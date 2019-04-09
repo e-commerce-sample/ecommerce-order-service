@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+    <!--<suppress>-->
+    <!--<notes><![CDATA[-->
+    <!--file name: javax.el-api-2.2.4.jar-->
+    <!--]]></notes>-->
+    <!--<gav regex="true">^javax\.el:javax\.el-api:.*$</gav>-->
+    <!--<cpe>cpe:/a:oracle:glassfish:2.2.4</cpe>-->
+    <!--</suppress>-->
+</suppressions>

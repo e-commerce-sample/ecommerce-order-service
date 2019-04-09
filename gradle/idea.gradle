@@ -1,0 +1,20 @@
+apply plugin: 'idea'
+
+configurations.apiTestImplementation.setCanBeResolved(true)
+configurations.apiTestRuntimeOnly.setCanBeResolved(true)
+configurations.integrationTestImplementation.setCanBeResolved(true)
+configurations.integrationTestRuntimeOnly.setCanBeResolved(true)
+
+idea {
+    module {
+        testSourceDirs += file('src/apiTest/java')
+        testSourceDirs += file('src/apiTest/resources')
+        testSourceDirs += file('src/integrationTest/java')
+        testSourceDirs += file('src/integrationTest/resources')
+        scopes.TEST.plus += [configurations.apiTestImplementation]
+        scopes.TEST.plus += [configurations.apiTestRuntimeOnly]
+        scopes.TEST.plus += [configurations.integrationTestImplementation]
+        scopes.TEST.plus += [configurations.integrationTestRuntimeOnly]
+    }
+}
+

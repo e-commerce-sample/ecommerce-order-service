@@ -1,0 +1,16 @@
+apply plugin: 'checkstyle'
+
+checkstyle {
+    sourceSets = [sourceSets.main]
+    maxWarnings = 0
+    ignoreFailures = false
+}
+
+tasks.withType(Checkstyle) {
+    exclude 'com/mryqr/common/utils/MryRegexUtils.java'
+    exclude 'com/mryqr/common/utils/TestFixture.java'
+    exclude 'com/mryqr/spike/**'
+    exclude 'com/qq/**'
+}
+
+

@@ -1,0 +1,25 @@
+dependencyCheck {
+    failBuildOnCVSS = 4
+    failOnError = true
+    suppressionFile = file("$projectDir/config/dependency-check/suppression.xml")
+    analyzers {
+        experimentalEnabled = true
+        archiveEnabled = true
+        jarEnabled = true
+        centralEnabled = true
+        nexusEnabled = true
+        pyDistributionEnabled = false
+        pyPackageEnabled = false
+        rubygemsEnabled = false
+        opensslEnabled = false
+        nuspecEnabled = false
+        assemblyEnabled = false
+        cmakeEnabled = false
+        autoconfEnabled = true
+        composerEnabled = false
+        nodeEnabled = true
+        nodeAuditEnabled = false
+        cocoapodsEnabled = false
+        swiftEnabled = false
+    }
+}

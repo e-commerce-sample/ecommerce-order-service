@@ -1,0 +1,50 @@
+apply plugin: "com.avast.gradle.docker-compose"
+
+
+dockerCompose.isRequiredBy(integrationTest)
+
+
+
+dockerCompose {
+    mysql {
+        useComposeFiles = ['src/integrationTest/resources/docker-compose.yml']
+    }
+    useComposeFiles = ['src/integrationTest/resources/docker-compose.yml']
+    //startedServices = ['mysqlDB'] // list of services to execute when calling 'docker-compose up' (when not specified, all services are executed)
+    //exitCodeFromService = 'mysqlDB'
+    // scale = [${serviceName1}: 5, ${serviceName2}: 2] // Pass docker compose --scale option like 'docker-compose up --scale serviceName1=5 --scale serviceName2=2'
+    // removeOrphans = false // Removes containers for services not defined in the Compose file
+    // forceRecreate = true // pass '--force-recreate' when calling 'docker-compose up'
+    // upAdditionalArgs = ['--no-deps']
+
+    // captureContainersOutput = true // prints output of all containers to Gradle output - very useful for debugging
+    // captureContainersOutputToFile = '/path/to/logFile' // sends output of all containers to a log file
+
+    // stopContainers = false // doesn't call `docker-compose down` - useful for debugging
+    // removeContainers = false
+    // removeImages = "None" // Other accepted values are: "All" and "Local"
+    // removeVolumes = false
+
+    // waitForTcpPorts = false // turns off the waiting for exposed TCP ports opening
+    // projectName = 'my-project' // allow to set custom docker-compose project name (defaults to directory name)
+    // executable = '/path/to/docker-compose' // allow to set the path of the docker-compose executable (useful if not present in PATH)
+    // dockerExecutable = '/path/to/docker' // allow to set the path of the docker executable (useful if not present in PATH)
+    // dockerComposeWorkingDirectory = '/path/where/docker-compose/is/invoked/from'
+    // dockerComposeStopTimeout = java.time.Duration.ofSeconds(20) // time before docker-compose sends SIGTERM to the running containers after the composeDown task has been started
+    // environment.put 'BACKEND_ADDRESS', '192.168.1.100' // Pass environment variable to 'docker-compose' for substitution in compose file
+}
+
+test.doFirst {
+    // exposes "${serviceName}_HOST" and "${serviceName}_TCP_${exposedPort}" environment variables
+    // for example exposes "WEB_HOST" and "WEB_TCP_80" environment variables for service named `web` with exposed port `80`
+    // if service is scaled using scale option, environment variables will be exposed for each service instance like "WEB_1_HOST", "WEB_1_TCP_80", "WEB_2_HOST", "WEB_2_TCP_80" and so on
+    dockerCompose.exposeAsEnvironment(test)
+    // exposes "${serviceName}.host" and "${serviceName}.tcp.${exposedPort}" system properties
+    // for example exposes "web.host" and "web.tcp.80" system properties for service named `web` with exposed port `80`
+    // if service is scaled using scale option, environment variables will be exposed for each service instance like "web_1.host", "web_1.tcp.80", "web_2.host", "web_2.tcp.80" and so on
+    dockerCompose.exposeAsSystemProperties(test)
+    // get information about container of service `web` (declared in docker-compose.yml)
+    //def mysqlDB = dockerCompose.servicesInfos.web.firstInstance
+    // in case scale option is used, dockerCompose.servicesInfos.containerInfos will contain information about all running containers of service. Particular container can be retrieved either by iterating the values of containerInfos map (key is service instance name, for example 'web_1')
+    //def mysqlDB = dockerCompose.servicesInfos.web.'web_1'
+}

@@ -1,16 +1,114 @@
+buildscript {
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/central" }
+    }
+}
+
 plugins {
-    id 'java'
-    id 'idea'
     id 'application'
+    id "org.springframework.boot" version "2.1.4.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
 }
 
 repositories {
-    jcenter()
+    maven { url "https://maven.aliyun.com/repository/central" }
 }
+
+application {
+    mainClassName = "ecommerce.order.EcommerceOrderApplication"
+    applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
-    implementation 'com.google.guava:guava:27.0.1-jre'
-    testImplementation 'junit:junit:4.12'
+    //spring dependencies
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+
+    //util dependencies
+    implementation('com.google.guava:guava:27.0.1-jre')
+    implementation('commons-io:commons-io:2.6')
+    implementation('org.apache.commons:commons-lang3')
+    implementation('org.apache.commons:commons-collections4:4.2')
+    implementation('io.springfox:springfox-swagger2:2.9.2')
+    implementation('io.springfox:springfox-swagger-ui:2.9.2')
+
+    //jackson dependencies
+    implementation('com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.8')
+    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.8')
+    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8')
+    implementation('com.fasterxml.jackson.core:jackson-core:2.9.8')
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.9.8')
+    implementation('com.fasterxml.jackson.core:jackson-annotations:2.9.8')
+
+    //test dependencies
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.rest-assured:spring-mock-mvc")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation('org.junit.jupiter:junit-jupiter-engine')
+    testImplementation('org.mockito:mockito-junit-jupiter:2.26.0')
 }
 
-mainClassName = 'ecommerce.order.App'
+
+sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+
+    apiTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+}
+
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    apiTestImplementation.extendsFrom testImplementation
+    apiTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+
+task integrationTest(type: Test) {
+    description = 'Run integration tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+}
+
+
+task apiTest(type: Test) {
+    description = 'Run API tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.apiTest.output.classesDirs
+    classpath = sourceSets.apiTest.runtimeClasspath
+    shouldRunAfter integrationTest
+}
+
+configurations.all {
+    exclude group: "junit", module: "junit"
+    exclude group: "org.assertj", module: "assertj-core"
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+check.dependsOn integrationTest
+check.dependsOn apiTest
+
+wrapper {
+    gradleVersion = '5.2.1'
+}
+
+apply from: "${rootProject.projectDir}/gradle/idea.gradle"
+
+
+
