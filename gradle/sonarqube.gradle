@@ -1,26 +1,9 @@
 apply plugin: "org.sonarqube"
 
 sonarqube {
-    properties {
-        property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.host.url", System.getenv("SONAR_URL"))
-        property("sonar.token", System.getenv("SONAR_TOKEN"))
-        property("sonar.gitlab.project_id", System.getenv("CI_PROJECT_PATH"))
-        property("sonar.gitlab.commit_sha", System.getenv("CI_COMMIT_SHA"))
-        property("sonar.gitlab.ref_name", System.getenv("CI_COMMIT_REF_NAME"))
-        property("sonar.gitlab.query_wait", "10000")
-        property("sonar.analysis.serviceGroup", System.getenv("GROUP_NAME"))
-        property("sonar.analysis.commitId", System.getenv("CI_COMMIT_SHA"))
-        property("sonar.projectKey", System.getenv("GROUP_NAME") + ':' + System.getenv("PROJECT_NAME"))
-        property("sonar.projectName", System.getenv("GROUP_NAME") + '/' + System.getenv("PROJECT_NAME"))
-        property("sonar.java.source", "8")
-        property("sonar.java.spotbugs.reportPaths", "./build/reports/spotbugs/main.xml")
-        property("sonar.java.checkstyle.reportPaths", "./build/reports/checkstyle/main.xml")
-        property("sonar.jacoco.reportPaths", "./build/jacoco/test.exec")
-        property("sonar.junit.reportPaths", "./build/test-results/test")
-    }
+
 }
 
-project.tasks["sonarqube"].dependsOn jacocoAllTestCoverageVerification
-project.tasks["sonarqube"].dependsOn spotbugsMain
-project.tasks["sonarqube"].dependsOn checkstyleMain
+sonarqube.dependsOn jacocoAllTestCoverageVerification
+sonarqube.dependsOn spotbugsMain
+sonarqube.dependsOn checkstyleMain
