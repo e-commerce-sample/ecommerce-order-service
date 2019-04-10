@@ -1,3 +1,5 @@
+apply plugin: "org.sonarqube"
+
 sonarqube {
     properties {
         property("sonar.sourceEncoding", "UTF-8")
@@ -19,6 +21,6 @@ sonarqube {
     }
 }
 
-project.tasks["sonarqube"].dependsOn jacocoTestCoverageVerification
+project.tasks["sonarqube"].dependsOn jacocoAllTestCoverageVerification
 project.tasks["sonarqube"].dependsOn spotbugsMain
 project.tasks["sonarqube"].dependsOn checkstyleMain

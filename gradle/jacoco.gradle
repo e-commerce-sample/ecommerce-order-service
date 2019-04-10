@@ -5,8 +5,7 @@ ext {
     jacocoBranchMin = 0
     jacocoExcludes = [
             'com/ecommerce/order/spike/**',
-            'com/ecommerce/order/common/logging/**',
-            'com/ecommerce/order/common/exception/**'
+            'com/ecommerce/order/common/ddd/**'
     ]
 }
 
@@ -183,5 +182,6 @@ task jacocoAllTestCoverageVerification(type: JacocoCoverageVerification) {
     }
 }
 
+jacocoAllTestCoverageVerification.dependsOn jacocoAllTestReport
 check.dependsOn jacocoAllTestReport
 check.dependsOn jacocoAllTestCoverageVerification

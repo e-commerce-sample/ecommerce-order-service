@@ -6,6 +6,7 @@ buildscript {
         classpath "com.avast.gradle:gradle-docker-compose-plugin:0.9.1"
         classpath "org.owasp:dependency-check-gradle:5.0.0-M2"
         classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.1"
+//        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7"
     }
 }
 
@@ -131,4 +132,5 @@ apply from: "${rootProject.projectDir}/gradle/spotbugs.gradle"
 apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
 apply from: "${rootProject.projectDir}/gradle/git-hooks.gradle"
 apply from: "${rootProject.projectDir}/gradle/version-info.gradle"
+apply from: "${rootProject.projectDir}/gradle/jacoco.gradle"
 
