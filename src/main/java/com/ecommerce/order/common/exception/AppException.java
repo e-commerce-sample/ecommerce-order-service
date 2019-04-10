@@ -9,8 +9,9 @@ import static java.util.Collections.unmodifiableMap;
 import static org.apache.commons.collections4.MapUtils.isEmpty;
 
 /**
- * Base exception class for all mry exceptions
+ * Base exception class for all business exceptions
  */
+
 public abstract class AppException extends RuntimeException {
     private final ErrorCode code;
     private final Map<String, Object> data = newHashMap();
@@ -50,6 +51,5 @@ public abstract class AppException extends RuntimeException {
     public String userMessage() {
         return code.getMessage();
     }
-
 
 }

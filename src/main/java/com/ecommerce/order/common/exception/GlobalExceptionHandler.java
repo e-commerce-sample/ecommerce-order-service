@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
     @ResponseBody
     public ResponseEntity<?> handleAppException(AppException ex, HttpServletRequest request) {
-        logger.error("", ex);
+        logger.error("App error:", ex);
         ErrorRepresentation representation = ErrorRepresentation.from(from(ex, request.getRequestURI()));
         return new ResponseEntity<>(representation, new HttpHeaders(), representation.httpStatus());
     }
