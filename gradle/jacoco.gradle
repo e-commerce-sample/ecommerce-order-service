@@ -184,5 +184,5 @@ task jacocoAllTestCoverageVerification(type: JacocoCoverageVerification) {
     }
 }
 
-build.dependsOn jacocoAllTestReport
-build.dependsOn jacocoAllTestCoverageVerification
+check.dependsOn jacocoAllTestReport
+check.dependsOn jacocoAllTestCoverageVerification

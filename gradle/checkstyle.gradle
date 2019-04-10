@@ -7,10 +7,8 @@ checkstyle {
 }
 
 tasks.withType(Checkstyle) {
-    exclude 'com/mryqr/common/utils/MryRegexUtils.java'
-    exclude 'com/mryqr/common/utils/TestFixture.java'
-    exclude 'com/mryqr/spike/**'
-    exclude 'com/qq/**'
+    exclude 'com/ecommerce/order/common/configuration/OrderProperties.java'
+    exclude 'com/ecommerce/order/spike/**'
 }
 
 

@@ -1,0 +1,18 @@
+buildNumber: ${buildNumber}
+buildTime: ${buildTime}
+gitRevision: ${gitRevision}
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:13306/ecommerce_order_mysql?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_bin&useServerPrepStmts=false&rewriteBatchedStatements=true
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+logging:
+  file: /var/log/ecommerce-order-backend/order-uat.log
+
+ecommerce:
+  order:
+    jwtSecret: whateversecret
+    jwtExpireMinutes: 30

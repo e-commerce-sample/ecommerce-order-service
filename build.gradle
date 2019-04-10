@@ -2,6 +2,11 @@ buildscript {
     repositories {
         maven { url "https://maven.aliyun.com/repository/central" }
     }
+    dependencies {
+        classpath "com.avast.gradle:gradle-docker-compose-plugin:0.9.1"
+        classpath "org.owasp:dependency-check-gradle:5.0.0-M2"
+        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.1"
+    }
 }
 
 plugins {
@@ -15,7 +20,7 @@ repositories {
 }
 
 application {
-    mainClassName = "ecommerce.order.EcommerceOrderApplication"
+    mainClassName = "com.ecommerce.order.EcommerceOrderApplication"
     applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
 }
 
@@ -29,13 +34,20 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
 
-    //util dependencies
+    //common dependencies
+    implementation("mysql:mysql-connector-java:8.0.15")
+    implementation('io.jsonwebtoken:jjwt:0.9.1')
+    implementation("org.flywaydb:flyway-core")
     implementation('com.google.guava:guava:27.0.1-jre')
     implementation('commons-io:commons-io:2.6')
     implementation('org.apache.commons:commons-lang3')
     implementation('org.apache.commons:commons-collections4:4.2')
     implementation('io.springfox:springfox-swagger2:2.9.2')
     implementation('io.springfox:springfox-swagger-ui:2.9.2')
+    implementation('com.cwbase:logback-redis-appender:1.1.5')
+    implementation('net.javacrumbs.shedlock:shedlock-spring:2.4.0')
+    implementation('net.javacrumbs.shedlock:shedlock-provider-jdbc-template:2.4.0')
+
 
     //jackson dependencies
     implementation('com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.8')
@@ -55,7 +67,7 @@ dependencies {
 
 
 sourceSets {
-    integrationTest {
+    componentTest {
         compileClasspath += sourceSets.main.output + sourceSets.test.output
         runtimeClasspath += sourceSets.main.output + sourceSets.test.output
     }
@@ -68,18 +80,18 @@ sourceSets {
 
 
 configurations {
-    integrationTestImplementation.extendsFrom testImplementation
-    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    componentTestImplementation.extendsFrom testImplementation
+    componentTestRuntimeOnly.extendsFrom testRuntimeOnly
     apiTestImplementation.extendsFrom testImplementation
     apiTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 
-task integrationTest(type: Test) {
-    description = 'Run integration tests.'
+task componentTest(type: Test) {
+    description = 'Run component tests.'
     group = 'verification'
-    testClassesDirs = sourceSets.integrationTest.output.classesDirs
-    classpath = sourceSets.integrationTest.runtimeClasspath
+    testClassesDirs = sourceSets.componentTest.output.classesDirs
+    classpath = sourceSets.componentTest.runtimeClasspath
     shouldRunAfter test
 }
 
@@ -89,7 +101,7 @@ task apiTest(type: Test) {
     group = 'verification'
     testClassesDirs = sourceSets.apiTest.output.classesDirs
     classpath = sourceSets.apiTest.runtimeClasspath
-    shouldRunAfter integrationTest
+    shouldRunAfter componentTest
 }
 
 configurations.all {
@@ -101,14 +113,21 @@ tasks.withType(Test) {
     useJUnitPlatform()
 }
 
-check.dependsOn integrationTest
+check.dependsOn componentTest
 check.dependsOn apiTest
+
+bootJar {
+    launchScript()
+}
 
 wrapper {
     gradleVersion = '5.2.1'
 }
 
 apply from: "${rootProject.projectDir}/gradle/idea.gradle"
-
-
+apply from: "${rootProject.projectDir}/gradle/docker-compose.gradle"
+apply from: "${rootProject.projectDir}/gradle/dependency-check.gradle"
+apply from: "${rootProject.projectDir}/gradle/spotbugs.gradle"
+apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
+apply from: "${rootProject.projectDir}/gradle/git-hooks.gradle"
 

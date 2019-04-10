@@ -1,0 +1,31 @@
+version: "2"
+services:
+  mysql:
+    restart: always
+    container_name: ecommerce-order-mysql
+    image: mysql:5.7.23
+    command: [
+      'mysqld',
+      '--innodb-buffer-pool-size=20M',
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-time-zone=+8:00',
+      '--lower-case-table-names=1'
+    ]
+    networks:
+      - ecommerce-order-mysql-net
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=ecommerce_order_mysql"
+    volumes:
+      - ecommerce-order-mysql-data:/var/lib/mysql
+    ports:
+      - "13306:3306"
+
+networks:
+  ecommerce-order-mysql-net:
+    driver: bridge
+
+volumes:
+  ecommerce-order-mysql-data:
+    driver: local

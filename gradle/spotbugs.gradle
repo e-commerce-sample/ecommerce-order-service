@@ -1,9 +1,3 @@
-buildscript {
-    dependencies {
-        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.1"
-    }
-}
-
 apply plugin: "com.github.spotbugs"
 
 

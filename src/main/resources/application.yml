@@ -1,0 +1,9 @@
+spring.profiles.active: local # default profile
+management.endpoints.web.exposure.include: "*"
+
+logging:
+  pattern:
+    console: "%date{yyyy-MM-dd HH:mm:ss.SSS,Asia/Shanghai} %X{clientIp}-%X{requestId}-%X{userId} %highlight(%-5level) %logger{36} : %m%n%wEx"
+    file: "%date{yyyy-MM-dd HH:mm:ss.SSS,Asia/Shanghai} %X{clientIp}-%X{requestId}-%X{userId} %highlight(%-5level) %logger{36} : %m%n%wEx"
+
+

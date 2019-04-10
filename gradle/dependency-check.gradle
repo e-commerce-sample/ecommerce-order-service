@@ -1,7 +1,10 @@
+apply plugin: "org.owasp.dependencycheck"
+
 dependencyCheck {
-    failBuildOnCVSS = 4
+    failBuildOnCVSS = 5
     failOnError = true
     suppressionFile = file("$projectDir/config/dependency-check/suppression.xml")
+    scanConfigurations = ["compile", "compileOnly", "implementation", "runtime"]
     analyzers {
         experimentalEnabled = true
         archiveEnabled = true
@@ -23,3 +26,6 @@ dependencyCheck {
         swiftEnabled = false
     }
 }
+
+check.dependsOn dependencyCheckAnalyze
+
