@@ -1,9 +1,6 @@
 package com.ecommerce.order.common.configuration;
 
 import com.ecommerce.order.common.logging.LogbackMdcTaskDecorator;
-import net.javacrumbs.shedlock.core.LockProvider;
-import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;
-import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -14,25 +11,16 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import javax.sql.DataSource;
-
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 
 @Configuration
 @EnableAsync
 @EnableScheduling
-@EnableSchedulerLock(defaultLockAtMostFor = "PT30S")
-public class TaskConfiguration implements SchedulingConfigurer {
+public class SchedulingConfiguration implements SchedulingConfigurer {
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.setScheduler(newScheduledThreadPool(10));
-
-    }
-
-    @Bean
-    public LockProvider lockProvider(DataSource dataSource) {
-        return new JdbcTemplateLockProvider(dataSource);
     }
 
     @Bean(destroyMethod = "shutdown")
