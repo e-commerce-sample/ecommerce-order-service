@@ -1,6 +1,6 @@
-buildNumber: local
-buildTime: local
-gitRevision: local
+buildNumber: unknown
+buildTime: unknown
+gitRevision: unknown
 gitBranch: unknown
 
 spring:

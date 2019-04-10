@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 
@@ -25,15 +24,16 @@ public class AboutController {
     }
 
     @GetMapping
-    public AboutRepresentation about(HttpServletRequest request) {
+    public AboutRepresentation about() {
         logger.info("About info accessed.");
         String buildNumber = environment.getProperty("buildNumber");
-
         String buildTime = environment.getProperty("buildTime");
         String gitRevision = environment.getProperty("gitRevision");
+        String gitBranch = environment.getProperty("gitBranch");
+
         String activeProfiles = Arrays.toString(environment.getActiveProfiles());
         String deployTime = this.deployTime.toString();
-        return new AboutRepresentation(buildNumber, buildTime, gitRevision, activeProfiles, deployTime);
+        return new AboutRepresentation(buildNumber, buildTime, deployTime, gitRevision, gitBranch, activeProfiles);
     }
 
 }
