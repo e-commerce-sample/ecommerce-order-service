@@ -1,6 +1,7 @@
 buildNumber: ${buildNumber}
 buildTime: ${buildTime}
 gitRevision: ${gitRevision}
+gitBranch: ${gitBranch}
 
 spring:
   datasource:

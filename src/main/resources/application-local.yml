@@ -1,6 +1,7 @@
 buildNumber: local
 buildTime: local
 gitRevision: local
+gitBranch: unknown
 
 spring:
   datasource:

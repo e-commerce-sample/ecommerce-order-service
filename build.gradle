@@ -130,4 +130,5 @@ apply from: "${rootProject.projectDir}/gradle/dependency-check.gradle"
 apply from: "${rootProject.projectDir}/gradle/spotbugs.gradle"
 apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
 apply from: "${rootProject.projectDir}/gradle/git-hooks.gradle"
+apply from: "${rootProject.projectDir}/gradle/version-info.gradle"
 

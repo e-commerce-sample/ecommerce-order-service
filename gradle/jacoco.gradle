@@ -4,10 +4,9 @@ ext {
     jacocoLineMin = 0
     jacocoBranchMin = 0
     jacocoExcludes = [
-            'com/mryqr/spike/**',
-            'com/qq/**',
-            'com/mryqr/common/logging/**',
-            'com/mryqr/common/exception/**'
+            'com/ecommerce/order/spike/**',
+            'com/ecommerce/order/common/logging/**',
+            'com/ecommerce/order/common/exception/**'
     ]
 }
 
