@@ -1,6 +1,6 @@
 package com.ecommerce.order;
 
-import com.ecommerce.order.common.utils.EcommerceObjectMapper;
+import com.ecommerce.order.common.utils.DefaultObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public abstract class BaseComponentTest {
 
 
     @Autowired
-    protected EcommerceObjectMapper objectMapper;
+    protected DefaultObjectMapper objectMapper;
 
     @BeforeEach
     public void setup() {

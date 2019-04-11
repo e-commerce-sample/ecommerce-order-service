@@ -9,7 +9,7 @@ import java.io.Writer;
 /**
  * ObjectMapper that converts check exceptions to RuntimeException
  */
-public final class EcommerceObjectMapper extends ObjectMapper {
+public final class DefaultObjectMapper extends ObjectMapper {
 
     @Override
     public String writeValueAsString(Object value) {

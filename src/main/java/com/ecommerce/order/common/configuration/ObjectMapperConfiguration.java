@@ -1,6 +1,6 @@
 package com.ecommerce.order.common.configuration;
 
-import com.ecommerce.order.common.utils.EcommerceObjectMapper;
+import com.ecommerce.order.common.utils.DefaultObjectMapper;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -30,8 +30,8 @@ import static java.util.TimeZone.getTimeZone;
 public class ObjectMapperConfiguration {
 
     @Bean
-    public EcommerceObjectMapper objectMapper() {
-        EcommerceObjectMapper mapper = new EcommerceObjectMapper();
+    public DefaultObjectMapper objectMapper() {
+        DefaultObjectMapper mapper = new DefaultObjectMapper();
         mapper.findAndRegisterModules()
                 .setTimeZone(getTimeZone(of("Asia/Shanghai")))
                 .setVisibility(ALL, NONE)

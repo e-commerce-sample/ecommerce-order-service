@@ -20,7 +20,7 @@ import static com.google.common.collect.ImmutableMap.of;
 
 
 @RestController
-public class EcommerceErrorController implements ErrorController {
+public class RestErrorController implements ErrorController {
     private static final Logger logger = AutoNamingLoggerFactory.getLogger();
 
     private static final String PATH = "/error";
