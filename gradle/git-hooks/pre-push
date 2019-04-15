@@ -2,6 +2,6 @@
 set -x
 echo Run gradle check before push to remote repository...
 
-./gradlew clean chec
+./gradlew clean checgege
 
 echo $?
