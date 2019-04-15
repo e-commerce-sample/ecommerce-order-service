@@ -22,7 +22,9 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 # 测试策略
 |测试类型|代码目录|测试内容|
 | --- | --- | --- |
-|单元测试|`src/test/java`|单元测试，包含核心领域模型（包含领域对象和Factory类）的测试|
+|单元测试|`src/test/java`|包含核心领域模型（包含领域对象和Factory类）的测试|
+|组件测试|`src/componentTest/java`|用于测试一些核心的组件级对象，比如Repository|
+|API测试|`src/apiTest/java`|模拟客户端调用API|
 
 # 技术架构
 技术架构图
@@ -31,6 +33,12 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 部署架构图
 
 # 外部依赖
+列出项目所依赖的其他系统，比如订单系统依赖于会员系统。
+
 # 环境信息
+列出各个环境的访问方式，数据库连接等。
+
 # 编码实践
+列出常用的公共的编码实践方式。
+
 # FAQ
