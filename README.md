@@ -7,10 +7,11 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 # 本地构建
 |功能|命令|备注|
 | --- | --- | --- |
-|生成IntelliJ工程|`./idea.sh`||
+|生成IntelliJ工程|`./idea.sh`|自动打开IntelliJ|
 |本地运行|`./run.sh`|监听5005调试端口|
-|本地构建|`./local-build.sh`||
-|重启数据库|`./gradlew composeDown composeUp`|将清空所有数据|
+|本地构建|`./local-build.sh`|运行所有类型的自动化测试|
+|停止数据库|`./gradlew composeDown`|将清空所有数据|
+|手动启动数据库|`./gradlew composeUp`||
 
 # 领域对象
 |领域对象|中文名|业务功能|
@@ -32,4 +33,4 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 # 外部依赖
 # 环境信息
 # 编码实践
-# 其他信息
+# FAQ
