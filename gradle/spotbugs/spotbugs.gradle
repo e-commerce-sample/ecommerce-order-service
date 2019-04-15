@@ -3,7 +3,7 @@ apply plugin: "com.github.spotbugs"
 
 spotbugs {
     sourceSets = [sourceSets.main]
-    excludeFilter = file("$projectDir/config/spotbugs/exclude.xml")
+    excludeFilter = file("$projectDir/gradle/spotbugs/exclude.xml")
     reportLevel = "high"
 }
 

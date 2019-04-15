@@ -4,6 +4,8 @@ checkstyle {
     sourceSets = [sourceSets.main]
     maxWarnings = 0
     ignoreFailures = false
+    configFile file("$projectDir/gradle/checkstyle/checkstyle.xml")
+
 }
 
 tasks.withType(Checkstyle) {
