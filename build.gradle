@@ -126,7 +126,7 @@ wrapper {
 }
 
 apply from: "${rootProject.projectDir}/gradle/idea.gradle"
-apply from: "${rootProject.projectDir}/gradle/docker-compose.gradle"
+apply from: "${rootProject.projectDir}/gradle/docker-compose/docker-compose.gradle"
 apply from: "${rootProject.projectDir}/gradle/dependency-check/dependency-check.gradle"
 apply from: "${rootProject.projectDir}/gradle/spotbugs/spotbugs.gradle"
 apply from: "${rootProject.projectDir}/gradle/checkstyle/checkstyle.gradle"

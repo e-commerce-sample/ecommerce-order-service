@@ -4,7 +4,7 @@ apply plugin: 'docker-compose'
 //dockerCompose.isRequiredBy(apiTest)
 
 dockerCompose {
-    useComposeFiles = ['docker/mysql/docker-compose.yml']
+    useComposeFiles = ['gradle/docker-compose/docker-compose.yml']
     // stopContainers = false
 //     removeContainers = false
 //     removeVolumes = false
