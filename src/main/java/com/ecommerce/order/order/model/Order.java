@@ -7,6 +7,7 @@ import java.util.List;
 import static com.ecommerce.order.order.model.OrderId.newOrderId;
 import static com.ecommerce.order.order.model.OrderStatus.CREATED;
 import static com.google.common.collect.Lists.newArrayList;
+import static java.math.BigDecimal.ZERO;
 import static java.time.Instant.now;
 
 public class Order {
@@ -32,7 +33,10 @@ public class Order {
     }
 
     private BigDecimal calculateTotalPrice() {
-        return BigDecimal.valueOf(12);
+        return items.stream()
+                .map(OrderItem::totalPrice)
+                .reduce(ZERO, BigDecimal::add);
+
     }
 
     public OrderId getId() {
