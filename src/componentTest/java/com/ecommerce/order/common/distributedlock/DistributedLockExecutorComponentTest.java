@@ -25,7 +25,7 @@ class DistributedLockExecutorComponentTest extends BaseComponentTest {
 
     private String executeWithLock() {
         return executor.executeWithLock(() -> "hello world.",
-                new LockConfiguration("componentTest", now().plusSeconds(5)));
+                new LockConfiguration("componentTest", now().plusSeconds(10), now().plusSeconds(5)));
     }
 
 }
