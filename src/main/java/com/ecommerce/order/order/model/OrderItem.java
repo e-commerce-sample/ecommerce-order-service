@@ -26,4 +26,15 @@ public class OrderItem {
         return itemPrice.multiply(BigDecimal.valueOf(count));
     }
 
+    public ProductId getProductId() {
+        return productId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public BigDecimal getItemPrice() {
+        return itemPrice;
+    }
 }

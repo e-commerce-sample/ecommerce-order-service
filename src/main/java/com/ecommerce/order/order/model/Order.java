@@ -46,4 +46,16 @@ public class Order {
     public Instant getCreatedAt() {
         return createdAt;
     }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
 }
