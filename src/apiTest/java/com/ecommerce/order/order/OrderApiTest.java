@@ -39,7 +39,9 @@ class OrderApiTest extends BaseApiTest {
         Order order = Order.create(newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))));
         repository.save(order);
         String idString = order.getId().toString();
-        given().when().get("/orders/{id}", idString)
+        given()
+                .when()
+                .get("/orders/{id}", idString)
                 .then().statusCode(200)
                 .body("orderId", is(idString));
     }
