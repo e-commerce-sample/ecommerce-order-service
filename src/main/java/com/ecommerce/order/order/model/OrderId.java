@@ -1,5 +1,7 @@
 package com.ecommerce.order.order.model;
 
+import java.util.Objects;
+
 import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
 
 public class OrderId {
@@ -23,5 +25,22 @@ public class OrderId {
     @Override
     public String toString() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        OrderId orderId = (OrderId) o;
+        return Objects.equals(id, orderId.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

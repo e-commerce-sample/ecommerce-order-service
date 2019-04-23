@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
+import static com.ecommerce.order.order.model.OrderId.newOrderId;
 import static com.ecommerce.order.order.model.OrderItem.create;
 import static com.ecommerce.order.product.ProductId.newProductId;
 import static com.google.common.collect.Lists.newArrayList;
@@ -36,14 +37,14 @@ class OrderApiTest extends BaseApiTest {
 
     @Test
     public void should_retrieve_order() {
-        Order order = Order.create(newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))));
+        Order order = Order.create(newOrderId(), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))));
         repository.save(order);
         String idString = order.getId().toString();
         given()
                 .when()
                 .get("/orders/{id}", idString)
                 .then().statusCode(200)
-                .body("orderId", is(idString));
+                .body("id", is(idString));
     }
 
 }
