@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.*;
 
 
 public enum ErrorCode {
+    PAID_PRICE_NOT_SAME_WITH_ORDER_PRICE(CONFLICT, "支付价格与订单实际价格不符"),
     PRODUCT_NOT_IN_ORDER(CONFLICT, "订单不包含产品"),
     ORDER_CANNOT_BE_MODIFIED(CONFLICT, "订单无法变更"),
     PRODUCT_NOT_FOUND(NOT_FOUND, "没有找到产品"),

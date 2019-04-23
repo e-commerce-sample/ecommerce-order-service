@@ -3,9 +3,11 @@ package com.ecommerce.order.order;
 import com.ecommerce.order.BaseApiTest;
 import com.ecommerce.order.order.command.CreateOrderCommand;
 import com.ecommerce.order.order.command.OrderItemCommand;
+import com.ecommerce.order.order.command.PayOrderCommand;
 import com.ecommerce.order.order.command.UpdateProductCountCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
+import com.ecommerce.order.order.model.OrderStatus;
 import com.ecommerce.order.product.ProductId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import static java.math.BigDecimal.valueOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class OrderApiTest extends BaseApiTest {
@@ -68,6 +71,24 @@ class OrderApiTest extends BaseApiTest {
         Order saved = repository.byId(order.getId());
         assertThat(valueOf(900), comparesEqualTo(saved.getTotalPrice()));
 
+    }
+
+
+    @Test
+    public void should_pay_order() {
+        ProductId productId = newProductId();
+        Order order = Order.create(newOrderId(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))));
+        repository.save(order);
+        String idString = order.getId().toString();
+
+        given().contentType("application/json")
+                .body(new PayOrderCommand(BigDecimal.valueOf(600)))
+                .when()
+                .post("orders/{id}/payment", idString)
+                .then().statusCode(200);
+
+        Order saved = repository.byId(order.getId());
+        assertEquals(OrderStatus.PAID, saved.getStatus());
 
     }
 

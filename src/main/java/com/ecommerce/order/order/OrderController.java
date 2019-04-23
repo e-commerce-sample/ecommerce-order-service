@@ -1,6 +1,7 @@
 package com.ecommerce.order.order;
 
 import com.ecommerce.order.order.command.CreateOrderCommand;
+import com.ecommerce.order.order.command.PayOrderCommand;
 import com.ecommerce.order.order.command.UpdateProductCountCommand;
 import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.representation.OrderRepresentation;
@@ -28,6 +29,11 @@ public class OrderController {
     @PostMapping("/{id}")
     public void updateProductCount(@PathVariable(name = "id") String id, @RequestBody @Valid UpdateProductCountCommand command) {
         service.updateProductCount(id, command);
+    }
+
+    @PostMapping("/{id}/payment")
+    public void pay(@PathVariable(name = "id") String id, @RequestBody @Valid PayOrderCommand command) {
+        service.pay(id, command);
     }
 
     @GetMapping("/{id}")

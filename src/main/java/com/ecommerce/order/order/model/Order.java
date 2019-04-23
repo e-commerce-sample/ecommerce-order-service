@@ -1,6 +1,7 @@
 package com.ecommerce.order.order.model;
 
 import com.ecommerce.order.order.exception.OrderCannotBeModifiedException;
+import com.ecommerce.order.order.exception.PaidPriceNotSameWithOrderPriceException;
 import com.ecommerce.order.order.exception.ProductNotInOrderException;
 import com.ecommerce.order.product.ProductId;
 
@@ -57,7 +58,10 @@ public class Order {
         this.totalPrice = calculateTotalPrice();
     }
 
-    public void pay() {
+    public void pay(BigDecimal paidPrice) {
+        if (!this.totalPrice.equals(paidPrice)) {
+            throw new PaidPriceNotSameWithOrderPriceException(id);
+        }
         this.status = PAID;
     }
 

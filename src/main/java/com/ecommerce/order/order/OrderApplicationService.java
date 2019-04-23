@@ -1,6 +1,7 @@
 package com.ecommerce.order.order;
 
 import com.ecommerce.order.order.command.CreateOrderCommand;
+import com.ecommerce.order.order.command.PayOrderCommand;
 import com.ecommerce.order.order.command.UpdateProductCountCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderFactory;
@@ -23,13 +24,16 @@ public class OrderApplicationService {
     private final OrderRepresentationService representationService;
     private final OrderRepository repository;
     private final OrderFactory factory;
+    private final OrderPaymentService paymentService;
 
     public OrderApplicationService(OrderRepresentationService representationService,
                                    OrderRepository repository,
-                                   OrderFactory factory) {
+                                   OrderFactory factory,
+                                   OrderPaymentService paymentService) {
         this.representationService = representationService;
         this.repository = repository;
         this.factory = factory;
+        this.paymentService = paymentService;
     }
 
     @Transactional
@@ -55,6 +59,13 @@ public class OrderApplicationService {
     public void updateProductCount(String id, UpdateProductCountCommand command) {
         Order order = repository.byId(orderId(id));
         order.updateProductCount(ProductId.productId(command.getProductId()), command.getCount());
+        repository.save(order);
+    }
+
+    @Transactional
+    public void pay(String id, PayOrderCommand command) {
+        Order order = repository.byId(orderId(id));
+        paymentService.pay(order, command.getPaidPrice());
         repository.save(order);
     }
 }
