@@ -26,6 +26,10 @@ public class OrderItem {
         return itemPrice.multiply(BigDecimal.valueOf(count));
     }
 
+    public void updateCount(int count) {
+        this.count = count;
+    }
+
     public ProductId getProductId() {
         return productId;
     }

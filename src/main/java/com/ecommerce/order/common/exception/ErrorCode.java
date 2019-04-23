@@ -6,6 +6,8 @@ import static org.springframework.http.HttpStatus.*;
 
 
 public enum ErrorCode {
+    PRODUCT_NOT_IN_ORDER(CONFLICT, "订单不包含产品"),
+    ORDER_CANNOT_BE_MODIFIED(CONFLICT, "订单无法变更"),
     PRODUCT_NOT_FOUND(NOT_FOUND, "没有找到产品"),
     LOCK_OCCUPIED(CONFLICT, "任务已被锁定，请稍后重试"),
     SYSTEM_ERROR(INTERNAL_SERVER_ERROR, "系统错误"),

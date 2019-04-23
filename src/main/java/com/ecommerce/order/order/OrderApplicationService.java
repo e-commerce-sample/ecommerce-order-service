@@ -1,12 +1,14 @@
 package com.ecommerce.order.order;
 
 import com.ecommerce.order.order.command.CreateOrderCommand;
+import com.ecommerce.order.order.command.UpdateProductCountCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderFactory;
 import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.model.OrderItem;
 import com.ecommerce.order.order.representation.OrderRepresentation;
 import com.ecommerce.order.order.representation.OrderRepresentationService;
+import com.ecommerce.order.product.ProductId;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,4 +51,10 @@ public class OrderApplicationService {
         return representationService.toRepresentation(order);
     }
 
+    @Transactional
+    public void updateProductCount(String id, UpdateProductCountCommand command) {
+        Order order = repository.byId(orderId(id));
+        order.updateProductCount(ProductId.productId(command.getProductId()), command.getCount());
+        repository.save(order);
+    }
 }

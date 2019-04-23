@@ -3,8 +3,10 @@ package com.ecommerce.order.order;
 import com.ecommerce.order.BaseApiTest;
 import com.ecommerce.order.order.command.CreateOrderCommand;
 import com.ecommerce.order.order.command.OrderItemCommand;
+import com.ecommerce.order.order.command.UpdateProductCountCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
+import com.ecommerce.order.product.ProductId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +16,9 @@ import static com.ecommerce.order.order.model.OrderId.newOrderId;
 import static com.ecommerce.order.order.model.OrderItem.create;
 import static com.ecommerce.order.product.ProductId.newProductId;
 import static com.google.common.collect.Lists.newArrayList;
+import static java.math.BigDecimal.valueOf;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -45,6 +50,25 @@ class OrderApiTest extends BaseApiTest {
                 .get("/orders/{id}", idString)
                 .then().statusCode(200)
                 .body("id", is(idString));
+    }
+
+    @Test
+    public void should_update_product_count() {
+        ProductId productId = newProductId();
+        Order order = Order.create(newOrderId(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))));
+        repository.save(order);
+        String idString = order.getId().toString();
+
+        given().contentType("application/json")
+                .body(new UpdateProductCountCommand(productId.toString(), 30))
+                .when()
+                .post("orders/{id}", idString)
+                .then().statusCode(200);
+
+        Order saved = repository.byId(order.getId());
+        assertThat(valueOf(900), comparesEqualTo(saved.getTotalPrice()));
+
+
     }
 
 }

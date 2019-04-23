@@ -1,6 +1,7 @@
 package com.ecommerce.order.order;
 
 import com.ecommerce.order.order.command.CreateOrderCommand;
+import com.ecommerce.order.order.command.UpdateProductCountCommand;
 import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.representation.OrderRepresentation;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,11 @@ public class OrderController {
     @ResponseStatus(CREATED)
     public OrderId createOrder(@RequestBody @Valid CreateOrderCommand command) {
         return service.createOrder(command);
+    }
+
+    @PostMapping("/{id}")
+    public void updateProductCount(@PathVariable(name = "id") String id, @RequestBody @Valid UpdateProductCountCommand command) {
+        service.updateProductCount(id, command);
     }
 
     @GetMapping("/{id}")

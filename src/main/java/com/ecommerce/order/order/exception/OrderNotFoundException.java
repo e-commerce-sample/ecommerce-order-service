@@ -1,4 +1,4 @@
-package com.ecommerce.order.order;
+package com.ecommerce.order.order.exception;
 
 import com.ecommerce.order.common.exception.AppException;
 import com.ecommerce.order.order.model.OrderId;

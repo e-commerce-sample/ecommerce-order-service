@@ -1,6 +1,7 @@
 package com.ecommerce.order.order;
 
 import com.ecommerce.order.common.utils.DefaultObjectMapper;
+import com.ecommerce.order.order.exception.OrderNotFoundException;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
 import org.springframework.dao.EmptyResultDataAccessException;
