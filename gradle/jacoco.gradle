@@ -1,8 +1,10 @@
 apply plugin: "jacoco"
 
 ext {
-    jacocoLineMin = 0
-    jacocoBranchMin = 0
+    jacocoLineMin = 0 // Line覆盖率
+    jacocoBranchMin = 0  //分支覆盖率
+
+    // 配置需要忽略的文件
     jacocoExcludes = [
             'com/ecommerce/order/spike/**',
             'com/ecommerce/order/common/ddd/**'

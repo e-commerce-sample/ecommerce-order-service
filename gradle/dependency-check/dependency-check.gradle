@@ -3,7 +3,7 @@ apply plugin: "org.owasp.dependencycheck"
 dependencyCheck {
     failBuildOnCVSS = 5
     failOnError = true
-    suppressionFile = file("$projectDir/gradle/dependency-check/suppression.xml")
+    suppressionFile = file("$projectDir/gradle/dependency-check/suppression.xml") //配置文件路径
     scanConfigurations = ["compile", "compileOnly", "implementation", "runtime"]
     analyzers {
         experimentalEnabled = true

@@ -4,10 +4,11 @@ checkstyle {
     sourceSets = [sourceSets.main]
     maxWarnings = 0
     ignoreFailures = false
-    configFile file("$projectDir/gradle/checkstyle/checkstyle.xml")
+    configFile file("$projectDir/gradle/checkstyle/checkstyle.xml") //Checkstyle配置文件路径
 
 }
 
+//配置需要忽略的文件
 tasks.withType(Checkstyle) {
     exclude 'com/ecommerce/order/common/configuration/OrderProperties.java'
     exclude 'com/ecommerce/order/spike/**'
