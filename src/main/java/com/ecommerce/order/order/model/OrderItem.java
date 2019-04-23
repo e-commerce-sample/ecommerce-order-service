@@ -1,10 +1,11 @@
 package com.ecommerce.order.order.model;
 
+import com.ecommerce.order.common.ddd.Entity;
 import com.ecommerce.order.product.ProductId;
 
 import java.math.BigDecimal;
 
-public class OrderItem {
+public class OrderItem implements Entity {
     private ProductId productId;
     private int count;
     private BigDecimal itemPrice;

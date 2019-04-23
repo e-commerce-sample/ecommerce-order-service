@@ -1,5 +1,6 @@
 package com.ecommerce.order.order;
 
+import com.ecommerce.order.common.ddd.ApplicationService;
 import com.ecommerce.order.order.command.CreateOrderCommand;
 import com.ecommerce.order.order.command.PayOrderCommand;
 import com.ecommerce.order.order.command.UpdateProductCountCommand;
@@ -20,7 +21,7 @@ import static com.ecommerce.order.order.model.OrderId.orderId;
 import static com.ecommerce.order.product.ProductId.productId;
 
 @Component
-public class OrderApplicationService {
+public class OrderApplicationService implements ApplicationService {
     private final OrderRepresentationService representationService;
     private final OrderRepository repository;
     private final OrderFactory factory;

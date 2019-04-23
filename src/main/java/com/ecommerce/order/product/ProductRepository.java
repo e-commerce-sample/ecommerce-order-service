@@ -1,5 +1,6 @@
 package com.ecommerce.order.product;
 
+import com.ecommerce.order.common.ddd.Repository;
 import com.ecommerce.order.common.utils.DefaultObjectMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,7 +12,7 @@ import java.util.Map;
 import static com.google.common.collect.ImmutableMap.of;
 
 @Component
-public class ProductRepository {
+public class ProductRepository implements Repository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final DefaultObjectMapper objectMapper;

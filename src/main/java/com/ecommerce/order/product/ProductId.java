@@ -1,10 +1,12 @@
 package com.ecommerce.order.product;
 
+import com.ecommerce.order.common.ddd.Identity;
+
 import java.util.Objects;
 
 import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
 
-public class ProductId {
+public class ProductId implements Identity {
     private String id;
 
     private ProductId() {

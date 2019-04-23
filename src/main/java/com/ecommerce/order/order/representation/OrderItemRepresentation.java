@@ -1,8 +1,10 @@
 package com.ecommerce.order.order.representation;
 
+import com.ecommerce.order.common.ddd.Representation;
+
 import java.math.BigDecimal;
 
-public class OrderItemRepresentation {
+public class OrderItemRepresentation implements Representation {
     private final String productId;
     private final int count;
     private final BigDecimal itemPrice;

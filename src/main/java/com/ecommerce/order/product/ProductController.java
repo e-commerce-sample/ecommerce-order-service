@@ -22,7 +22,6 @@ public class ProductController {
         this.repService = repService;
     }
 
-
     @PostMapping
     @ResponseStatus(CREATED)
     public ProductId createProduct(@RequestBody @Valid CreateProductCommand command) {

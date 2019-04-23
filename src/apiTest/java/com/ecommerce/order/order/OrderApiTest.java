@@ -7,7 +7,6 @@ import com.ecommerce.order.order.command.PayOrderCommand;
 import com.ecommerce.order.order.command.UpdateProductCountCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
-import com.ecommerce.order.order.model.OrderStatus;
 import com.ecommerce.order.product.ProductId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import java.math.BigDecimal;
 
 import static com.ecommerce.order.order.model.OrderId.newOrderId;
 import static com.ecommerce.order.order.model.OrderItem.create;
+import static com.ecommerce.order.order.model.OrderStatus.PAID;
 import static com.ecommerce.order.product.ProductId.newProductId;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.math.BigDecimal.valueOf;
@@ -88,7 +88,7 @@ class OrderApiTest extends BaseApiTest {
                 .then().statusCode(200);
 
         Order saved = repository.byId(order.getId());
-        assertEquals(OrderStatus.PAID, saved.getStatus());
+        assertEquals(PAID, saved.getStatus());
 
     }
 

@@ -1,9 +1,11 @@
 package com.ecommerce.order.product;
 
+import com.ecommerce.order.common.ddd.AggregateRoot;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class Product {
+public class Product implements AggregateRoot {
     private ProductId id;
     private String name;
     private String description;

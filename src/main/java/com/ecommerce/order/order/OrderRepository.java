@@ -1,5 +1,6 @@
 package com.ecommerce.order.order;
 
+import com.ecommerce.order.common.ddd.Repository;
 import com.ecommerce.order.common.utils.DefaultObjectMapper;
 import com.ecommerce.order.order.exception.OrderNotFoundException;
 import com.ecommerce.order.order.model.Order;
@@ -14,7 +15,7 @@ import java.util.Map;
 import static com.google.common.collect.ImmutableMap.of;
 
 @Component
-public class OrderRepository {
+public class OrderRepository implements Repository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final DefaultObjectMapper objectMapper;
 

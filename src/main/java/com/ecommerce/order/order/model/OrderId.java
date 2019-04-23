@@ -1,10 +1,12 @@
 package com.ecommerce.order.order.model;
 
+import com.ecommerce.order.common.ddd.Identity;
+
 import java.util.Objects;
 
 import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
 
-public class OrderId {
+public class OrderId implements Identity {
     private String id;
 
     private OrderId() {

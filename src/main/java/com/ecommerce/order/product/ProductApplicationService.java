@@ -1,10 +1,11 @@
 package com.ecommerce.order.product;
 
+import com.ecommerce.order.common.ddd.ApplicationService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class ProductApplicationService {
+public class ProductApplicationService implements ApplicationService {
 
     private final ProductRepository repository;
 

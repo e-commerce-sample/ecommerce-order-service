@@ -1,5 +1,6 @@
 package com.ecommerce.order.order.model;
 
+import com.ecommerce.order.common.ddd.AggregateRoot;
 import com.ecommerce.order.order.exception.OrderCannotBeModifiedException;
 import com.ecommerce.order.order.exception.PaidPriceNotSameWithOrderPriceException;
 import com.ecommerce.order.order.exception.ProductNotInOrderException;
@@ -15,7 +16,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static java.math.BigDecimal.ZERO;
 import static java.time.Instant.now;
 
-public class Order {
+public class Order implements AggregateRoot {
     private OrderId id;
     private List<OrderItem> items = newArrayList();
     private BigDecimal totalPrice;
