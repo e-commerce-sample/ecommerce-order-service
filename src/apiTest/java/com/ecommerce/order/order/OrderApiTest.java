@@ -13,7 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
-import static com.ecommerce.order.order.model.OrderId.newOrderId;
+import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
+import static com.ecommerce.order.order.model.OrderId.orderId;
 import static com.ecommerce.order.order.model.OrderItem.create;
 import static com.ecommerce.order.order.model.OrderStatus.PAID;
 import static com.ecommerce.order.product.ProductId.newProductId;
@@ -45,7 +46,7 @@ class OrderApiTest extends BaseApiTest {
 
     @Test
     public void should_retrieve_order() {
-        Order order = Order.create(newOrderId(), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))));
+        Order order = Order.create(orderId(newUuid()), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))));
         repository.save(order);
         String idString = order.getId().toString();
         given()
@@ -58,7 +59,7 @@ class OrderApiTest extends BaseApiTest {
     @Test
     public void should_update_product_count() {
         ProductId productId = newProductId();
-        Order order = Order.create(newOrderId(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))));
+        Order order = Order.create(orderId(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))));
         repository.save(order);
         String idString = order.getId().toString();
 
@@ -69,6 +70,7 @@ class OrderApiTest extends BaseApiTest {
                 .then().statusCode(200);
 
         Order saved = repository.byId(order.getId());
+        assertEquals(30, saved.getItems().get(0).getCount());
         assertThat(valueOf(900), comparesEqualTo(saved.getTotalPrice()));
 
     }
@@ -77,7 +79,7 @@ class OrderApiTest extends BaseApiTest {
     @Test
     public void should_pay_order() {
         ProductId productId = newProductId();
-        Order order = Order.create(newOrderId(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))));
+        Order order = Order.create(orderId(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))));
         repository.save(order);
         String idString = order.getId().toString();
 

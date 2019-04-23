@@ -4,8 +4,6 @@ import com.ecommerce.order.common.ddd.Identity;
 
 import java.util.Objects;
 
-import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
-
 public class OrderId implements Identity {
     private String id;
 
@@ -18,10 +16,6 @@ public class OrderId implements Identity {
 
     public static OrderId orderId(String id) {
         return new OrderId(id);
-    }
-
-    public static OrderId newOrderId() {
-        return new OrderId(newUuid());
     }
 
     @Override

@@ -37,7 +37,7 @@ public class ProductController {
 
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_UTF8_VALUE)
-    public String byId(@PathVariable(name = "id") String id) {
+    public Object byId(@PathVariable(name = "id") String id) {
         return repService.byId(id);
     }
 
