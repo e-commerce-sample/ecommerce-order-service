@@ -12,13 +12,13 @@ public class ScheduledTaskRunner {
     private static final int THIRTY_MIN = 30 * 60 * 1000;
     private static final int ONE_MIN = 60 * 1000;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     @SchedulerLock(name = "scheduledTask1", lockAtMostFor = THIRTY_MIN, lockAtLeastFor = ONE_MIN)
     public void run1() {
         logger.info("Run scheduled task1.");
     }
 
-    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0/20 * * * ?")
     @SchedulerLock(name = "scheduledTask2", lockAtMostFor = THIRTY_MIN, lockAtLeastFor = ONE_MIN)
     public void run2() {
         logger.info("Run scheduled task2.");
