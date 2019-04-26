@@ -23,18 +23,17 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(CREATED)
     public OrderId createOrder(@RequestBody @Valid CreateOrderCommand command) {
-        // TODO: 创建Order
-        return null;
+        return service.createOrder(command);
     }
 
     @PostMapping("/{id}")
     public void updateProductCount(@PathVariable(name = "id") String id, @RequestBody @Valid UpdateProductCountCommand command) {
-       // TODO: 更新Order中Product的数量
+        service.updateProductCount(id, command);
     }
 
     @PostMapping("/{id}/payment")
     public void pay(@PathVariable(name = "id") String id, @RequestBody @Valid PayOrderCommand command) {
-        // TODO: 支付Order
+        service.pay(id, command);
     }
 
     @GetMapping("/{id}")
