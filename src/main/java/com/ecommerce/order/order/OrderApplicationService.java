@@ -45,7 +45,7 @@ public class OrderApplicationService implements ApplicationService {
                         item.getItemPrice()))
                 .collect(Collectors.toList());
 
-        Order order = factory.create(items);
+        Order order = factory.create(items, command.getAddress());
         repository.save(order);
         return order.getId();
     }
@@ -67,6 +67,13 @@ public class OrderApplicationService implements ApplicationService {
     public void pay(String id, PayOrderCommand command) {
         Order order = repository.byId(orderId(id));
         paymentService.pay(order, command.getPaidPrice());
+        repository.save(order);
+    }
+
+    @Transactional
+    public void changeAddressDetail(String id, String detail) {
+        Order order = repository.byId(orderId(id));
+        order.changeAddressDetail(detail);
         repository.save(order);
     }
 }

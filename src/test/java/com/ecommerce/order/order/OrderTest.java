@@ -1,5 +1,6 @@
 package com.ecommerce.order.order;
 
+import com.ecommerce.order.common.utils.Address;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderItem;
 import org.junit.jupiter.api.Test;
@@ -19,9 +20,11 @@ class OrderTest {
 
     @Test
     public void should_create_order() {
+        Address address = Address.of("四川", "成都", "天府软件园1号");
+
         OrderItem orderItem1 = create(newProductId(), 2, valueOf(20));
         OrderItem orderItem2 = create(newProductId(), 3, valueOf(30));
-        Order order = Order.create(orderId(newUuid()), newArrayList(orderItem1, orderItem2));
+        Order order = Order.create(orderId(newUuid()), newArrayList(orderItem1, orderItem2), address);
         assertThat(valueOf(130), comparesEqualTo(order.getTotalPrice()));
         assertEquals(CREATED, order.getStatus());
     }

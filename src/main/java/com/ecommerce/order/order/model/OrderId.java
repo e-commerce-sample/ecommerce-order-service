@@ -1,10 +1,11 @@
 package com.ecommerce.order.order.model;
 
 import com.ecommerce.order.common.ddd.Identity;
+import com.ecommerce.order.common.ddd.ValueObject;
 
 import java.util.Objects;
 
-public class OrderId implements Identity {
+public class OrderId implements Identity, ValueObject {
     private String id;
 
     private OrderId() {

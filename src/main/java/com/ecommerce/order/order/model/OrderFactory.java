@@ -1,6 +1,7 @@
 package com.ecommerce.order.order.model;
 
 import com.ecommerce.order.common.ddd.Factory;
+import com.ecommerce.order.common.utils.Address;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,8 +14,8 @@ public class OrderFactory implements Factory {
         this.idGenerator = idGenerator;
     }
 
-    public Order create(List<OrderItem> items) {
+    public Order create(List<OrderItem> items, Address address) {
         OrderId orderId = idGenerator.generate();
-        return Order.create(orderId, items);
+        return Order.create(orderId, items, address);
     }
 }

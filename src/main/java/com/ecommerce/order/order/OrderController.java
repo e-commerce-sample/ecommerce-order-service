@@ -1,5 +1,6 @@
 package com.ecommerce.order.order;
 
+import com.ecommerce.order.order.command.ChangeAddressDetailCommand;
 import com.ecommerce.order.order.command.CreateOrderCommand;
 import com.ecommerce.order.order.command.PayOrderCommand;
 import com.ecommerce.order.order.command.UpdateProductCountCommand;
@@ -34,6 +35,12 @@ public class OrderController {
     @PostMapping("/{id}/payment")
     public void pay(@PathVariable(name = "id") String id, @RequestBody @Valid PayOrderCommand command) {
         service.pay(id, command);
+    }
+
+
+    @PostMapping("/{id}/address/detail")
+    public void changeAddressDetail(@PathVariable(name = "id") String id, @RequestBody @Valid ChangeAddressDetailCommand command) {
+        service.changeAddressDetail(id, command.getDetail());
     }
 
     @GetMapping("/{id}")

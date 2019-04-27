@@ -1,6 +1,7 @@
 package com.ecommerce.order.order.model;
 
 import com.ecommerce.order.common.ddd.AggregateRoot;
+import com.ecommerce.order.common.utils.Address;
 import com.ecommerce.order.order.exception.OrderCannotBeModifiedException;
 import com.ecommerce.order.order.exception.PaidPriceNotSameWithOrderPriceException;
 import com.ecommerce.order.order.exception.ProductNotInOrderException;
@@ -21,21 +22,23 @@ public class Order implements AggregateRoot {
     private List<OrderItem> items = newArrayList();
     private BigDecimal totalPrice;
     private OrderStatus status;
+    private Address address;
     private Instant createdAt;
 
     private Order() {
     }
 
-    private Order(OrderId id, List<OrderItem> items) {
+    private Order(OrderId id, List<OrderItem> items, Address address) {
         this.id = id;
         this.items.addAll(items);
         this.totalPrice = calculateTotalPrice();
         this.status = CREATED;
+        this.address = address;
         this.createdAt = now();
     }
 
-    public static Order create(OrderId id, List<OrderItem> items) {
-        return new Order(id, items);
+    public static Order create(OrderId id, List<OrderItem> items, Address address) {
+        return new Order(id, items, address);
     }
 
     private BigDecimal calculateTotalPrice() {
@@ -66,6 +69,14 @@ public class Order implements AggregateRoot {
         this.status = PAID;
     }
 
+    public void changeAddressDetail(String detail) {
+        if (this.status == PAID) {
+            throw new OrderCannotBeModifiedException(this.id);
+        }
+
+        this.address = this.address.changeDetailTo(detail);
+    }
+
     public OrderId getId() {
         return id;
     }
@@ -84,5 +95,9 @@ public class Order implements AggregateRoot {
 
     public List<OrderItem> getItems() {
         return items;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }
