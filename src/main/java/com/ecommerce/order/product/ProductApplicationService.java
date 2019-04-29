@@ -7,16 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class ProductApplicationService implements ApplicationService {
 
-    private final ProductRepository repository;
+    private final ProductRepository productRepository;
 
-    public ProductApplicationService(ProductRepository repository) {
-        this.repository = repository;
+    public ProductApplicationService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @Transactional
     public ProductId create(CreateProductCommand command) {
         Product product = Product.create(command.getName(), command.getDescription(), command.getPrice());
-        repository.save(product);
+        productRepository.save(product);
         return product.getId();
     }
 }

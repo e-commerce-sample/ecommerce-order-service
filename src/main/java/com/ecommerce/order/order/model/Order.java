@@ -48,18 +48,23 @@ public class Order implements AggregateRoot {
 
     }
 
-    public void updateProductCount(ProductId productId, int count) {
+    public void changeProductCount(ProductId productId, int count) {
         if (this.status == PAID) {
             throw new OrderCannotBeModifiedException(this.id);
         }
-        OrderItem orderItem = items.stream()
-                .filter(item -> item.getProductId().equals(productId))
-                .findFirst()
-                .orElseThrow(() -> new ProductNotInOrderException(productId, id));
+
+        OrderItem orderItem = retrieveItem(productId);
 
         orderItem.updateCount(count);
 
         this.totalPrice = calculateTotalPrice();
+    }
+
+    private OrderItem retrieveItem(ProductId productId) {
+        return items.stream()
+                .filter(item -> item.getProductId().equals(productId))
+                .findFirst()
+                .orElseThrow(() -> new ProductNotInOrderException(productId, id));
     }
 
     public void pay(BigDecimal paidPrice) {

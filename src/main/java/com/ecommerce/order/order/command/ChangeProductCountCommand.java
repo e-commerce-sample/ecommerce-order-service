@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-public class UpdateProductCountCommand implements Command {
+public class ChangeProductCountCommand implements Command {
     @NotBlank(message = "产品ID不能为空")
     private String productId;
 
@@ -15,7 +15,7 @@ public class UpdateProductCountCommand implements Command {
     private int count;
 
     @JsonCreator
-    public UpdateProductCountCommand(@JsonProperty("productId") String productId,
+    public ChangeProductCountCommand(@JsonProperty("productId") String productId,
                                      @JsonProperty("count") int count) {
         this.productId = productId;
         this.count = count;

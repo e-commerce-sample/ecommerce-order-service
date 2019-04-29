@@ -66,9 +66,9 @@ class OrderApiTest extends BaseApiTest {
         String idString = order.getId().toString();
 
         given().contentType("application/json")
-                .body(new UpdateProductCountCommand(productId.toString(), 30))
+                .body(new ChangeProductCountCommand(productId.toString(), 30))
                 .when()
-                .post("orders/{id}", idString)
+                .post("orders/{id}/products", idString)
                 .then().statusCode(200);
 
         Order saved = repository.byId(order.getId());

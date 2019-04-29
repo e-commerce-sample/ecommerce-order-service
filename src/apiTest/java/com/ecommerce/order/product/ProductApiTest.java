@@ -39,7 +39,7 @@ class ProductApiTest extends BaseApiTest {
                 .get("/products?pageIndex=2&pageSize=5")
                 .then().statusCode(200)
                 .body("pageIndex", is(2))
-                .body("resource[0].name", is("喜乐多"));
+                .body("resource.size()", is(5));
     }
 
     @Test

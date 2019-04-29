@@ -1,9 +1,9 @@
 package com.ecommerce.order.order;
 
 import com.ecommerce.order.common.ddd.ApplicationService;
+import com.ecommerce.order.order.command.ChangeProductCountCommand;
 import com.ecommerce.order.order.command.CreateOrderCommand;
 import com.ecommerce.order.order.command.PayOrderCommand;
-import com.ecommerce.order.order.command.UpdateProductCountCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderFactory;
 import com.ecommerce.order.order.model.OrderId;
@@ -22,19 +22,19 @@ import static com.ecommerce.order.product.ProductId.productId;
 
 @Component
 public class OrderApplicationService implements ApplicationService {
-    private final OrderRepresentationService representationService;
-    private final OrderRepository repository;
-    private final OrderFactory factory;
-    private final OrderPaymentService paymentService;
+    private final OrderRepresentationService orderRepresentationService;
+    private final OrderRepository orderRepository;
+    private final OrderFactory orderFactory;
+    private final OrderPaymentService orderPaymentService;
 
-    public OrderApplicationService(OrderRepresentationService representationService,
-                                   OrderRepository repository,
-                                   OrderFactory factory,
-                                   OrderPaymentService paymentService) {
-        this.representationService = representationService;
-        this.repository = repository;
-        this.factory = factory;
-        this.paymentService = paymentService;
+    public OrderApplicationService(OrderRepresentationService orderRepresentationService,
+                                   OrderRepository orderRepository,
+                                   OrderFactory orderFactory,
+                                   OrderPaymentService orderPaymentService) {
+        this.orderRepresentationService = orderRepresentationService;
+        this.orderRepository = orderRepository;
+        this.orderFactory = orderFactory;
+        this.orderPaymentService = orderPaymentService;
     }
 
     @Transactional
@@ -45,35 +45,35 @@ public class OrderApplicationService implements ApplicationService {
                         item.getItemPrice()))
                 .collect(Collectors.toList());
 
-        Order order = factory.create(items, command.getAddress());
-        repository.save(order);
+        Order order = orderFactory.create(items, command.getAddress());
+        orderRepository.save(order);
         return order.getId();
     }
 
     @Transactional(readOnly = true)
     public OrderRepresentation byId(String id) {
-        Order order = repository.byId(orderId(id));
-        return representationService.toRepresentation(order);
+        Order order = orderRepository.byId(orderId(id));
+        return orderRepresentationService.toRepresentation(order);
     }
 
     @Transactional
-    public void updateProductCount(String id, UpdateProductCountCommand command) {
-        Order order = repository.byId(orderId(id));
-        order.updateProductCount(ProductId.productId(command.getProductId()), command.getCount());
-        repository.save(order);
+    public void changeProductCount(String id, ChangeProductCountCommand command) {
+        Order order = orderRepository.byId(orderId(id));
+        order.changeProductCount(ProductId.productId(command.getProductId()), command.getCount());
+        orderRepository.save(order);
     }
 
     @Transactional
     public void pay(String id, PayOrderCommand command) {
-        Order order = repository.byId(orderId(id));
-        paymentService.pay(order, command.getPaidPrice());
-        repository.save(order);
+        Order order = orderRepository.byId(orderId(id));
+        orderPaymentService.pay(order, command.getPaidPrice());
+        orderRepository.save(order);
     }
 
     @Transactional
     public void changeAddressDetail(String id, String detail) {
-        Order order = repository.byId(orderId(id));
+        Order order = orderRepository.byId(orderId(id));
         order.changeAddressDetail(detail);
-        repository.save(order);
+        orderRepository.save(order);
     }
 }
