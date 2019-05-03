@@ -15,16 +15,16 @@ public class Product implements AggregateRoot {
     private Product() {
     }
 
+    public static Product create(String name, String description, BigDecimal price) {
+        return new Product(name, description, price);
+    }
+
     private Product(String name, String description, BigDecimal price) {
         this.id = ProductId.newProductId();
         this.name = name;
         this.description = description;
         this.price = price;
         this.createdAt = Instant.now();
-    }
-
-    public static Product create(String name, String description, BigDecimal price) {
-        return new Product(name, description, price);
     }
 
     public ProductId getId() {

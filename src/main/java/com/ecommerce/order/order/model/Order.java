@@ -41,12 +41,6 @@ public class Order implements AggregateRoot {
         return new Order(id, items, address);
     }
 
-    private BigDecimal calculateTotalPrice() {
-        return items.stream()
-                .map(OrderItem::totalPrice)
-                .reduce(ZERO, BigDecimal::add);
-
-    }
 
     public void changeProductCount(ProductId productId, int count) {
         if (this.status == PAID) {
@@ -54,11 +48,16 @@ public class Order implements AggregateRoot {
         }
 
         OrderItem orderItem = retrieveItem(productId);
-
         orderItem.updateCount(count);
-
         this.totalPrice = calculateTotalPrice();
     }
+
+    private BigDecimal calculateTotalPrice() {
+        return items.stream()
+                .map(OrderItem::totalPrice)
+                .reduce(ZERO, BigDecimal::add);
+    }
+
 
     private OrderItem retrieveItem(ProductId productId) {
         return items.stream()
