@@ -25,7 +25,9 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @Order(HIGHEST_PRECEDENCE)
 public class RequestIdMdcFilter extends OncePerRequestFilter {
     public static final String REQUEST_ID = "requestId";
+    public static final String CLIENT_IP = "clientIp";
     private static final String HEADER_X_REQUEST_ID = "x-request-id";
+    private static final String HEADER_X_REAL_IP = "x-real-ip";
 
 
     @Override
@@ -43,7 +45,15 @@ public class RequestIdMdcFilter extends OncePerRequestFilter {
 
     private void populateMdc(HttpServletRequest request) {
         MDC.put(REQUEST_ID, requestId(request));
+        MDC.put(CLIENT_IP, clientIp(request));
     }
+
+    private String clientIp(HttpServletRequest request) {
+        //client ip in header may come from Gateway, eg. Nginx
+        String headerClientIp = request.getHeader(HEADER_X_REAL_IP);
+        return isNullOrEmpty(headerClientIp) ? request.getRemoteAddr() : headerClientIp;
+    }
+
 
     private String requestId(HttpServletRequest request) {
         //request id in header may come from Gateway, eg. Nginx
@@ -53,6 +63,6 @@ public class RequestIdMdcFilter extends OncePerRequestFilter {
 
     private void clearMdc() {
         MDC.remove(REQUEST_ID);
+        MDC.remove(CLIENT_IP);
     }
-
 }

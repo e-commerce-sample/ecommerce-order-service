@@ -13,7 +13,7 @@ services:
       '--lower-case-table-names=1'
     ]
     networks:
-      - ecommerce-order-mysql-net
+      - ecommerce-order-net
     environment:
       - "MYSQL_ROOT_PASSWORD=root"
       - "MYSQL_DATABASE=ecommerce_order_mysql"
@@ -21,11 +21,27 @@ services:
       - ecommerce-order-mysql-data:/var/lib/mysql
     ports:
       - "13306:3306"
+  rabbitmq:
+    restart: always
+    container_name: ecommerce-order-rabbitmq
+    image: rabbitmq:3-management
+    networks:
+      - ecommerce-order-net
+    environment:
+      - "RABBITMQ_DEFAULT_USER=rabbitmq-user"
+      - "RABBITMQ_DEFAULT_PASS=rabbitmq-password"
+    volumes:
+      - ecommerce-order-rabbitmq-data:/var/lib/rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
 
 networks:
-  ecommerce-order-mysql-net:
+  ecommerce-order-net:
     driver: bridge
 
 volumes:
   ecommerce-order-mysql-data:
+    driver: local
+  ecommerce-order-rabbitmq-data:
     driver: local
