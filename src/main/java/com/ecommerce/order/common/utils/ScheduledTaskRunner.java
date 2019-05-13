@@ -12,7 +12,7 @@ public class ScheduledTaskRunner {
     private static final int THIRTY_MIN = 30 * 60 * 1000;
     private static final int ONE_MIN = 60 * 1000;
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 1000)
     @SchedulerLock(name = "scheduledTask1", lockAtMostFor = THIRTY_MIN, lockAtLeastFor = 1000)
     public void run1() throws InterruptedException {
         logger.info("Run scheduled task1.");
