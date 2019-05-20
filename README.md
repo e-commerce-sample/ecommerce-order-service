@@ -1,3 +1,6 @@
+# 本示例代码对应博客：
+- [Spring Boot项目模板](https://www.jianshu.com/p/bd8136129dfb)
+
 # 项目简介
 本项目是ecommerce系统的订单子系统，用于向用户展示产品并接受用户订单。
 
