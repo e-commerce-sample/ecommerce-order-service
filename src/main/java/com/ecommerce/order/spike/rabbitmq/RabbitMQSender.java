@@ -22,7 +22,7 @@ public class RabbitMQSender {
         factory.setVirtualHost("/");
         factory.setPort(5672);
 
-        try (Connection conn = factory.newConnection(); Channel channel = conn.createChannel();) {
+        try (Connection conn = factory.newConnection(); Channel channel = conn.createChannel()) {
             //设置死信交换,Topic类型，持久化
             channel.exchangeDeclare("dlx", TOPIC, true, false, null);
 

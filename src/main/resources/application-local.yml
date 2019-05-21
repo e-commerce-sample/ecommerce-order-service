@@ -9,6 +9,13 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: root
+  rabbitmq:
+    host: localhost
+    port: 5672
+    virtual-host: /
+    username: rabbitmq-user
+    password: rabbitmq-password
+    publisher-confirms: true
 
 ecommerce:
   order:
