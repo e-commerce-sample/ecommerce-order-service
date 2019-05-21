@@ -15,13 +15,13 @@ public class SpikeOrderReadModelListener {
 
     @RabbitHandler
     public void handleOrderCreated(OrderCreatedEvent orderCreatedEvent) {
-        logger.info("handle orderCreatedEvent");
+        logger.info("handle orderCreatedEvent:{}", orderCreatedEvent.getPrice());
     }
 
     @RabbitHandler
     public void handleOrderUpdateEvent(OrderUpdatedEvent orderUpdatedEvent) {
         if (new Random().nextBoolean()) {
-            logger.info("handle orderUpdatedEvent");
+            logger.info("handle orderUpdatedEvent:{}", orderUpdatedEvent.getUpdatedPrice());
         } else {
             throw new RuntimeException("handle order created event failed.");
         }
