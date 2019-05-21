@@ -39,12 +39,12 @@ public class RabbitMQReceiver {
                             logger.info("成功消费消息" + deliveryTag);
                             channel.basicAck(deliveryTag, false);
                         } else {
-                            if (envelope.isRedeliver()) {
+                            if (!envelope.isRedeliver()) {
                                 logger.warn("首次消费消息" + deliveryTag + "不成功，尝试重试");
-                                channel.basicNack(deliveryTag, false, false);
+                                channel.basicNack(deliveryTag, false, true);
                             } else {
                                 logger.warn("第二次消费消息" + deliveryTag + "不成功，扔到DLX");
-                                channel.basicNack(deliveryTag, false, true);
+                                channel.basicNack(deliveryTag, false, false);
                             }
                         }
                     }

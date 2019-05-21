@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
-import java.util.function.IntConsumer;
-import java.util.stream.IntStream;
 
 import static com.google.common.collect.ImmutableMap.of;
 import static com.rabbitmq.client.BuiltinExchangeType.TOPIC;
@@ -53,13 +51,20 @@ public class RabbitMQSender {
             channel.queueBind("order-summary-queue", "order", "order.#");
 
 
-            //定义用于order创建时发出通知的queue，设置死信交换为dlx
-            ImmutableMap<String, Object> orderNotificationQueueArguments = of("x-dead-letter-exchange", "dlx");
+            //定义用于order创建时向用户发出通知的queue，设置死信交换为dlx
+            ImmutableMap<String, Object> orderNotificationQueueArguments = of("x-dead-letter-exchange",
+                    "dlx",
+                    "x-overflow",
+                    "drop-head",
+                    "x-max-length",
+                    300,
+                    "x-message-ttl",
+                    24 * 60 * 60 * 1000);
             channel.queueDeclare("order-notification-queue", true, false, false, orderNotificationQueueArguments);
             channel.queueBind("order-notification-queue", "order", "order.created");
 
 
-            //设置
+            //设置发送端确认
             channel.addConfirmListener(new ConfirmListener() {
                 public void handleAck(long seqNo, boolean multiple) {
                     if (multiple) {
@@ -91,18 +96,14 @@ public class RabbitMQSender {
                     .build();
 
 
-            IntStream.range(0, 250).forEach(new IntConsumer() {
-                @Override
-                public void accept(int value) {
-                    //发送时没有必要设置mandatory，因为无法路由的消息会记录在dlq中
-                    //达到queue的上限时，queue头部消息将被放入dlx中
-                    try {
-                        channel.basicPublish("order", "order.created", false, properties, "sample-data".getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            //发送时没有必要设置mandatory，因为无法路由的消息会记录在dlq中
+            //达到queue的上限时，queue头部消息将被放入dlx中
+            try {
+                channel.basicPublish("order", "order.created", false, properties, "create order data".getBytes());
+                channel.basicPublish("order", "order.updated", false, properties, "update order data".getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Thread.sleep(5000);
         }
 
