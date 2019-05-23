@@ -10,7 +10,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.api.RabbitListenerErrorHandler;
-import org.springframework.amqp.rabbit.listener.exception.ListenerExecutionFailedException;
+import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -102,19 +102,26 @@ public class SpringRabbitConfig {
 
     @Bean
     public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
-        return new Jackson2JsonMessageConverter(objectMapper);
+        Jackson2JsonMessageConverter messageConverter = new Jackson2JsonMessageConverter(objectMapper);
+        messageConverter.setClassMapper(classMapper());
+        return messageConverter;
+    }
+
+
+    @Bean
+    public DefaultClassMapper classMapper() {
+        DefaultClassMapper classMapper = new DefaultClassMapper();
+        classMapper.setTrustedPackages("*");
+        return classMapper;
     }
 
     @Bean
     public RabbitListenerErrorHandler rabbitListenerErrorHandler() {
-        return new RabbitListenerErrorHandler() {
-            @Override
-            public Object handleError(Message amqpMessage, org.springframework.messaging.Message<?> message, ListenerExecutionFailedException exception) throws Exception {
-                if (amqpMessage.getMessageProperties().isRedelivered()) {
-                    throw new AmqpRejectAndDontRequeueException(exception);
-                }
-                throw new RuntimeException(exception);
+        return (amqpMessage, message, exception) -> {
+            if (amqpMessage.getMessageProperties().isRedelivered()) {
+                throw new AmqpRejectAndDontRequeueException(exception);
             }
+            throw exception;
         };
     }
 }

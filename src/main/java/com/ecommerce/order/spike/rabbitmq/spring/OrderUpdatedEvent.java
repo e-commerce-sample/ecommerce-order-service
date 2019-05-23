@@ -1,13 +1,17 @@
 package com.ecommerce.order.spike.rabbitmq.spring;
 
-public class OrderUpdatedEvent {
+import static com.ecommerce.order.spike.rabbitmq.spring.EventType.ORDER_UPDATED;
+
+public class OrderUpdatedEvent extends DomainEvent {
     private String orderId;
     private double updatedPrice;
 
     private OrderUpdatedEvent() {
+        super(ORDER_UPDATED);
     }
 
     public OrderUpdatedEvent(String orderId, double updatedPrice) {
+        this();
         this.orderId = orderId;
         this.updatedPrice = updatedPrice;
     }

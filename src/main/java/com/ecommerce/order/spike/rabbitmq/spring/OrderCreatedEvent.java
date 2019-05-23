@@ -1,13 +1,17 @@
 package com.ecommerce.order.spike.rabbitmq.spring;
 
-public class OrderCreatedEvent {
+import static com.ecommerce.order.spike.rabbitmq.spring.EventType.ORDER_CREATED;
+
+public class OrderCreatedEvent extends DomainEvent {
     private String orderId;
     private double price;
 
     private OrderCreatedEvent() {
+        super(ORDER_CREATED);
     }
 
     public OrderCreatedEvent(String orderId, double price) {
+        this();
         this.orderId = orderId;
         this.price = price;
     }
