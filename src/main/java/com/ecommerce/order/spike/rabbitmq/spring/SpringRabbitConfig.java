@@ -4,12 +4,11 @@ import com.ecommerce.order.common.logging.AutoNamingLoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
-import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.listener.api.RabbitListenerErrorHandler;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -116,12 +115,14 @@ public class SpringRabbitConfig {
     }
 
     @Bean
-    public RabbitListenerErrorHandler rabbitListenerErrorHandler() {
-        return (amqpMessage, message, exception) -> {
-            if (amqpMessage.getMessageProperties().isRedelivered()) {
-                throw new AmqpRejectAndDontRequeueException(exception);
-            }
-            throw exception;
-        };
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setPrefetchCount(1);
+        factory.setConcurrentConsumers(5);
+        factory.setMaxConcurrentConsumers(20);
+        factory.setErrorHandler(new RabbitExceptionHandler());
+        factory.setMessageConverter(messageConverter);
+        return factory;
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-@RabbitListener(queues = "order-summary-queue", errorHandler = "rabbitListenerErrorHandler")
+@RabbitListener(queues = "order-summary-queue")
 public class SpikeOrderReadModelListener {
     private static final Logger logger = AutoNamingLoggerFactory.getLogger();
 

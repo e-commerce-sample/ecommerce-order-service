@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-@RabbitListener(queues = "order-notification-queue", errorHandler = "rabbitListenerErrorHandler")
+@RabbitListener(queues = "order-notification-queue")
 public class SpikeOrderNotificationListener {
     private static final Logger logger = AutoNamingLoggerFactory.getLogger();
 
