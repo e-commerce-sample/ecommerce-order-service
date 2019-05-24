@@ -1,10 +1,10 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.common.ddd.Repository;
 import com.ecommerce.order.common.utils.DefaultObjectMapper;
 import com.ecommerce.order.order.exception.OrderNotFoundException;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
+import com.ecommerce.order.common.event.DomainEventAwareRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -15,7 +15,7 @@ import java.util.Map;
 import static com.google.common.collect.ImmutableMap.of;
 
 @Component
-public class OrderRepository implements Repository {
+public class OrderRepository extends DomainEventAwareRepository<Order> {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final DefaultObjectMapper objectMapper;
 
@@ -25,7 +25,8 @@ public class OrderRepository implements Repository {
         this.objectMapper = objectMapper;
     }
 
-    public void save(Order order) {
+    @Override
+    protected void doSave(Order order) {
         String sql = "INSERT INTO ORDERS (ID, JSON_CONTENT) VALUES (:id, :json) " +
                 "ON DUPLICATE KEY UPDATE JSON_CONTENT=:json;";
         Map<String, String> paramMap = of("id", order.getId().toString(), "json", objectMapper.writeValueAsString(order));

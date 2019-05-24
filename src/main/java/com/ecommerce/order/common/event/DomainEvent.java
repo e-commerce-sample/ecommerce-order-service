@@ -1,0 +1,58 @@
+package com.ecommerce.order.common.event;
+
+import com.ecommerce.order.order.model.event.OrderAddressChangedEvent;
+import com.ecommerce.order.order.model.event.OrderCreatedEvent;
+import com.ecommerce.order.order.model.event.OrderPaidEvent;
+import com.ecommerce.order.order.model.event.OrderProductChangedEvent;
+import com.ecommerce.order.product.ProductCreatedEvent;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.time.Instant;
+
+import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
+import static java.time.Instant.now;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "_type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = OrderCreatedEvent.class, name = "ORDER_CREATED"),
+        @JsonSubTypes.Type(value = OrderAddressChangedEvent.class, name = "ORDER_ADDRESS_CHANGED"),
+        @JsonSubTypes.Type(value = OrderPaidEvent.class, name = "ORDER_PAID"),
+        @JsonSubTypes.Type(value = OrderProductChangedEvent.class, name = "ORDER_PRODUCT_CHANGED"),
+        @JsonSubTypes.Type(value = ProductCreatedEvent.class, name = "PRODUCT_CREATED")
+
+})
+public abstract class DomainEvent {
+    private final String _id;
+    private final EventType _type;
+    private final Instant _createdAt;
+
+    @JsonCreator
+    protected DomainEvent(@JsonProperty("_id") String _id,
+                          @JsonProperty("_type") EventType _type,
+                          @JsonProperty("_createdAt") Instant _createdAt) {
+        this._id = _id;
+        this._type = _type;
+        this._createdAt = _createdAt;
+    }
+
+    protected DomainEvent(EventType _type) {
+        this._id = newUuid();
+        this._type = _type;
+        this._createdAt = now();
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public EventType get_type() {
+        return _type;
+    }
+
+    public Instant get_createdAt() {
+        return _createdAt;
+    }
+}

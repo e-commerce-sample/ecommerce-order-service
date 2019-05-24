@@ -1,10 +1,14 @@
 package com.ecommerce.order.order.model;
 
-import com.ecommerce.order.common.ddd.AggregateRoot;
+import com.ecommerce.order.common.event.DomainEventAwareAggregate;
 import com.ecommerce.order.common.utils.Address;
 import com.ecommerce.order.order.exception.OrderCannotBeModifiedException;
 import com.ecommerce.order.order.exception.PaidPriceNotSameWithOrderPriceException;
 import com.ecommerce.order.order.exception.ProductNotInOrderException;
+import com.ecommerce.order.order.model.event.OrderAddressChangedEvent;
+import com.ecommerce.order.order.model.event.OrderCreatedEvent;
+import com.ecommerce.order.order.model.event.OrderPaidEvent;
+import com.ecommerce.order.order.model.event.OrderProductChangedEvent;
 import com.ecommerce.order.product.ProductId;
 
 import java.math.BigDecimal;
@@ -17,7 +21,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static java.math.BigDecimal.ZERO;
 import static java.time.Instant.now;
 
-public class Order implements AggregateRoot {
+public class Order extends DomainEventAwareAggregate {
     private OrderId id;
     private List<OrderItem> items = newArrayList();
     private BigDecimal totalPrice;
@@ -35,6 +39,7 @@ public class Order implements AggregateRoot {
         this.status = CREATED;
         this.address = address;
         this.createdAt = now();
+        raiseEvent(new OrderCreatedEvent(this));
     }
 
     public static Order create(OrderId id, List<OrderItem> items, Address address) {
@@ -50,6 +55,7 @@ public class Order implements AggregateRoot {
         OrderItem orderItem = retrieveItem(productId);
         orderItem.updateCount(count);
         this.totalPrice = calculateTotalPrice();
+        raiseEvent(new OrderProductChangedEvent(this));
     }
 
     private BigDecimal calculateTotalPrice() {
@@ -71,6 +77,7 @@ public class Order implements AggregateRoot {
             throw new PaidPriceNotSameWithOrderPriceException(id);
         }
         this.status = PAID;
+        raiseEvent(new OrderPaidEvent(this.getId()));
     }
 
     public void changeAddressDetail(String detail) {
@@ -79,6 +86,7 @@ public class Order implements AggregateRoot {
         }
 
         this.address = this.address.changeDetailTo(detail);
+        raiseEvent(new OrderAddressChangedEvent(getId(), detail, address.getDetail()));
     }
 
     public OrderId getId() {
