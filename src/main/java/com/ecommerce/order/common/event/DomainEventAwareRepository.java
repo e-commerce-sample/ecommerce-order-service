@@ -8,7 +8,7 @@ public abstract class DomainEventAwareRepository<AR extends DomainEventAwareAggr
     private DomainEventRepository eventRepository;
 
     public void save(AR aggregate) {
-        aggregate.getEvents().forEach(eventRepository::save);
+        aggregate.getEvents().forEach(eventRepository::add);
         aggregate.clearEvents();
         doSave(aggregate);
     }

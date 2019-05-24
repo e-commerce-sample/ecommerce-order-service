@@ -8,20 +8,23 @@ import com.ecommerce.order.product.ProductCreatedEvent;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.time.Instant;
 
 import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.EXISTING_PROPERTY;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 import static java.time.Instant.now;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "_type")
+@JsonTypeInfo(use = NAME, include = EXISTING_PROPERTY, property = "_type", visible = true)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = OrderCreatedEvent.class, name = "ORDER_CREATED"),
-        @JsonSubTypes.Type(value = OrderAddressChangedEvent.class, name = "ORDER_ADDRESS_CHANGED"),
-        @JsonSubTypes.Type(value = OrderPaidEvent.class, name = "ORDER_PAID"),
-        @JsonSubTypes.Type(value = OrderProductChangedEvent.class, name = "ORDER_PRODUCT_CHANGED"),
-        @JsonSubTypes.Type(value = ProductCreatedEvent.class, name = "PRODUCT_CREATED")
+        @Type(value = OrderCreatedEvent.class, name = "ORDER_CREATED"),
+        @Type(value = OrderAddressChangedEvent.class, name = "ORDER_ADDRESS_CHANGED"),
+        @Type(value = OrderPaidEvent.class, name = "ORDER_PAID"),
+        @Type(value = OrderProductChangedEvent.class, name = "ORDER_PRODUCT_CHANGED"),
+        @Type(value = ProductCreatedEvent.class, name = "PRODUCT_CREATED")
 
 })
 public abstract class DomainEvent {
@@ -54,5 +57,10 @@ public abstract class DomainEvent {
 
     public Instant get_createdAt() {
         return _createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "DomainEvent{" + "_id='" + _id + '\'' + '}';
     }
 }

@@ -30,9 +30,7 @@ public class DomainEventReceiver {
         // throw exception
 //        throw new RuntimeException();
         Object proceed = joinPoint.proceed();
-        if (1 > 0) {
-            throw new RuntimeException("-----");
-        }
+
         return proceed;
     }
 }

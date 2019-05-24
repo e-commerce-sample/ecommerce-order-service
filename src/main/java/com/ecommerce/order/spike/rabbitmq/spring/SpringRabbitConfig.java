@@ -4,11 +4,12 @@ import com.ecommerce.order.common.logging.AutoNamingLoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.connection.CorrelationData;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -39,7 +40,7 @@ public class SpringRabbitConfig {
 
     @Bean
     public TopicExchange orderExchange() {
-        return new TopicExchange("order", true, false, of("alternate-exchange", "dlx"));
+        return new TopicExchange("order.order", true, false, of("alternate-exchange", "dlx"));
     }
 
     @Bean
@@ -77,27 +78,6 @@ public class SpringRabbitConfig {
     public Binding orderNotificationQueueBinding() {
         return BindingBuilder.bind(orderNotificationQueue()).to(orderExchange()).with("order.created");
     }
-
-
-    @Bean
-    public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
-        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
-            @Override
-            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-                logger.info("confirm " + ack + cause);
-            }
-        });
-        rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
-            @Override
-            public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-                logger.info("returned");
-            }
-        });
-        rabbitTemplate.setMessageConverter(messageConverter);
-        return rabbitTemplate;
-    }
-
 
     @Bean
     public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
