@@ -39,7 +39,7 @@ public class DomainEventPublisher {
     @Scheduled(fixedDelay = 2000)
     @SchedulerLock(name = "domain-event-publisher", lockAtMostFor = 30000, lockAtLeastFor = 1000)
     public void run() {
-        List<DomainEvent> newestEvents = eventDAO.newestEvents();
+        List<DomainEvent> newestEvents = eventDAO.nextBatchEvents();
         newestEvents.forEach(event -> {
             try {
                 DomainEventType eventType = event.get_type();

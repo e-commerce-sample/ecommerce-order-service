@@ -61,6 +61,6 @@ public abstract class DomainEvent {
 
     @Override
     public String toString() {
-        return "DomainEvent{" + "_id='" + _id + '\'' + '}';
+        return "DomainEvent{" + "_id='" + _id + '\'' + ", _type=" + _type + '}';
     }
 }

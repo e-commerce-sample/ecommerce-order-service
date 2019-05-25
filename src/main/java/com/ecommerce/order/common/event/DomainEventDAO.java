@@ -43,8 +43,8 @@ public class DomainEventDAO {
         insert(newArrayList(event));
     }
 
-    public List<DomainEvent> newestEvents() {
-        String sql = "SELECT JSON_CONTENT FROM EVENT WHERE PUBLISH_TRIES < 5 ORDER BY CREATED_AT DESC LIMIT 50;";
+    public List<DomainEvent> nextBatchEvents() {
+        String sql = "SELECT JSON_CONTENT FROM EVENT WHERE PUBLISH_TRIES < 5 ORDER BY CREATED_AT LIMIT 50;";
         return jdbcTemplate.query(sql, mapper);
     }
 

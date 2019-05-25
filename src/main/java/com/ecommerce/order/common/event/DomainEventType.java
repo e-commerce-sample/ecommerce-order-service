@@ -6,5 +6,4 @@ public enum DomainEventType {
     ORDER_PAID,
     ORDER_PRODUCT_CHANGED,
     PRODUCT_CREATED
-
 }

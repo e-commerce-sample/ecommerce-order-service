@@ -1,9 +1,7 @@
 package com.ecommerce.order.spike.rabbitmq.spring;
 
-import com.ecommerce.order.common.logging.AutoNamingLoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
-import org.slf4j.Logger;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -20,6 +18,33 @@ import static com.google.common.collect.ImmutableMap.of;
 
 @Configuration
 public class RabbitmqConfig {
+
+    @Bean
+    public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
+        Jackson2JsonMessageConverter messageConverter = new Jackson2JsonMessageConverter(objectMapper);
+        messageConverter.setClassMapper(classMapper());
+        return messageConverter;
+    }
+
+
+    @Bean
+    public DefaultClassMapper classMapper() {
+        DefaultClassMapper classMapper = new DefaultClassMapper();
+        classMapper.setTrustedPackages("*");
+        return classMapper;
+    }
+
+    @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setPrefetchCount(1);
+        factory.setConcurrentConsumers(5);
+        factory.setMaxConcurrentConsumers(20);
+        factory.setErrorHandler(new RabbitExceptionHandler());
+        factory.setMessageConverter(messageConverter);
+        return factory;
+    }
 
     @Bean
     public TopicExchange dlx() {
@@ -79,29 +104,21 @@ public class RabbitmqConfig {
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
-        Jackson2JsonMessageConverter messageConverter = new Jackson2JsonMessageConverter(objectMapper);
-        messageConverter.setClassMapper(classMapper());
-        return messageConverter;
-    }
-
-
-    @Bean
-    public DefaultClassMapper classMapper() {
-        DefaultClassMapper classMapper = new DefaultClassMapper();
-        classMapper.setTrustedPackages("*");
-        return classMapper;
+    public Queue productNotificationQueue() {
+        ImmutableMap<String, Object> args = of("x-dead-letter-exchange",
+                "dlx",
+                "x-overflow",
+                "drop-head",
+                "x-max-length",
+                300,
+                "x-message-ttl",
+                24 * 60 * 60 * 1000);
+        return new Queue("product-notification-queue", true, false, false, args);
     }
 
     @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-        factory.setPrefetchCount(1);
-        factory.setConcurrentConsumers(5);
-        factory.setMaxConcurrentConsumers(20);
-        factory.setErrorHandler(new RabbitExceptionHandler());
-        factory.setMessageConverter(messageConverter);
-        return factory;
+    public Binding productNotificationQueueBinding() {
+        return BindingBuilder.bind(productNotificationQueue()).to(orderExchange()).with("product.created");
     }
+
 }
