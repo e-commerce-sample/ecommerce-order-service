@@ -1,4 +1,4 @@
-package com.ecommerce.order.spike.rabbitmq.spring;
+package com.ecommerce.order.common.event;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

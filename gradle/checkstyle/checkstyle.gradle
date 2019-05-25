@@ -12,6 +12,7 @@ checkstyle {
 tasks.withType(Checkstyle) {
     exclude 'com/ecommerce/order/common/configuration/OrderProperties.java'
     exclude 'com/ecommerce/order/spike/**'
+    exclude 'com/ecommerce/order/common/event/DomainEventReceiveRecordingAspect.java'
 }
 
 

@@ -20,6 +20,15 @@ public class ProductRepresentationService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    // TODO: 2019-05-25 通过数据模型获取Product信息
+    @Transactional(readOnly = true)
+    public String byId(String id) {
+        return jdbcTemplate.queryForObject("SELECT JSON_CONTENT FROM PRODUCT WHERE ID =:id;",
+                new MapSqlParameterSource().addValue("id", id),
+                String.class);
+    }
+
     @Transactional(readOnly = true)
     public PagedResource<ProductSummaryRepresentation> listProducts(int pageIndex, int pageSize) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -35,11 +44,5 @@ public class ProductRepresentationService {
         return PagedResource.of(total, pageIndex, products);
     }
 
-    @Transactional(readOnly = true)
-    public String byId(String id) {
-        return jdbcTemplate.queryForObject("SELECT JSON_CONTENT FROM PRODUCT WHERE ID =:id;",
-                new MapSqlParameterSource().addValue("id", id),
-                String.class);
-    }
 
 }

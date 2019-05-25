@@ -1,4 +1,4 @@
-package com.ecommerce.order.spike.rabbitmq.spring;
+package com.ecommerce.order.common.event;
 
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.core.Message;

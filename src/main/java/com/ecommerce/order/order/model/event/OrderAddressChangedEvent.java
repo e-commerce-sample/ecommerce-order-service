@@ -1,6 +1,5 @@
 package com.ecommerce.order.order.model.event;
 
-import com.ecommerce.order.common.event.DomainEvent;
 import com.ecommerce.order.common.event.DomainEventType;
 import com.ecommerce.order.order.model.OrderId;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -10,8 +9,7 @@ import java.time.Instant;
 
 import static com.ecommerce.order.common.event.DomainEventType.ORDER_ADDRESS_CHANGED;
 
-public class OrderAddressChangedEvent extends DomainEvent {
-    private final OrderId orderId;
+public class OrderAddressChangedEvent extends OrderEvent {
     private final String oldAddress;
     private final String newAddress;
 
@@ -22,21 +20,15 @@ public class OrderAddressChangedEvent extends DomainEvent {
                                      @JsonProperty("orderId") OrderId orderId,
                                      @JsonProperty("oldAddress") String oldAddress,
                                      @JsonProperty("newAddress") String newAddress) {
-        super(_id, _type, _createdAt);
-        this.orderId = orderId;
+        super(orderId, _id, _type, _createdAt);
         this.oldAddress = oldAddress;
         this.newAddress = newAddress;
     }
 
     public OrderAddressChangedEvent(OrderId orderId, String oldAddress, String newAddress) {
-        super(ORDER_ADDRESS_CHANGED);
-        this.orderId = orderId;
+        super(orderId, ORDER_ADDRESS_CHANGED);
         this.oldAddress = oldAddress;
         this.newAddress = newAddress;
-    }
-
-    public OrderId getOrderId() {
-        return orderId;
     }
 
     public String getOldAddress() {

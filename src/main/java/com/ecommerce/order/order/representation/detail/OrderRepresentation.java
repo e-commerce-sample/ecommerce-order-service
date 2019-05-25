@@ -1,4 +1,4 @@
-package com.ecommerce.order.order.representation;
+package com.ecommerce.order.order.representation.detail;
 
 import com.ecommerce.order.common.ddd.Representation;
 import com.ecommerce.order.order.model.OrderStatus;
@@ -24,5 +24,25 @@ public class OrderRepresentation implements Representation {
         this.totalPrice = totalPrice;
         this.status = status;
         this.createdAt = createdAt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<OrderItemRepresentation> getItems() {
+        return items;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 }

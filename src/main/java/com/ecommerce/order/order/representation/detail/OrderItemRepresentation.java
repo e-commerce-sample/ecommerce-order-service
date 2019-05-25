@@ -1,4 +1,4 @@
-package com.ecommerce.order.order.representation;
+package com.ecommerce.order.order.representation.detail;
 
 import com.ecommerce.order.common.ddd.Representation;
 
@@ -13,5 +13,17 @@ public class OrderItemRepresentation implements Representation {
         this.productId = productId;
         this.count = count;
         this.itemPrice = itemPrice;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public BigDecimal getItemPrice() {
+        return itemPrice;
     }
 }

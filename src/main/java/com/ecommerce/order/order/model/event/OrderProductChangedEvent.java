@@ -1,6 +1,5 @@
 package com.ecommerce.order.order.model.event;
 
-import com.ecommerce.order.common.event.DomainEvent;
 import com.ecommerce.order.common.event.DomainEventType;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
@@ -14,8 +13,7 @@ import java.util.List;
 
 import static com.ecommerce.order.common.event.DomainEventType.ORDER_PRODUCT_CHANGED;
 
-public class OrderProductChangedEvent extends DomainEvent {
-    private final OrderId orderId;
+public class OrderProductChangedEvent extends OrderEvent {
     private final List<OrderItem> items;
     private final BigDecimal totalPrice;
 
@@ -26,21 +24,15 @@ public class OrderProductChangedEvent extends DomainEvent {
                                     @JsonProperty("orderId") OrderId orderId,
                                     @JsonProperty("items") List<OrderItem> items,
                                     @JsonProperty("totalPrice") BigDecimal totalPrice) {
-        super(_id, _type, _createdAt);
-        this.orderId = orderId;
+        super(orderId, _id, _type, _createdAt);
         this.items = items;
         this.totalPrice = totalPrice;
     }
 
     public OrderProductChangedEvent(Order order) {
-        super(ORDER_PRODUCT_CHANGED);
-        this.orderId = order.getId();
+        super(order.getId(), ORDER_PRODUCT_CHANGED);
         this.items = order.getItems();
         this.totalPrice = order.getTotalPrice();
-    }
-
-    public OrderId getOrderId() {
-        return orderId;
     }
 
     public List<OrderItem> getItems() {

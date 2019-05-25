@@ -18,6 +18,7 @@ import static com.ecommerce.order.order.model.OrderStatus.PAID;
 import static com.ecommerce.order.product.ProductId.newProductId;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.math.BigDecimal.valueOf;
+import static java.util.stream.IntStream.range;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.is;
@@ -55,6 +56,25 @@ class OrderApiTest extends BaseApiTest {
                 .then().statusCode(200)
                 .body("id", is(idString));
     }
+
+    @Test
+    public void should_list_order_summary() throws InterruptedException {
+        range(0, 10).forEach(value -> {
+            Address address = Address.of("四川", "成都", "天府软件园1号");
+            Order order = Order.create(orderId(newUuid()), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))), address);
+            repository.save(order);
+        });
+
+        Thread.sleep(3000);
+
+        given()
+                .when()
+                .get("/orders?pageIndex=1&pageSize=5")
+                .then().statusCode(200)
+                .body("pageIndex", is(1))
+                .body("resource.size()", is(5));
+    }
+
 
     @Test
     public void should_update_product_count() {

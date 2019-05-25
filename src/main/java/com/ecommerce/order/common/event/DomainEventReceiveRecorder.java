@@ -1,6 +1,5 @@
-package com.ecommerce.order.spike.rabbitmq.spring;
+package com.ecommerce.order.common.event;
 
-import com.ecommerce.order.common.event.DomainEvent;
 import com.ecommerce.order.common.logging.AutoNamingLoggerFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
@@ -32,12 +31,11 @@ public class DomainEventReceiveRecorder {
                 .findFirst();
 
         if (optionalEvent.isPresent()) {
-            String endpointTag = constructEndPointTag(joinPoint);
             DomainEvent event = (DomainEvent) optionalEvent.get();
             try {
-                recordEvent(endpointTag, event);
+                recordEvent(event);
             } catch (DuplicateKeyException dke) {
-                logger.warn("Duplicated {} skipped for {}.", event, endpointTag);
+                logger.warn("Duplicated {} skipped.", event);
                 return null;
             }
 
@@ -47,14 +45,8 @@ public class DomainEventReceiveRecorder {
         return joinPoint.proceed();
     }
 
-    private String constructEndPointTag(ProceedingJoinPoint joinPoint) {
-        String methodName = joinPoint.getSignature().getName();
-        String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
-        return className + ":" + methodName;
-    }
-
-    private void recordEvent(String endpointTag, DomainEvent event) {
-        String sql = "INSERT INTO EVENT_RECEIVE_RECORD (ENDPOINT_TAG, EVENT_ID) VALUES (:tag, :eventId);";
-        jdbcTemplate.update(sql, of("tag", endpointTag, "eventId", event.get_id()));
+    private void recordEvent(DomainEvent event) {
+        String sql = "INSERT INTO EVENT_RECEIVE_RECORD (EVENT_ID) VALUES (:eventId);";
+        jdbcTemplate.update(sql, of("eventId", event.get_id()));
     }
 }

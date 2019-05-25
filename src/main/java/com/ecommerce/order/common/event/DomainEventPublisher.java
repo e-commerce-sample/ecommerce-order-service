@@ -15,7 +15,6 @@ import java.util.List;
 @Component
 public class DomainEventPublisher {
     private static final Logger logger = AutoNamingLoggerFactory.getLogger();
-    private static final String ORDER_BOUNDED_CONTEXT = "order";
     private final DomainEventDAO eventDAO;
     private final RabbitTemplate rabbitTemplate;
 
@@ -45,7 +44,7 @@ public class DomainEventPublisher {
                 DomainEventType eventType = event.get_type();
                 String routingKey = eventType.name().toLowerCase().replace('_', '.');
                 eventDAO.increasePublishTries(event.get_id());
-                rabbitTemplate.convertAndSend(ORDER_BOUNDED_CONTEXT,
+                rabbitTemplate.convertAndSend(eventType.getExchange(),
                         routingKey,
                         event,
                         new CorrelationData(event.get_id()));

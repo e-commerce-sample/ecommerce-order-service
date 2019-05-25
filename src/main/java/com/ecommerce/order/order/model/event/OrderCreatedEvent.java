@@ -1,6 +1,5 @@
 package com.ecommerce.order.order.model.event;
 
-import com.ecommerce.order.common.event.DomainEvent;
 import com.ecommerce.order.common.event.DomainEventType;
 import com.ecommerce.order.common.utils.Address;
 import com.ecommerce.order.order.model.Order;
@@ -13,8 +12,7 @@ import java.time.Instant;
 
 import static com.ecommerce.order.common.event.DomainEventType.ORDER_CREATED;
 
-public class OrderCreatedEvent extends DomainEvent {
-    private final OrderId orderId;
+public class OrderCreatedEvent extends OrderEvent {
     private final BigDecimal price;
     private final Instant createdAt;
     private final Address address;
@@ -27,24 +25,19 @@ public class OrderCreatedEvent extends DomainEvent {
                               @JsonProperty("price") BigDecimal price,
                               @JsonProperty("createdAt") Instant createdAt,
                               @JsonProperty("address") Address address) {
-        super(_id, _type, _createdAt);
-        this.orderId = orderId;
+        super(orderId, _id, _type, _createdAt);
         this.price = price;
         this.createdAt = createdAt;
         this.address = address;
     }
 
     public OrderCreatedEvent(Order order) {
-        super(ORDER_CREATED);
-        this.orderId = order.getId();
+        super(order.getId(), ORDER_CREATED);
         this.price = order.getTotalPrice();
         this.createdAt = order.getCreatedAt();
         this.address = order.getAddress();
     }
 
-    public OrderId getOrderId() {
-        return orderId;
-    }
 
     public BigDecimal getPrice() {
         return price;
