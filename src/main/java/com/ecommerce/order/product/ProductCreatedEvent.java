@@ -1,14 +1,14 @@
 package com.ecommerce.order.product;
 
 import com.ecommerce.order.common.event.DomainEvent;
-import com.ecommerce.order.common.event.EventType;
+import com.ecommerce.order.common.event.DomainEventType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
-import static com.ecommerce.order.common.event.EventType.PRODUCT_CREATED;
+import static com.ecommerce.order.common.event.DomainEventType.PRODUCT_CREATED;
 
 public class ProductCreatedEvent extends DomainEvent {
     private final ProductId productId;
@@ -19,7 +19,7 @@ public class ProductCreatedEvent extends DomainEvent {
 
     @JsonCreator
     private ProductCreatedEvent(@JsonProperty("_id") String _id,
-                                @JsonProperty("_type") EventType _type,
+                                @JsonProperty("_type") DomainEventType _type,
                                 @JsonProperty("_createdAt") Instant _createdAt,
                                 @JsonProperty("productId") ProductId productId,
                                 @JsonProperty("name") String name,

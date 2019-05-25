@@ -29,19 +29,19 @@ import static java.time.Instant.now;
 })
 public abstract class DomainEvent {
     private final String _id;
-    private final EventType _type;
+    private final DomainEventType _type;
     private final Instant _createdAt;
 
     @JsonCreator
     protected DomainEvent(@JsonProperty("_id") String _id,
-                          @JsonProperty("_type") EventType _type,
+                          @JsonProperty("_type") DomainEventType _type,
                           @JsonProperty("_createdAt") Instant _createdAt) {
         this._id = _id;
         this._type = _type;
         this._createdAt = _createdAt;
     }
 
-    protected DomainEvent(EventType _type) {
+    protected DomainEvent(DomainEventType _type) {
         this._id = newUuid();
         this._type = _type;
         this._createdAt = now();
@@ -51,7 +51,7 @@ public abstract class DomainEvent {
         return _id;
     }
 
-    public EventType get_type() {
+    public DomainEventType get_type() {
         return _type;
     }
 

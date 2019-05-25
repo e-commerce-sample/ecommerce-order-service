@@ -15,19 +15,23 @@ import java.util.List;
 @Component
 public class DomainEventPublisher {
     private static final Logger logger = AutoNamingLoggerFactory.getLogger();
-    private static final String BOUNDED_CONTEXT = "order";
-    private final DomainEventRepository repository;
+    private static final String ORDER_BOUNDED_CONTEXT = "order";
+    private final DomainEventDAO eventDAO;
     private final RabbitTemplate rabbitTemplate;
 
 
-    public DomainEventPublisher(DomainEventRepository repository,
+    public DomainEventPublisher(DomainEventDAO eventDAO,
                                 ConnectionFactory connectionFactory,
                                 MessageConverter messageConverter) {
-        this.repository = repository;
-        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        this.eventDAO = eventDAO;
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause)
-                -> this.repository.delete(correlationData.getId()));
+                -> {
+            if (ack) {
+                eventDAO.delete(correlationData.getId());
+            }
+        });
         this.rabbitTemplate = rabbitTemplate;
     }
 
@@ -35,15 +39,18 @@ public class DomainEventPublisher {
     @Scheduled(fixedDelay = 2000)
     @SchedulerLock(name = "domain-event-publisher", lockAtMostFor = 30000, lockAtLeastFor = 1000)
     public void run() {
-        List<DomainEvent> domainEvents = repository.newestEvents();
-        domainEvents.forEach(domainEvent -> {
+        List<DomainEvent> newestEvents = eventDAO.newestEvents();
+        newestEvents.forEach(event -> {
             try {
-                EventType type = domainEvent.get_type();
-                String exchange = BOUNDED_CONTEXT + "." + type.getAggregate();
-                String routingKey = type.getAggregate() + "." + type.getType();
-                rabbitTemplate.convertAndSend(exchange, routingKey, domainEvent, new CorrelationData(domainEvent.get_id()));
+                DomainEventType eventType = event.get_type();
+                String routingKey = eventType.name().toLowerCase().replace('_', '.');
+                eventDAO.increasePublishTries(event.get_id());
+                rabbitTemplate.convertAndSend(ORDER_BOUNDED_CONTEXT,
+                        routingKey,
+                        event,
+                        new CorrelationData(event.get_id()));
             } catch (Throwable t) {
-                logger.error("Error while publish {}:{}", domainEvent, t.getMessage());
+                logger.error("Error while publish domain event {}:{}", event, t.getMessage());
             }
         });
     }

@@ -1,7 +1,7 @@
 package com.ecommerce.order.order.model.event;
 
 import com.ecommerce.order.common.event.DomainEvent;
-import com.ecommerce.order.common.event.EventType;
+import com.ecommerce.order.common.event.DomainEventType;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.model.OrderItem;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import static com.ecommerce.order.common.event.EventType.ORDER_PRODUCT_CHANGED;
+import static com.ecommerce.order.common.event.DomainEventType.ORDER_PRODUCT_CHANGED;
 
 public class OrderProductChangedEvent extends DomainEvent {
     private final OrderId orderId;
@@ -21,7 +21,7 @@ public class OrderProductChangedEvent extends DomainEvent {
 
     @JsonCreator
     public OrderProductChangedEvent(@JsonProperty("_id") String _id,
-                                    @JsonProperty("_type") EventType _type,
+                                    @JsonProperty("_type") DomainEventType _type,
                                     @JsonProperty("_createdAt") Instant _createdAt,
                                     @JsonProperty("orderId") OrderId orderId,
                                     @JsonProperty("items") List<OrderItem> items,

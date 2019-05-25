@@ -19,8 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import static com.google.common.collect.ImmutableMap.of;
 
 @Configuration
-public class SpringRabbitConfig {
-    private static final Logger logger = AutoNamingLoggerFactory.getLogger();
+public class RabbitmqConfig {
 
     @Bean
     public TopicExchange dlx() {
@@ -40,7 +39,7 @@ public class SpringRabbitConfig {
 
     @Bean
     public TopicExchange orderExchange() {
-        return new TopicExchange("order.order", true, false, of("alternate-exchange", "dlx"));
+        return new TopicExchange("order", true, false, of("alternate-exchange", "dlx"));
     }
 
     @Bean

@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class DomainEventAwareRepository<AR extends DomainEventAwareAggregate> implements Repository {
     @Autowired
-    private DomainEventRepository eventRepository;
+    private DomainEventDAO eventDAO;
 
     public void save(AR aggregate) {
-        aggregate.getEvents().forEach(eventRepository::add);
+        eventDAO.insert(aggregate.getEvents());
         aggregate.clearEvents();
         doSave(aggregate);
     }

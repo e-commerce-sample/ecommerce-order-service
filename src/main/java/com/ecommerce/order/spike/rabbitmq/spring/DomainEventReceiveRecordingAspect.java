@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class DomainEventReceivingAspect {
-    private DomainEventReceiver domainEventReceiver;
+public class DomainEventReceiveRecordingAspect {
+    private DomainEventReceiveRecorder domainEventReceiveRecorder;
 
-    public DomainEventReceivingAspect(DomainEventReceiver domainEventReceiver) {
-        this.domainEventReceiver = domainEventReceiver;
+    public DomainEventReceiveRecordingAspect(DomainEventReceiveRecorder domainEventReceiveRecorder) {
+        this.domainEventReceiveRecorder = domainEventReceiveRecorder;
     }
 
     @Around("@annotation(org.springframework.amqp.rabbit.annotation.RabbitHandler) || @annotation(org.springframework.amqp.rabbit.annotation.RabbitListener)")
     public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
-        return domainEventReceiver.aa(joinPoint);
+        return domainEventReceiveRecorder.record(joinPoint);
     }
 }
