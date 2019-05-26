@@ -1,7 +1,7 @@
 package com.ecommerce.order.order.model.event;
 
 import com.ecommerce.order.common.event.DomainEventType;
-import com.ecommerce.order.common.utils.Address;
+import com.ecommerce.order.common.model.Address;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
 import com.fasterxml.jackson.annotation.JsonCreator;

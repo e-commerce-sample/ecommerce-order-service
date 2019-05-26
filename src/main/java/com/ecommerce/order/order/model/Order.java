@@ -1,7 +1,7 @@
 package com.ecommerce.order.order.model;
 
 import com.ecommerce.order.common.event.DomainEventAwareAggregate;
-import com.ecommerce.order.common.utils.Address;
+import com.ecommerce.order.common.model.Address;
 import com.ecommerce.order.order.exception.OrderCannotBeModifiedException;
 import com.ecommerce.order.order.exception.PaidPriceNotSameWithOrderPriceException;
 import com.ecommerce.order.order.exception.ProductNotInOrderException;

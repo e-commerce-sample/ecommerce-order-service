@@ -1,7 +1,7 @@
 package com.ecommerce.order.order.representation.summary;
 
 import com.ecommerce.order.common.ddd.Representation;
-import com.ecommerce.order.common.utils.Address;
+import com.ecommerce.order.common.model.Address;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderStatus;
 

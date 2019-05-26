@@ -1,6 +1,6 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.common.utils.Address;
+import com.ecommerce.order.common.model.Address;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderItem;
 import org.junit.jupiter.api.Test;

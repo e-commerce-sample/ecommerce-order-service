@@ -1,20 +1,16 @@
 package com.ecommerce.order.product;
 
-import com.ecommerce.order.common.ddd.Identity;
-import com.ecommerce.order.common.ddd.ValueObject;
-
-import java.util.Objects;
+import com.ecommerce.order.common.model.AbstractId;
 
 import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
 
-public class ProductId implements Identity, ValueObject {
-    private String id;
+public class ProductId extends AbstractId {
 
     private ProductId() {
     }
 
     private ProductId(String id) {
-        this.id = id;
+        super(id);
     }
 
     public static ProductId productId(String id) {
@@ -25,25 +21,5 @@ public class ProductId implements Identity, ValueObject {
         return new ProductId(newUuid());
     }
 
-    @Override
-    public String toString() {
-        return id;
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ProductId productId = (ProductId) o;
-        return Objects.equals(id, productId.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

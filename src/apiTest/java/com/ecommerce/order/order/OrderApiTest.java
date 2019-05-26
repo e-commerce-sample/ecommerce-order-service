@@ -1,7 +1,7 @@
 package com.ecommerce.order.order;
 
 import com.ecommerce.order.BaseApiTest;
-import com.ecommerce.order.common.utils.Address;
+import com.ecommerce.order.common.model.Address;
 import com.ecommerce.order.order.command.*;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;

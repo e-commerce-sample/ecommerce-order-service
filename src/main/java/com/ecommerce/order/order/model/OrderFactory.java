@@ -1,7 +1,7 @@
 package com.ecommerce.order.order.model;
 
 import com.ecommerce.order.common.ddd.Factory;
-import com.ecommerce.order.common.utils.Address;
+import com.ecommerce.order.common.model.Address;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ecommerce.order.common.utils;
+package com.ecommerce.order.common.model;
 
 import com.ecommerce.order.common.ddd.ValueObject;
 

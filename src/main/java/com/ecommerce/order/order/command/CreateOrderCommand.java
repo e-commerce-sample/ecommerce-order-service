@@ -1,7 +1,7 @@
 package com.ecommerce.order.order.command;
 
 import com.ecommerce.order.common.ddd.Command;
-import com.ecommerce.order.common.utils.Address;
+import com.ecommerce.order.common.model.Address;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

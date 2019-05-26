@@ -1,43 +1,22 @@
 package com.ecommerce.order.order.model;
 
-import com.ecommerce.order.common.ddd.Identity;
-import com.ecommerce.order.common.ddd.ValueObject;
+import com.ecommerce.order.common.model.AbstractId;
+import com.ecommerce.order.common.utils.UuidGenerator;
 
-import java.util.Objects;
-
-public class OrderId implements Identity, ValueObject {
-    private String id;
-
+public class OrderId extends AbstractId {
     private OrderId() {
     }
 
     private OrderId(String id) {
-        this.id = id;
+        super(id);
     }
 
     public static OrderId orderId(String id) {
         return new OrderId(id);
     }
 
-    @Override
-    public String toString() {
-        return id;
+    public static OrderId newOrderId() {
+        return orderId(UuidGenerator.newUuid());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        OrderId orderId = (OrderId) o;
-        return Objects.equals(id, orderId.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
