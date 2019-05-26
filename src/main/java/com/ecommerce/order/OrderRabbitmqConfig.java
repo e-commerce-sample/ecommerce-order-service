@@ -1,4 +1,4 @@
-package com.ecommerce.order.order;
+package com.ecommerce.order;
 
 import com.google.common.collect.ImmutableMap;
 import org.springframework.amqp.core.Binding;
