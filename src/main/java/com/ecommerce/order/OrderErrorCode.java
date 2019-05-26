@@ -1,7 +1,7 @@
 package com.ecommerce.order;
 
-import com.ecommerce.common.exception.ErrorEnum;
 
+import com.ecommerce.common.exception.ErrorEnum;
 
 public enum OrderErrorCode implements ErrorEnum {
     ORDER_CANNOT_BE_MODIFIED(409, "订单无法变更"),

@@ -1,7 +1,6 @@
 package com.ecommerce.order.inventory;
 
 import com.ecommerce.common.event.DomainEventAwareAggregate;
-import com.ecommerce.common.event.inventory.InventoryChangedEvent;
 import com.ecommerce.order.order.model.ProductId;
 
 import java.time.Instant;
@@ -28,7 +27,7 @@ public class Inventory extends DomainEventAwareAggregate {
 
     public void decrease(int number) {
         this.remains = this.remains - number;
-        raiseEvent(new InventoryChangedEvent(productId, remains));
+//        raiseEvent(new InventoryChangedEvent(productId, remains));
     }
 
     public ProductId getProductId() {

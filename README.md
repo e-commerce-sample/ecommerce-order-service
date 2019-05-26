@@ -8,6 +8,14 @@
 Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 
 # 本地构建
+
+在本地构建之前必须完成以下步骤：
+- 命令行进入[`ecommerce-sample/devops`](https://github.com/e-commerce-sample/devops)项目的跟目录
+- 运行`./start-nexus.sh`，用于启动Nexus
+- 运行`./start-rabbitmq.sh`，用于启动RabbitMQ
+- 命令行进入[`ecommerce-sample/common`](https://github.com/e-commerce-sample/common)项目的根目录
+- 运行`./publish.sh`，该命令将推送公共的`common.jar`包到Nexus
+
 |功能|命令|备注|
 | --- | --- | --- |
 |生成IntelliJ工程|`./idea.sh`|自动打开IntelliJ|
@@ -51,4 +59,4 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 - 所有和列表相关的东西全部放到bff层中，也即各个服务只会暴露单个聚合根详情的接口，cqrs的bff接到事件通知后调用各个子服务的详情接口同步数据
 - 各个服务发出的事件应该包含事件相关的数据，即便consumer端只是用于通知，但是对于发送发自己来讲应该通知事件相应的事件
 - 根据id查看聚合根详情api优先领域模型转换或者数据模型，通过单独的representationservice
-- 所有事件放到common包中
+- 所有事件放到common包中,同时包括command和representation，因为这些是服务对外的接口，事件中带入尽量少的恰如其分的数据，对于创建ar来说，尽量少，并且最好是原始类型

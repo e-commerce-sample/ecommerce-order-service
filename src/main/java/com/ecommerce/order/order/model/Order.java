@@ -38,7 +38,7 @@ public class Order extends DomainEventAwareAggregate {
         this.status = CREATED;
         this.address = address;
         this.createdAt = now();
-        raiseEvent(new OrderCreatedEvent(this));
+        raiseEvent(new OrderCreatedEvent(id.toString(), totalPrice, address, createdAt));
     }
 
     public static Order create(OrderId id, List<OrderItem> items, Address address) {
@@ -52,9 +52,10 @@ public class Order extends DomainEventAwareAggregate {
         }
 
         OrderItem orderItem = retrieveItem(productId);
+        int originalCount = orderItem.getCount();
         orderItem.updateCount(count);
         this.totalPrice = calculateTotalPrice();
-        raiseEvent(new OrderProductChangedEvent(this));
+        raiseEvent(new OrderProductChangedEvent(id.toString(), productId.toString(), originalCount, count));
     }
 
     private BigDecimal calculateTotalPrice() {
@@ -76,7 +77,7 @@ public class Order extends DomainEventAwareAggregate {
             throw new PaidPriceNotSameWithOrderPriceException(id);
         }
         this.status = PAID;
-        raiseEvent(new OrderPaidEvent(this.getId()));
+        raiseEvent(new OrderPaidEvent(this.getId().toString()));
     }
 
     public void changeAddressDetail(String detail) {
@@ -85,7 +86,7 @@ public class Order extends DomainEventAwareAggregate {
         }
 
         this.address = this.address.changeDetailTo(detail);
-        raiseEvent(new OrderAddressChangedEvent(getId(), detail, address.getDetail()));
+        raiseEvent(new OrderAddressChangedEvent(getId().toString(), detail, address.getDetail()));
     }
 
     public OrderId getId() {

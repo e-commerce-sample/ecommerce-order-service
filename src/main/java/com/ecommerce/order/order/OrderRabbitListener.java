@@ -9,6 +9,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import static com.ecommerce.order.order.OrderRabbitmqConfig.ORDER_RECEIVE_QUEUE;
+import static com.ecommerce.order.order.model.OrderId.orderId;
 
 @Component
 @RabbitListener(queues = ORDER_RECEIVE_QUEUE)
@@ -22,7 +23,7 @@ public class OrderRabbitListener {
 
     @RabbitHandler
     public void on(OrderEvent event) {
-        orderRepresentationService.cqrsSync(event.getOrderId());
+        orderRepresentationService.cqrsSync(orderId(event.getOrderId()));
     }
 
 }
