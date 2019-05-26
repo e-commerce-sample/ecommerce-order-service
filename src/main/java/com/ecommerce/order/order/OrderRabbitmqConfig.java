@@ -14,7 +14,7 @@ import static org.springframework.amqp.core.Binding.DestinationType.QUEUE;
 @Configuration
 public class OrderRabbitmqConfig {
 
-    public static final String ORDER_PUBLISH_EXCHANGE = "order-publish-x";
+    public static final String ORDER_PUBLISH_EXCHANGE = "order";
     public static final String ORDER_PUBLISH_DLX = "order-publish-dlx";
     public static final String ORDER_PUBLISH_DLQ = "order-publish-dlq";
 

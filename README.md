@@ -45,3 +45,6 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 列出常用的公共的编码实践方式。
 
 # FAQ
+- 根据id查看聚合根详情api优先领域模型转换或者数据模型，通过单独的representationservice
+- 单个限界上下文中，单个的聚合根列表或者涉及到夸多个聚合根的查询，采用内部cqrs
+- BFF优先考虑CQRS从不同限界上下文得到通知后调用各个聚合根的详情API更新展现模型

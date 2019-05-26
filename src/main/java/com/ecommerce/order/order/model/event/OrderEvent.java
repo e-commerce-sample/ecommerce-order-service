@@ -20,7 +20,7 @@ public abstract class OrderEvent extends DomainEvent {
         this.orderId = orderId;
     }
 
-    public OrderEvent(OrderId orderId, DomainEventType eventType) {
+    protected OrderEvent(OrderId orderId, DomainEventType eventType) {
         super(eventType);
         this.orderId = orderId;
     }

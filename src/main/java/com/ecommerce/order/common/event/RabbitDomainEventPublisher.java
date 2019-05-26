@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class DomainEventPublisher {
+public class RabbitDomainEventPublisher {
     private static final Logger logger = AutoNamingLoggerFactory.getLogger();
     private final DomainEventDAO eventDAO;
     private final RabbitTemplate rabbitTemplate;
 
 
-    public DomainEventPublisher(DomainEventDAO eventDAO,
-                                ConnectionFactory connectionFactory,
-                                MessageConverter messageConverter) {
+    public RabbitDomainEventPublisher(DomainEventDAO eventDAO,
+                                      ConnectionFactory connectionFactory,
+                                      MessageConverter messageConverter) {
         this.eventDAO = eventDAO;
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
@@ -42,9 +42,10 @@ public class DomainEventPublisher {
         newestEvents.forEach(event -> {
             try {
                 DomainEventType eventType = event.get_type();
+                String exchange = eventType.name().toLowerCase().split("_")[0];
                 String routingKey = eventType.name().toLowerCase().replace('_', '.');
                 eventDAO.increasePublishTries(event.get_id());
-                rabbitTemplate.convertAndSend(eventType.getExchange(),
+                rabbitTemplate.convertAndSend(exchange,
                         routingKey,
                         event,
                         new CorrelationData(event.get_id()));
