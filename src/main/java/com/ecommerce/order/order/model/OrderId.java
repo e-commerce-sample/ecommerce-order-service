@@ -1,7 +1,7 @@
 package com.ecommerce.order.order.model;
 
-import com.ecommerce.order.common.model.AbstractId;
-import com.ecommerce.order.common.utils.UuidGenerator;
+import com.ecommerce.common.model.AbstractId;
+import com.ecommerce.common.utils.UuidGenerator;
 
 public class OrderId extends AbstractId {
     private OrderId() {

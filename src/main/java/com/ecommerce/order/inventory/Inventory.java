@@ -1,7 +1,8 @@
 package com.ecommerce.order.inventory;
 
-import com.ecommerce.order.common.event.DomainEventAwareAggregate;
-import com.ecommerce.order.product.ProductId;
+import com.ecommerce.common.event.DomainEventAwareAggregate;
+import com.ecommerce.common.event.inventory.InventoryChangedEvent;
+import com.ecommerce.order.order.model.ProductId;
 
 import java.time.Instant;
 

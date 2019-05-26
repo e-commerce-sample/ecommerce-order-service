@@ -1,14 +1,13 @@
 package com.ecommerce.order.order.representation.summary;
 
-import com.ecommerce.order.common.ddd.Representation;
-import com.ecommerce.order.common.model.Address;
+import com.ecommerce.common.model.Address;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class OrderSummaryRepresentation implements Representation {
+public class OrderSummaryRepresentation {
     private String id;
     private BigDecimal totalPrice;
     private OrderStatus status;

@@ -1,6 +1,5 @@
 package com.ecommerce.order.order.command;
 
-import com.ecommerce.order.common.ddd.Command;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-public class OrderItemCommand implements Command {
+public class OrderItemCommand {
     @NotBlank(message = "产品ID不能为空")
     private String productId;
 

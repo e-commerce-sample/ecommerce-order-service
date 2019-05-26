@@ -1,13 +1,12 @@
 package com.ecommerce.order.order.representation.detail;
 
-import com.ecommerce.order.common.ddd.Representation;
 import com.ecommerce.order.order.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-public class OrderRepresentation implements Representation {
+public class OrderRepresentation {
     private final String id;
     private final List<OrderItemRepresentation> items;
     private final BigDecimal totalPrice;

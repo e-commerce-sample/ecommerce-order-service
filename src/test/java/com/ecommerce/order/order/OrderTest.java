@@ -1,15 +1,15 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.common.model.Address;
+import com.ecommerce.common.model.Address;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderItem;
 import org.junit.jupiter.api.Test;
 
-import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
+import static com.ecommerce.common.utils.UuidGenerator.newUuid;
 import static com.ecommerce.order.order.model.OrderId.orderId;
 import static com.ecommerce.order.order.model.OrderItem.create;
 import static com.ecommerce.order.order.model.OrderStatus.CREATED;
-import static com.ecommerce.order.product.ProductId.newProductId;
+import static com.ecommerce.order.order.model.ProductId.newProductId;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.math.BigDecimal.valueOf;
 import static org.hamcrest.MatcherAssert.assertThat;

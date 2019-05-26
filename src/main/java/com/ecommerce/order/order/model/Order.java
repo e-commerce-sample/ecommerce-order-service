@@ -1,15 +1,14 @@
 package com.ecommerce.order.order.model;
 
-import com.ecommerce.order.common.event.DomainEventAwareAggregate;
-import com.ecommerce.order.common.model.Address;
+import com.ecommerce.common.event.DomainEventAwareAggregate;
+import com.ecommerce.common.event.order.OrderAddressChangedEvent;
+import com.ecommerce.common.event.order.OrderCreatedEvent;
+import com.ecommerce.common.event.order.OrderPaidEvent;
+import com.ecommerce.common.event.order.OrderProductChangedEvent;
+import com.ecommerce.common.model.Address;
 import com.ecommerce.order.order.exception.OrderCannotBeModifiedException;
 import com.ecommerce.order.order.exception.PaidPriceNotSameWithOrderPriceException;
 import com.ecommerce.order.order.exception.ProductNotInOrderException;
-import com.ecommerce.order.order.model.event.OrderAddressChangedEvent;
-import com.ecommerce.order.order.model.event.OrderCreatedEvent;
-import com.ecommerce.order.order.model.event.OrderPaidEvent;
-import com.ecommerce.order.order.model.event.OrderProductChangedEvent;
-import com.ecommerce.order.product.ProductId;
 
 import java.math.BigDecimal;
 import java.time.Instant;

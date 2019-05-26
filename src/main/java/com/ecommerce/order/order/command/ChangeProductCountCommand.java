@@ -1,13 +1,12 @@
 package com.ecommerce.order.order.command;
 
-import com.ecommerce.order.common.ddd.Command;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-public class ChangeProductCountCommand implements Command {
+public class ChangeProductCountCommand {
     @NotBlank(message = "产品ID不能为空")
     private String productId;
 

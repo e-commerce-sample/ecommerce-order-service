@@ -1,13 +1,13 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.common.utils.PagedResource;
+import com.ecommerce.common.utils.PagedResource;
 import com.ecommerce.order.order.command.ChangeAddressDetailCommand;
 import com.ecommerce.order.order.command.ChangeProductCountCommand;
 import com.ecommerce.order.order.command.CreateOrderCommand;
 import com.ecommerce.order.order.command.PayOrderCommand;
 import com.ecommerce.order.order.model.OrderId;
-import com.ecommerce.order.order.representation.detail.OrderRepresentation;
 import com.ecommerce.order.order.representation.OrderRepresentationService;
+import com.ecommerce.order.order.representation.detail.OrderRepresentation;
 import com.ecommerce.order.order.representation.summary.OrderSummaryRepresentation;
 import org.springframework.web.bind.annotation.*;
 

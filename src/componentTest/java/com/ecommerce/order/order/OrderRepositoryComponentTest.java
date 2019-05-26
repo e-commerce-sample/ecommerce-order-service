@@ -1,17 +1,17 @@
 package com.ecommerce.order.order;
 
+import com.ecommerce.common.model.Address;
 import com.ecommerce.order.BaseComponentTest;
-import com.ecommerce.order.common.model.Address;
 import com.ecommerce.order.order.model.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
-import static com.ecommerce.order.common.utils.UuidGenerator.newUuid;
+import static com.ecommerce.common.utils.UuidGenerator.newUuid;
 import static com.ecommerce.order.order.model.OrderId.orderId;
 import static com.ecommerce.order.order.model.OrderItem.create;
-import static com.ecommerce.order.product.ProductId.newProductId;
+import static com.ecommerce.order.order.model.ProductId.newProductId;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.math.BigDecimal.valueOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;

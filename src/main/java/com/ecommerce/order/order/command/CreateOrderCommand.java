@@ -1,7 +1,6 @@
 package com.ecommerce.order.order.command;
 
-import com.ecommerce.order.common.ddd.Command;
-import com.ecommerce.order.common.model.Address;
+import com.ecommerce.common.model.Address;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class CreateOrderCommand implements Command {
+public class CreateOrderCommand {
     @Valid
     @NotEmpty(message = "订单项不能为空")
     private List<OrderItemCommand> items;

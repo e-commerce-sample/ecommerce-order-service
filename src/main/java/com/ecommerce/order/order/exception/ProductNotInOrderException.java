@@ -1,10 +1,10 @@
 package com.ecommerce.order.order.exception;
 
-import com.ecommerce.order.common.exception.AppException;
+import com.ecommerce.common.exception.AppException;
 import com.ecommerce.order.order.model.OrderId;
-import com.ecommerce.order.product.ProductId;
+import com.ecommerce.order.order.model.ProductId;
 
-import static com.ecommerce.order.common.exception.ErrorCode.PRODUCT_NOT_IN_ORDER;
+import static com.ecommerce.order.OrderErrorCode.PRODUCT_NOT_IN_ORDER;
 import static com.google.common.collect.ImmutableMap.of;
 
 public class ProductNotInOrderException extends AppException {

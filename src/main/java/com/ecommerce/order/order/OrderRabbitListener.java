@@ -1,7 +1,7 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.common.logging.AutoNamingLoggerFactory;
-import com.ecommerce.order.order.model.event.OrderEvent;
+import com.ecommerce.common.event.order.OrderEvent;
+import com.ecommerce.common.logging.AutoNamingLoggerFactory;
 import com.ecommerce.order.order.representation.OrderRepresentationService;
 import org.slf4j.Logger;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;

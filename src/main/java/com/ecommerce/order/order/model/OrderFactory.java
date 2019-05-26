@@ -1,13 +1,12 @@
 package com.ecommerce.order.order.model;
 
-import com.ecommerce.order.common.ddd.Factory;
-import com.ecommerce.order.common.model.Address;
+import com.ecommerce.common.model.Address;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class OrderFactory implements Factory {
+public class OrderFactory {
     private final OrderIdGenerator idGenerator;
 
     public OrderFactory(OrderIdGenerator idGenerator) {

@@ -2,7 +2,7 @@
 - [Spring Boot项目模板](https://www.jianshu.com/p/bd8136129dfb)
 
 # 项目简介
-本项目是ecommerce系统的订单子系统，用于向用户展示产品并接受用户订单。
+本项目是ecommerce系统的订单（Order）子系统，用于接受用户订单。
 
 # 技术选型
 Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
@@ -19,7 +19,6 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 # 领域对象
 |领域对象|中文名|业务功能|
 | --- | --- | --- |
-|Product|产品|包含名称和价格|
 |Order|订单|表示用于下的订单，包含多个产品及其数量|
 
 # 测试策略
@@ -52,3 +51,4 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 - 所有和列表相关的东西全部放到bff层中，也即各个服务只会暴露单个聚合根详情的接口，cqrs的bff接到事件通知后调用各个子服务的详情接口同步数据
 - 各个服务发出的事件应该包含事件相关的数据，即便consumer端只是用于通知，但是对于发送发自己来讲应该通知事件相应的事件
 - 根据id查看聚合根详情api优先领域模型转换或者数据模型，通过单独的representationservice
+- 所有事件放到common包中

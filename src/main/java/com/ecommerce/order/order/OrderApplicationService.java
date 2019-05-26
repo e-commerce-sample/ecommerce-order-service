@@ -1,14 +1,9 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.common.ddd.ApplicationService;
 import com.ecommerce.order.order.command.ChangeProductCountCommand;
 import com.ecommerce.order.order.command.CreateOrderCommand;
 import com.ecommerce.order.order.command.PayOrderCommand;
-import com.ecommerce.order.order.model.Order;
-import com.ecommerce.order.order.model.OrderFactory;
-import com.ecommerce.order.order.model.OrderId;
-import com.ecommerce.order.order.model.OrderItem;
-import com.ecommerce.order.product.ProductId;
+import com.ecommerce.order.order.model.*;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.ecommerce.order.order.model.OrderId.orderId;
-import static com.ecommerce.order.product.ProductId.productId;
+import static com.ecommerce.order.order.model.ProductId.productId;
 
 @Component
-public class OrderApplicationService implements ApplicationService {
+public class OrderApplicationService {
     private final OrderRepository orderRepository;
     private final OrderFactory orderFactory;
     private final OrderPaymentService orderPaymentService;

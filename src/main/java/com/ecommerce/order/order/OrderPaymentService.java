@@ -1,13 +1,12 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.common.ddd.DomainService;
 import com.ecommerce.order.order.model.Order;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 @Component
-public class OrderPaymentService implements DomainService {
+public class OrderPaymentService {
     private final OrderPaymentProxy paymentProxy;
 
     public OrderPaymentService(OrderPaymentProxy paymentProxy) {

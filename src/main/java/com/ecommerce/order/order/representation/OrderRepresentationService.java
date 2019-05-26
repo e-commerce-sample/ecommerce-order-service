@@ -1,7 +1,7 @@
 package com.ecommerce.order.order.representation;
 
-import com.ecommerce.order.common.utils.DefaultObjectMapper;
-import com.ecommerce.order.common.utils.PagedResource;
+import com.ecommerce.common.utils.DefaultObjectMapper;
+import com.ecommerce.common.utils.PagedResource;
 import com.ecommerce.order.order.OrderRepository;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
