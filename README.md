@@ -11,10 +11,7 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 
 在本地构建之前必须完成以下步骤：
 - 命令行进入[`ecommerce-sample/devops`](https://github.com/e-commerce-sample/devops)项目的跟目录
-- 运行`./start-nexus.sh`，用于启动Nexus
 - 运行`./start-rabbitmq.sh`，用于启动RabbitMQ
-- 命令行进入[`ecommerce-sample/common`](https://github.com/e-commerce-sample/common)项目的根目录
-- 运行`./publish.sh`，该命令将推送公共的`common.jar`包到Nexus
 
 |功能|命令|备注|
 | --- | --- | --- |
