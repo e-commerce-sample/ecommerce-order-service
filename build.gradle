@@ -18,7 +18,7 @@ plugins {
 
 repositories {
     maven { url "https://maven.aliyun.com/repository/central" }
-    maven { url "http://localhost:9091/repository/maven-snapshots/" }
+    maven { url "https://mymavenrepo.com/repo/2w5k9sU2AsKfaYehyqno/" }
 
 }
 
@@ -36,7 +36,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
-    implementation("com.ecommerce:common:0.1-SNAPSHOT")
+    implementation("com.ecommerce:ecommerce-common:0.3-SNAPSHOT")
 
     //common dependencies
     implementation("mysql:mysql-connector-java:8.0.15")
