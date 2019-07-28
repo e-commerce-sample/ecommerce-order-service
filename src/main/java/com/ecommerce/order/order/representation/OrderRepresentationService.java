@@ -1,6 +1,5 @@
 package com.ecommerce.order.order.representation;
 
-import com.ecommerce.common.logging.AutoNamingLoggerFactory;
 import com.ecommerce.common.utils.DefaultObjectMapper;
 import com.ecommerce.common.utils.PagedResource;
 import com.ecommerce.order.order.OrderRepository;
@@ -9,7 +8,6 @@ import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.representation.detail.OrderItemRepresentation;
 import com.ecommerce.order.order.representation.detail.OrderRepresentation;
 import com.ecommerce.order.order.representation.summary.OrderSummaryRepresentation;
-import org.slf4j.Logger;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -25,8 +23,6 @@ import static com.google.common.collect.Maps.newHashMap;
 
 @Component
 public class OrderRepresentationService {
-    private static final Logger logger = AutoNamingLoggerFactory.getLogger();
-
     private static final String SELECT_SQL = "SELECT JSON_CONTENT FROM ORDER_SUMMARY LIMIT :limit OFFSET :offset;";
     private static final String COUNT_SQL = "SELECT COUNT(1) FROM ORDER_SUMMARY;";
     private final OrderRepository orderRepository;
@@ -64,8 +60,6 @@ public class OrderRepresentationService {
 
     @Transactional
     public void cqrsSync(OrderId id) {
-        logger.info("CQRS sync order to order summary.");
-
         Order order = orderRepository.byId(id);
         OrderSummaryRepresentation summary = OrderSummaryRepresentation.from(order);
         String sql = "INSERT INTO ORDER_SUMMARY (ID, JSON_CONTENT) VALUES (:id, :json) " +

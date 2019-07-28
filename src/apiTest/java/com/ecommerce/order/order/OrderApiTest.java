@@ -2,7 +2,11 @@ package com.ecommerce.order.order;
 
 import com.ecommerce.common.model.Address;
 import com.ecommerce.order.BaseApiTest;
-import com.ecommerce.order.order.command.*;
+import com.ecommerce.order.order.command.ChangeAddressDetailCommand;
+import com.ecommerce.order.order.command.ChangeProductCountCommand;
+import com.ecommerce.order.order.command.CreateOrderCommand;
+import com.ecommerce.order.order.command.OrderItemCommand;
+import com.ecommerce.order.order.command.PayOrderCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.model.ProductId;
