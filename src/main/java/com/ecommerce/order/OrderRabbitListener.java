@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.stereotype.Component;
 
-import static com.ecommerce.order.order.model.OrderId.orderId;
+import static com.ecommerce.order.order.model.OrderId.of;
 
 @Component
 @EcommerceRabbitListener
@@ -22,7 +22,7 @@ public class OrderRabbitListener {
 
     @RabbitHandler
     public void on(OrderEvent event) {
-        orderRepresentationService.cqrsSync(orderId(event.getOrderId()));
+        orderRepresentationService.cqrsSync(of(event.getOrderId()));
     }
 
 }

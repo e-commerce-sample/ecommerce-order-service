@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 
 import static com.ecommerce.common.utils.UuidGenerator.newUuid;
-import static com.ecommerce.order.order.model.OrderId.orderId;
+import static com.ecommerce.order.order.model.OrderId.of;
 import static com.ecommerce.order.order.model.OrderItem.create;
 import static com.ecommerce.order.order.model.OrderStatus.PAID;
 import static com.ecommerce.order.order.model.ProductId.newProductId;
@@ -44,14 +44,14 @@ class OrderApiTest extends BaseApiTest {
                 .post("/orders")
                 .then().statusCode(201)
                 .extract().body().jsonPath().getString("id");
-        Order order = repository.byId(OrderId.orderId(id));
+        Order order = repository.byId(OrderId.of(id));
         assertNotNull(order);
     }
 
     @Test
     public void should_retrieve_order() {
         Address address = Address.of("四川", "成都", "天府软件园1号");
-        Order order = Order.create(orderId(newUuid()), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))), address);
+        Order order = Order.create(of(newUuid()), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
         String idString = order.getId().toString();
         given()
@@ -65,7 +65,7 @@ class OrderApiTest extends BaseApiTest {
     public void should_list_order_summary() throws InterruptedException {
         range(0, 10).forEach(value -> {
             Address address = Address.of("四川", "成都", "天府软件园1号");
-            Order order = Order.create(orderId(newUuid()), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))), address);
+            Order order = Order.create(of(newUuid()), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))), address);
             repository.save(order);
         });
 
@@ -85,7 +85,7 @@ class OrderApiTest extends BaseApiTest {
         Address address = Address.of("四川", "成都", "天府软件园1号");
 
         ProductId productId = newProductId();
-        Order order = Order.create(orderId(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
+        Order order = Order.create(of(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
         String idString = order.getId().toString();
 
@@ -106,7 +106,7 @@ class OrderApiTest extends BaseApiTest {
     public void should_pay_order() {
         Address address = Address.of("四川", "成都", "天府软件园1号");
         ProductId productId = newProductId();
-        Order order = Order.create(orderId(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
+        Order order = Order.create(of(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
         String idString = order.getId().toString();
 
@@ -126,7 +126,7 @@ class OrderApiTest extends BaseApiTest {
     public void should_change_order_address_detail() {
         Address address = Address.of("四川", "成都", "天府软件园1号");
         ProductId productId = newProductId();
-        Order order = Order.create(orderId(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
+        Order order = Order.create(of(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
         String idString = order.getId().toString();
 

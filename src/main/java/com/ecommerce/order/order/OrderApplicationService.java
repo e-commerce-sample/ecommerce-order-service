@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.ecommerce.order.order.model.OrderId.orderId;
+import static com.ecommerce.order.order.model.OrderId.of;
 import static com.ecommerce.order.order.model.ProductId.productId;
 
 @Component
@@ -46,21 +46,21 @@ public class OrderApplicationService {
 
     @Transactional
     public void changeProductCount(String id, ChangeProductCountCommand command) {
-        Order order = orderRepository.byId(orderId(id));
+        Order order = orderRepository.byId(of(id));
         order.changeProductCount(ProductId.productId(command.getProductId()), command.getCount());
         orderRepository.save(order);
     }
 
     @Transactional
     public void pay(String id, PayOrderCommand command) {
-        Order order = orderRepository.byId(orderId(id));
+        Order order = orderRepository.byId(of(id));
         orderPaymentService.pay(order, command.getPaidPrice());
         orderRepository.save(order);
     }
 
     @Transactional
     public void changeAddressDetail(String id, String detail) {
-        Order order = orderRepository.byId(orderId(id));
+        Order order = orderRepository.byId(of(id));
         order.changeAddressDetail(detail);
         orderRepository.save(order);
     }

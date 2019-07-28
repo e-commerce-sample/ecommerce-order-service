@@ -11,12 +11,12 @@ public class OrderId extends AbstractId {
         super(id);
     }
 
-    public static OrderId orderId(String id) {
+    public static OrderId of(String id) {
         return new OrderId(id);
     }
 
-    public static OrderId newOrderId() {
-        return orderId(UuidGenerator.newUuid());
+    public static OrderId newId() {
+        return of(UuidGenerator.newUuid());
     }
 
 }

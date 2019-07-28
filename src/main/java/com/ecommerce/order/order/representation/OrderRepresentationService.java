@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.ecommerce.order.order.model.OrderId.orderId;
 import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.collect.Maps.newHashMap;
 
@@ -39,7 +38,7 @@ public class OrderRepresentationService {
 
     @Transactional(readOnly = true)
     public OrderRepresentation byId(String id) {
-        Order order = orderRepository.byId(orderId(id));
+        Order order = orderRepository.byId(OrderId.of(id));
         return toRepresentation(order);
     }
 
