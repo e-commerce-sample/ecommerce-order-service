@@ -8,11 +8,10 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import static com.ecommerce.order.OrderRabbitmqConfig.ORDER_RECEIVE_QUEUE;
 import static com.ecommerce.order.order.model.OrderId.orderId;
 
 @Component
-@RabbitListener(queues = ORDER_RECEIVE_QUEUE)
+@RabbitListener(queues = "order-receive-q")
 public class OrderRabbitListener {
     private static final Logger logger = AutoNamingLoggerFactory.getLogger();
     private final OrderRepresentationService orderRepresentationService;

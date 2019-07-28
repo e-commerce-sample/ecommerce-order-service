@@ -1,9 +1,9 @@
 package com.ecommerce.order;
 
 
-import com.ecommerce.common.exception.ErrorEnum;
+import com.ecommerce.common.exception.ErrorCode;
 
-public enum OrderErrorCode implements ErrorEnum {
+public enum OrderErrorCode implements ErrorCode {
     ORDER_CANNOT_BE_MODIFIED(409, "订单无法变更"),
     ORDER_NOT_FOUND(404, "没有找到订单"),
     PAID_PRICE_NOT_SAME_WITH_ORDER_PRICE(409, "支付价格与订单实际价格不符"),
