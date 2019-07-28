@@ -13,6 +13,7 @@ import com.ecommerce.order.order.exception.ProductNotInOrderException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.ecommerce.order.order.model.OrderStatus.CREATED;
 import static com.ecommerce.order.order.model.OrderStatus.PAID;
@@ -38,7 +39,10 @@ public class Order extends DomainEventAwareAggregate {
         this.status = CREATED;
         this.address = address;
         this.createdAt = now();
-        raiseEvent(new OrderCreatedEvent(id.toString(), totalPrice, address, createdAt));
+        List<com.ecommerce.common.event.order.OrderItem> orderItems = items.stream()
+                .map(orderItem -> new com.ecommerce.common.event.order.OrderItem(orderItem.getProductId().toString(),
+                        orderItem.getCount())).collect(Collectors.toList());
+        raiseEvent(new OrderCreatedEvent(id.toString(), totalPrice, address, createdAt, orderItems));
     }
 
     public static Order create(OrderId id, List<OrderItem> items, Address address) {
