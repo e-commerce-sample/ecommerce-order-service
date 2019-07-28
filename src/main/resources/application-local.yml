@@ -21,7 +21,7 @@ ecommerce:
     jwtSecret: whateversecret
     jwtExpireMinutes: 30
   rabbit:
-    publishX: order
+    publishX: order-publish-x
     publishDlx: order-publish-dlx
     publishDlq: order-publish-dlq
     receiveQ: order-receive-q
