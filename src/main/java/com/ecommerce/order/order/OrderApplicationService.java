@@ -1,5 +1,6 @@
 package com.ecommerce.order.order;
 
+import com.ecommerce.common.logging.AutoNamingLoggerFactory;
 import com.ecommerce.order.order.command.ChangeProductCountCommand;
 import com.ecommerce.order.order.command.CreateOrderCommand;
 import com.ecommerce.order.order.command.PayOrderCommand;
@@ -8,6 +9,7 @@ import com.ecommerce.order.order.model.OrderFactory;
 import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.model.OrderItem;
 import com.ecommerce.order.order.model.ProductId;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,8 @@ import static com.ecommerce.order.order.model.ProductId.productId;
 
 @Component
 public class OrderApplicationService {
+    private static final Logger logger = AutoNamingLoggerFactory.getLogger();
+
     private final OrderRepository orderRepository;
     private final OrderFactory orderFactory;
     private final OrderPaymentService orderPaymentService;
@@ -41,6 +45,7 @@ public class OrderApplicationService {
 
         Order order = orderFactory.create(items, command.getAddress());
         orderRepository.save(order);
+        logger.info("Created order[{}].", order.getId());
         return order.getId();
     }
 
