@@ -1,6 +1,3 @@
-# 本示例代码对应博客：
-- [Spring Boot项目模板](https://www.jianshu.com/p/bd8136129dfb)
-
 # 项目简介
 本项目是ecommerce系统的订单（Order）子系统，用于接受用户订单。
 
@@ -11,7 +8,7 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 
 在本地构建之前必须完成以下步骤：
 - 命令行进入[`ecommerce-sample/devops`](https://github.com/e-commerce-sample/devops)项目的跟目录
-- 运行`./start-rabbitmq.sh`，用于启动RabbitMQ
+- 运行`./start-rabbitmq.sh`，用于启动RabbitMQ，整个Ecommerce下的所有服务只需启动RabbitMQ一次
 
 |功能|命令|备注|
 | --- | --- | --- |
