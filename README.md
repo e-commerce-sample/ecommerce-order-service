@@ -13,7 +13,7 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
 |功能|命令|备注|
 | --- | --- | --- |
 |生成IntelliJ工程|`./idea.sh`|自动打开IntelliJ|
-|本地运行|`./run.sh`|自动启动MySQL，监听5005调试端口|
+|本地运行|`./run.sh`|自动启动MySQL，开启HTTP8080端口，监听5005调试端口|
 |本地构建|`./local-build.sh`|启动启动MySQL，运行所有类型的自动化测试|
 |停止MySQL|`./gradlew composeDown`|将清空所有数据|
 |手动启动MySQL|`./gradlew composeUp`||
