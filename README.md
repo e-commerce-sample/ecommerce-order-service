@@ -12,7 +12,7 @@ Ecommerce项目包括：
 |devops|基础设施|[https://github.com/e-commerce-sample/devops](https://github.com/e-commerce-sample/devops)|
 
 # 技术选型
-Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker
+Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker、RabbitMQ
 
 # 本地构建
 
