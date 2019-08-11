@@ -17,7 +17,8 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker、RabbitMQ
 # 本地构建
 
 在本地构建之前必须完成以下步骤：
-- 命令行进入[`ecommerce-sample/devops`](https://github.com/e-commerce-sample/devops)项目的根目录
+- Pull最新[devops](https://github.com/e-commerce-sample/devops)代码
+- 命令行进入`devops`的`ecommerce-sample/devops/local/rabbitmq`目录
 - 运行`./start-rabbitmq.sh`，用于启动RabbitMQ，整个Ecommerce下的所有服务只需启动RabbitMQ一次
 
 |功能|命令|备注|
