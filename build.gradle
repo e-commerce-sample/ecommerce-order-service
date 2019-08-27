@@ -37,7 +37,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
-    implementation("com.ecommerce:ecommerce-common:0.33-SNAPSHOT")
+    implementation("com.ecommerce:ecommerce-common:0.35-SNAPSHOT")
 
     //common dependencies
     implementation("mysql:mysql-connector-java:8.0.15")
@@ -62,6 +62,11 @@ dependencies {
     implementation('com.fasterxml.jackson.core:jackson-databind:2.9.8')
     implementation('com.fasterxml.jackson.core:jackson-annotations:2.9.8')
     implementation("org.springframework.boot:spring-boot-starter-amqp")
+
+
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
 
     //test dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test")

@@ -1,5 +1,6 @@
 package com.ecommerce.order.order;
 
+import com.ecommerce.common.event.publish.DomainEventPublisher;
 import com.ecommerce.common.model.Address;
 import com.ecommerce.order.BaseApiTest;
 import com.ecommerce.order.order.command.ChangeAddressDetailCommand;
@@ -33,6 +34,9 @@ class OrderApiTest extends BaseApiTest {
 
     @Autowired
     private OrderRepository repository;
+
+    @Autowired
+    private DomainEventPublisher domainEventPublisher;
 
     @Test
     public void should_create_order() {
@@ -68,7 +72,7 @@ class OrderApiTest extends BaseApiTest {
             Order order = Order.create(of(newUuid()), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))), address);
             repository.save(order);
         });
-
+        domainEventPublisher.publish();
         Thread.sleep(3000);
 
         given()
