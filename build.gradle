@@ -13,6 +13,7 @@ buildscript {
 plugins {
     id 'application'
     id "org.springframework.boot" version "2.1.4.RELEASE"
+    id 'maven-publish'
 }
 
 repositories {
@@ -26,8 +27,36 @@ application {
     applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
 }
 
+def theGroup = 'com.ecommerce'
+def theArtifactName = 'ecommerce-order-api'
+def theVersion = '0.01-SNAPSHOT'
+group = theGroup
+archivesBaseName = theArtifactName
+version = theVersion
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+
+sourceSets {
+    api
+
+    main {
+        compileClasspath += sourceSets.api.output
+        runtimeClasspath += sourceSets.api.output
+    }
+
+    componentTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output + sourceSets.api.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output + sourceSets.api.output
+    }
+
+    apiTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output + sourceSets.api.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output + sourceSets.api.output
+    }
+}
+
 
 dependencies {
     compile platform('org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE')
@@ -77,20 +106,9 @@ dependencies {
 }
 
 
-sourceSets {
-    componentTest {
-        compileClasspath += sourceSets.main.output + sourceSets.test.output
-        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
-    }
-
-    apiTest {
-        compileClasspath += sourceSets.main.output + sourceSets.test.output
-        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
-    }
-}
-
-
 configurations {
+    implementation.extendsFrom apiImplementation
+    runtimeOnly.extendsFrom apiRuntimeOnly
     componentTestImplementation.extendsFrom testImplementation
     componentTestRuntimeOnly.extendsFrom testRuntimeOnly
     apiTestImplementation.extendsFrom testImplementation
@@ -134,6 +152,39 @@ bootJar {
 wrapper {
     gradleVersion = '5.2.1'
 }
+
+
+task apiJar(type: Jar) {
+    from sourceSets.api.output
+}
+
+
+task apiSourcesJar(type: Jar) {
+    from sourceSets.api.allJava
+    archiveClassifier = 'sources'
+}
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = theGroup
+            artifactId = theArtifactName
+            version = theVersion
+            artifact apiJar
+            artifact apiSourcesJar {
+                classifier "sources"
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = "https://mymavenrepo.com/repo/Cd07WrKAtJ9Kq7PBaTuf/"
+        }
+    }
+}
+
 
 apply from: "${rootProject.projectDir}/gradle/idea.gradle"
 apply from: "${rootProject.projectDir}/gradle/docker-compose/docker-compose.gradle"
