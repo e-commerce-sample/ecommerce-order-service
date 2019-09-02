@@ -1,5 +1,8 @@
 apply plugin: 'idea'
 
+
+configurations.apiImplementation.setCanBeResolved(true)
+configurations.apiRuntimeOnly.setCanBeResolved(true)
 configurations.apiTestImplementation.setCanBeResolved(true)
 configurations.apiTestRuntimeOnly.setCanBeResolved(true)
 configurations.componentTestImplementation.setCanBeResolved(true)
@@ -7,10 +10,14 @@ configurations.componentTestRuntimeOnly.setCanBeResolved(true)
 
 idea {
     module {
+        sourceDirs += file('src/api/java')
+        sourceDirs += file('src/api/resources')
         testSourceDirs += file('src/apiTest/java')
         testSourceDirs += file('src/apiTest/resources')
         testSourceDirs += file('src/componentTest/java')
         testSourceDirs += file('src/componentTest/resources')
+        scopes.TEST.plus += [configurations.apiImplementation]
+        scopes.TEST.plus += [configurations.apiRuntimeOnly]
         scopes.TEST.plus += [configurations.apiTestImplementation]
         scopes.TEST.plus += [configurations.apiTestRuntimeOnly]
         scopes.TEST.plus += [configurations.componentTestImplementation]

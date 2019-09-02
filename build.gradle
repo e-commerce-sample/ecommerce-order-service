@@ -13,7 +13,7 @@ buildscript {
 plugins {
     id 'application'
     id "org.springframework.boot" version "2.1.4.RELEASE"
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id 'maven-publish'
 }
 
 repositories {
@@ -27,16 +27,46 @@ application {
     applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
 }
 
+def theGroup = 'com.ecommerce'
+def theArtifactName = 'ecommerce-order-api'
+def theVersion = '0.01-SNAPSHOT'
+group = theGroup
+archivesBaseName = theArtifactName
+version = theVersion
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+
+sourceSets {
+    api
+
+    main {
+        compileClasspath += sourceSets.api.output
+        runtimeClasspath += sourceSets.api.output
+    }
+
+    componentTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output + sourceSets.api.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output + sourceSets.api.output
+    }
+
+    apiTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output + sourceSets.api.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output + sourceSets.api.output
+    }
+}
+
+
 dependencies {
+    compile platform('org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE')
+
     //spring dependencies
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
-    implementation("com.ecommerce:ecommerce-common:0.22-SNAPSHOT")
+    implementation("com.ecommerce:ecommerce-common:0.35-SNAPSHOT")
 
     //common dependencies
     implementation("mysql:mysql-connector-java:8.0.15")
@@ -62,6 +92,11 @@ dependencies {
     implementation('com.fasterxml.jackson.core:jackson-annotations:2.9.8')
     implementation("org.springframework.boot:spring-boot-starter-amqp")
 
+
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+
     //test dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.rest-assured:spring-mock-mvc")
@@ -71,20 +106,9 @@ dependencies {
 }
 
 
-sourceSets {
-    componentTest {
-        compileClasspath += sourceSets.main.output + sourceSets.test.output
-        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
-    }
-
-    apiTest {
-        compileClasspath += sourceSets.main.output + sourceSets.test.output
-        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
-    }
-}
-
-
 configurations {
+    implementation.extendsFrom apiImplementation
+    runtimeOnly.extendsFrom apiRuntimeOnly
     componentTestImplementation.extendsFrom testImplementation
     componentTestRuntimeOnly.extendsFrom testRuntimeOnly
     apiTestImplementation.extendsFrom testImplementation
@@ -128,6 +152,39 @@ bootJar {
 wrapper {
     gradleVersion = '5.2.1'
 }
+
+
+task apiJar(type: Jar) {
+    from sourceSets.api.output
+}
+
+
+task apiSourcesJar(type: Jar) {
+    from sourceSets.api.allJava
+    archiveClassifier = 'sources'
+}
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = theGroup
+            artifactId = theArtifactName
+            version = theVersion
+            artifact apiJar
+            artifact apiSourcesJar {
+                classifier "sources"
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = "https://mymavenrepo.com/repo/Cd07WrKAtJ9Kq7PBaTuf/"
+        }
+    }
+}
+
 
 apply from: "${rootProject.projectDir}/gradle/idea.gradle"
 apply from: "${rootProject.projectDir}/gradle/docker-compose/docker-compose.gradle"
