@@ -13,3 +13,4 @@ build/**
 classes/
 .ideaDataSources/
 dataSources/
+**/build/**

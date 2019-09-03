@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-./gradlew clean bootRun
+./gradlew clean :order-api:bootRun

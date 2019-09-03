@@ -1,0 +1,17 @@
+apply plugin: "com.github.spotbugs"
+
+
+spotbugs {
+    sourceSets = [sourceSets.main]
+    excludeFilter = file("$projectDir/gradle/spotbugs/exclude.xml")//Spotbug配置文件路径
+    reportLevel = "high"
+}
+
+
+spotbugsMain {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+

@@ -1,0 +1,189 @@
+apply plugin: "jacoco"
+
+ext {
+    jacocoLineMin = 0 // Line覆盖率
+    jacocoBranchMin = 0  //分支覆盖率
+
+    // 配置需要忽略的文件
+    jacocoExcludes = [
+            'com/ecommerce/order/spike/**',
+            'com/ecommerce/order/common/**'
+    ]
+}
+
+//Unit test===========================
+//Unit test report
+jacocoTestReport {
+    shouldRunAfter test
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+}
+
+//Unit test code coverage
+jacocoTestCoverageVerification {
+    shouldRunAfter test
+    executionData test
+    violationRules {
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'INSTRUCTION'
+                minimum = jacocoLineMin
+            }
+        }
+
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'BRANCH'
+                minimum = jacocoBranchMin
+            }
+        }
+    }
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+}
+
+//Component test===========================
+//Component test report
+task jacocoComponentTestReport(type: JacocoReport) {
+    shouldRunAfter componentTest
+    sourceSets sourceSets.main
+    executionData componentTest
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+}
+
+//Component test code coverage
+task jacocoComponentTestCoverageVerification(type: JacocoCoverageVerification) {
+    shouldRunAfter componentTest
+    executionData componentTest
+    sourceDirectories.from = files(sourceSets.main.allSource.srcDirs)
+    classDirectories.from = files(sourceSets.main.output)
+
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+
+    violationRules {
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'INSTRUCTION'
+                minimum = jacocoLineMin
+            }
+        }
+
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'BRANCH'
+                minimum = jacocoBranchMin
+            }
+        }
+    }
+}
+
+//Api test===========================
+//API test coverage
+task jacocoApiTestReport(type: JacocoReport) {
+    shouldRunAfter apiTest
+    sourceSets sourceSets.main
+    executionData apiTest
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+}
+
+//Api test code coverage
+task jacocoApiTestCoverageVerification(type: JacocoCoverageVerification) {
+    shouldRunAfter apiTest
+    executionData apiTest
+    sourceDirectories.from = files(sourceSets.main.allSource.srcDirs)
+    classDirectories.from = files(sourceSets.main.output)
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+    violationRules {
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'INSTRUCTION'
+                minimum = jacocoLineMin
+            }
+        }
+
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'BRANCH'
+                minimum = jacocoBranchMin
+            }
+        }
+    }
+}
+
+//All test===========================
+//Unit test and component test and API test coverage all together
+task jacocoAllTestReport(type: JacocoReport) {
+    shouldRunAfter check
+    sourceSets sourceSets.main
+    executionData test, componentTest, apiTest
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+}
+
+//All test code coverage together
+task jacocoAllTestCoverageVerification(type: JacocoCoverageVerification) {
+    shouldRunAfter check
+    executionData test, componentTest, apiTest
+    sourceDirectories.from = files(sourceSets.main.allSource.srcDirs)
+    classDirectories.from = files(sourceSets.main.output)
+
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+
+
+    violationRules {
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'INSTRUCTION'
+                minimum = jacocoLineMin
+            }
+        }
+
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'BRANCH'
+                minimum = jacocoBranchMin
+            }
+        }
+    }
+}
+
+jacocoAllTestCoverageVerification.dependsOn jacocoAllTestReport
+check.dependsOn jacocoAllTestReport
+check.dependsOn jacocoAllTestCoverageVerification

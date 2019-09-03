@@ -1,0 +1,154 @@
+//buildscript {
+//    repositories {
+//        maven { url "https://maven.aliyun.com/repository/central" }
+//    }
+//    dependencies {
+//        classpath "com.avast.gradle:gradle-docker-compose-plugin:0.9.1"
+//        classpath "org.owasp:dependency-check-gradle:5.0.0-M2"
+//        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.1"
+//        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7"
+//    }
+//}
+
+plugins {
+    id 'application'
+    id "org.springframework.boot" version "2.1.4.RELEASE"
+}
+//
+//repositories {
+//    maven { url "https://maven.aliyun.com/repository/central" }
+//    maven { url "https://mymavenrepo.com/repo/2w5k9sU2AsKfaYehyqno/" }
+//
+//}
+
+application {
+    mainClassName = "com.ecommerce.Application"
+    applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+sourceSets {
+
+    componentTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+
+    apiTest {
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+}
+
+
+dependencies {
+
+    compile project(':order-sdk')
+
+    compile platform('org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE')
+
+    //spring dependencies
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("com.ecommerce:ecommerce-spring-common:0.40-SNAPSHOT")
+
+    //common dependencies
+    implementation("mysql:mysql-connector-java:8.0.15")
+    implementation('io.jsonwebtoken:jjwt:0.9.1')
+    implementation("org.flywaydb:flyway-core")
+    implementation('com.google.guava:guava:27.0.1-jre')
+    implementation('commons-io:commons-io:2.6')
+    implementation('org.apache.commons:commons-lang3')
+    implementation('org.apache.commons:commons-collections4:4.2')
+    implementation('io.springfox:springfox-swagger2:2.9.2')
+    implementation('io.springfox:springfox-swagger-ui:2.9.2')
+    implementation('com.cwbase:logback-redis-appender:1.1.5')
+    implementation('net.javacrumbs.shedlock:shedlock-spring:2.4.0')
+    implementation('net.javacrumbs.shedlock:shedlock-provider-jdbc-template:2.4.0')
+
+
+    //jackson dependencies
+    implementation('com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.8')
+    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.8')
+    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8')
+    implementation('com.fasterxml.jackson.core:jackson-core:2.9.8')
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.9.8')
+    implementation('com.fasterxml.jackson.core:jackson-annotations:2.9.8')
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
+
+
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+
+    //test dependencies
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.rest-assured:spring-mock-mvc")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation('org.junit.jupiter:junit-jupiter-engine')
+    testImplementation('org.mockito:mockito-junit-jupiter:2.26.0')
+}
+
+
+configurations {
+    implementation.extendsFrom apiImplementation
+    runtimeOnly.extendsFrom apiRuntimeOnly
+    componentTestImplementation.extendsFrom testImplementation
+    componentTestRuntimeOnly.extendsFrom testRuntimeOnly
+    apiTestImplementation.extendsFrom testImplementation
+    apiTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+
+task componentTest(type: Test) {
+    description = 'Run component tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.componentTest.output.classesDirs
+    classpath = sourceSets.componentTest.runtimeClasspath
+    shouldRunAfter test
+}
+
+
+task apiTest(type: Test) {
+    description = 'Run API tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.apiTest.output.classesDirs
+    classpath = sourceSets.apiTest.runtimeClasspath
+    shouldRunAfter componentTest
+}
+
+configurations.all {
+    exclude group: "junit", module: "junit"
+    exclude group: "org.assertj", module: "assertj-core"
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+check.dependsOn componentTest
+check.dependsOn apiTest
+
+bootJar {
+    launchScript()
+}
+//
+//wrapper {
+//    gradleVersion = '5.2.1'
+//}
+
+//
+//
+apply from: "${projectDir}/gradle/idea.gradle"
+//apply from: "${projectDir}/gradle/docker-compose/docker-compose.gradle"
+//apply from: "${projectDir}/gradle/dependency-check/dependency-check.gradle"
+//apply from: "${projectDir}/gradle/spotbugs/spotbugs.gradle"
+//apply from: "${projectDir}/gradle/checkstyle/checkstyle.gradle"
+//apply from: "${projectDir}/gradle/git-hooks/git-hooks.gradle"
+//apply from: "${projectDir}/gradle/version-info.gradle"
+//apply from: "${projectDir}/gradle/jacoco.gradle"

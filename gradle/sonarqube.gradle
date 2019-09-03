@@ -1,9 +1,0 @@
-apply plugin: "org.sonarqube"
-
-sonarqube {
-
-}
-
-sonarqube.dependsOn jacocoAllTestCoverageVerification
-sonarqube.dependsOn spotbugsMain
-sonarqube.dependsOn checkstyleMain

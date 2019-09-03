@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!--如何设置请参考：https://spotbugs.readthedocs.io/en/stable/filter.html-->
+
+    <Match>
+        <Package name="com.ecommerce.order.spike"/>
+    </Match>
+
+    <Match>
+        <Package name="~com\.ecommerce\.order\.spike.*"/>
+    </Match>
+
+    <Match>
+        <Bug pattern="URF_UNREAD_FIELD"/>
+    </Match>
+
+    <Match>
+        <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD"/>
+    </Match>
+</FindBugsFilter>

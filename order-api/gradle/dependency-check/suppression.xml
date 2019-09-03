@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+
+    <!--如何设置忽略：在build/reports/dependency-check-report.html报告中，找到对应项中的"suppress"按钮，可以查看忽略设置-->
+
+    <suppress>
+        <gav regex="true">^com\.cwbase:logback-redis-appender:.*$</gav>
+        <cve>CVE-2017-5929</cve>
+    </suppress>
+
+    <suppress>
+        <gav regex="true">^io\.jsonwebtoken:jjwt:.*$</gav>
+        <cve>CVE-2018-1000539</cve>
+    </suppress>
+
+</suppressions>

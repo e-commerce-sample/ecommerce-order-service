@@ -1,0 +1,2 @@
+rootProject.name = 'order-backend'
+include 'order-api','order-sdk'

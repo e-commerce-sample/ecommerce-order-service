@@ -1,0 +1,31 @@
+apply plugin: "org.owasp.dependencycheck"
+
+dependencyCheck {
+    failBuildOnCVSS = 5
+    failOnError = true
+    suppressionFile = file("$projectDir/gradle/dependency-check/suppression.xml") //配置文件路径
+    scanConfigurations = ["compile", "compileOnly", "implementation", "runtime"]
+    analyzers {
+        experimentalEnabled = true
+        archiveEnabled = true
+        jarEnabled = true
+        centralEnabled = true
+        nexusEnabled = true
+        pyDistributionEnabled = false
+        pyPackageEnabled = false
+        rubygemsEnabled = false
+        opensslEnabled = false
+        nuspecEnabled = false
+        assemblyEnabled = false
+        cmakeEnabled = false
+        autoconfEnabled = true
+        composerEnabled = false
+        nodeEnabled = true
+        nodeAuditEnabled = false
+        cocoapodsEnabled = false
+        swiftEnabled = false
+    }
+}
+
+check.dependsOn dependencyCheckAnalyze
+
