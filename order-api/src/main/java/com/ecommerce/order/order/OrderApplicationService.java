@@ -1,8 +1,8 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.order.command.ChangeProductCountCommand;
-import com.ecommerce.order.order.command.CreateOrderCommand;
-import com.ecommerce.order.order.command.PayOrderCommand;
+import com.ecommerce.order.command.ChangeProductCountCommand;
+import com.ecommerce.order.command.CreateOrderCommand;
+import com.ecommerce.order.command.PayOrderCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderFactory;
 import com.ecommerce.order.order.model.OrderId;

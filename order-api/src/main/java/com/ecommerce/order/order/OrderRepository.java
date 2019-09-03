@@ -3,7 +3,6 @@ package com.ecommerce.order.order;
 import com.ecommerce.order.order.exception.OrderNotFoundException;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
-import com.ecommerce.shared.event.publish.DomainEventPublishingRecorder;
 import com.ecommerce.shared.model.BaseRepository;
 import com.ecommerce.shared.utils.DefaultObjectMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,9 +20,7 @@ public class OrderRepository extends BaseRepository<Order> {
     private final DefaultObjectMapper objectMapper;
 
     public OrderRepository(NamedParameterJdbcTemplate jdbcTemplate,
-                           DefaultObjectMapper objectMapper,
-                           DomainEventPublishingRecorder recorder) {
-        super(recorder);
+                           DefaultObjectMapper objectMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.objectMapper = objectMapper;
     }

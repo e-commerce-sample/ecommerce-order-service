@@ -32,7 +32,7 @@ targetCompatibility = 1.8
 
 
 dependencies {
-    api("com.ecommerce:ecommerce-shared-model:0.9-SNAPSHOT")
+    api("com.ecommerce:ecommerce-shared-model:0.11-SNAPSHOT")
 }
 
 task sourcesJar(type: Jar) {

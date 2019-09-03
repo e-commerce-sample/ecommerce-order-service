@@ -1,9 +1,9 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.order.command.ChangeAddressDetailCommand;
-import com.ecommerce.order.order.command.ChangeProductCountCommand;
-import com.ecommerce.order.order.command.CreateOrderCommand;
-import com.ecommerce.order.order.command.PayOrderCommand;
+import com.ecommerce.order.command.ChangeAddressDetailCommand;
+import com.ecommerce.order.command.ChangeProductCountCommand;
+import com.ecommerce.order.command.CreateOrderCommand;
+import com.ecommerce.order.command.PayOrderCommand;
 import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.representation.OrderRepresentationService;
 import com.ecommerce.order.order.representation.detail.OrderRepresentation;
