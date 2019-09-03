@@ -4,7 +4,7 @@ checkstyle {
     sourceSets = [sourceSets.main]
     maxWarnings = 0
     ignoreFailures = false
-    configFile file("$projectDir/gradle/checkstyle/checkstyle.xml") //Checkstyle配置文件路径
+    configFile file("${rootProject.projectDir}/gradle/checkstyle/checkstyle.xml") //Checkstyle配置文件路径
 
 }
 

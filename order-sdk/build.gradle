@@ -11,7 +11,6 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'idea'
 }
 //
 //repositories {
@@ -32,7 +31,7 @@ targetCompatibility = 1.8
 
 
 dependencies {
-    api("com.ecommerce:ecommerce-shared-model:0.11-SNAPSHOT")
+    api("com.ecommerce:ecommerce-shared-model:0.12-SNAPSHOT")
 }
 
 task sourcesJar(type: Jar) {
@@ -60,12 +59,4 @@ publishing {
         }
     }
 }
-//
-//
-//apply from: "${rootProject.projectDir}/gradle/idea.gradle"
-//apply from: "${rootProject.projectDir}/gradle/dependency-check/dependency-check.gradle"
-//apply from: "${rootProject.projectDir}/gradle/spotbugs/spotbugs.gradle"
-//apply from: "${rootProject.projectDir}/gradle/checkstyle/checkstyle.gradle"
-//apply from: "${rootProject.projectDir}/gradle/git-hooks/git-hooks.gradle"
-//apply from: "${rootProject.projectDir}/gradle/version-info.gradle"
-//apply from: "${rootProject.projectDir}/gradle/jacoco.gradle"
+apply from: "${projectDir}/gradle/version-info.gradle"

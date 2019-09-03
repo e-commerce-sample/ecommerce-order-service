@@ -1,15 +1,15 @@
 //buildscript {
 //    repositories {
-//        maven { url "https://maven.aliyun.com/repository/central" }
+////        maven { url "https://maven.aliyun.com/repository/central" }
+////        mavenCentral()
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//        }
 //    }
 //    dependencies {
 //        classpath "com.avast.gradle:gradle-docker-compose-plugin:0.9.1"
-//        classpath "org.owasp:dependency-check-gradle:5.0.0-M2"
-//        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.1"
-//        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7"
 //    }
 //}
-
 plugins {
     id 'application'
     id "org.springframework.boot" version "2.1.4.RELEASE"
@@ -55,7 +55,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
-    implementation("com.ecommerce:ecommerce-spring-common:0.40-SNAPSHOT")
+    implementation("com.ecommerce:ecommerce-spring-common:0.41-SNAPSHOT")
 
     //common dependencies
     implementation("mysql:mysql-connector-java:8.0.15")
