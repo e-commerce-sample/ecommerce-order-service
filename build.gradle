@@ -36,6 +36,8 @@ subprojects {
     configurations.all {
         exclude group: "junit", module: "junit"
         exclude group: "org.assertj", module: "assertj-core"
+        // Check for updates every build
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
 
     tasks.withType(Test) {

@@ -1,37 +1,13 @@
-//buildscript {
-//    repositories {
-//        maven { url "https://maven.aliyun.com/repository/central" }
-//    }
-//    dependencies {
-//        classpath "org.owasp:dependency-check-gradle:5.0.0-M2"
-//        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.1"
-//    }
-//}
-
 plugins {
     id 'java-library'
     id 'maven-publish'
 }
-//
-//repositories {
-//    maven { url "https://maven.aliyun.com/repository/central" }
-//    maven { url "https://mymavenrepo.com/repo/2w5k9sU2AsKfaYehyqno/" }
-//}
-
-
-def theGroup = 'com.ecommerce'
-def theArtifactName = 'order-sdk'
-def theVersion = '0.1-SNAPSHOT'
-group = theGroup
-archivesBaseName = theArtifactName
-version = theVersion
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-
 dependencies {
-    api("com.ecommerce:ecommerce-shared-model:0.12-SNAPSHOT")
+    api("com.ecommerce:ecommerce-shared-model:0.12-SNAPSHOT") { changing = true }
 }
 
 task sourcesJar(type: Jar) {
@@ -39,13 +15,12 @@ task sourcesJar(type: Jar) {
     archiveClassifier = 'sources'
 }
 
-
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = theGroup
-            artifactId = theArtifactName
-            version = theVersion
+            groupId = 'com.ecommerce'
+            artifactId = 'order-sdk'
+            version = '0.1-SNAPSHOT'
             from components.java
             artifact sourcesJar {
                 classifier "sources"
@@ -59,4 +34,5 @@ publishing {
         }
     }
 }
+
 apply from: "${projectDir}/gradle/version-info.gradle"
