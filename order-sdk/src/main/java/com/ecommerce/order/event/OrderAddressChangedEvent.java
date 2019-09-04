@@ -1,14 +1,16 @@
 package com.ecommerce.order.event;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderAddressChangedEvent extends OrderEvent {
     private String oldAddress;
     private String newAddress;
 
-    public OrderAddressChangedEvent(String orderId, String oldAddress, String newAddress) {
+    @JsonCreator
+    public OrderAddressChangedEvent(@JsonProperty("orderId") String orderId,
+                                    @JsonProperty("oldAddress") String oldAddress,
+                                    @JsonProperty("newAddress") String newAddress) {
         super(orderId);
         this.oldAddress = oldAddress;
         this.newAddress = newAddress;

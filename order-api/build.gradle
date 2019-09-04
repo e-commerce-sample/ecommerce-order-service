@@ -31,15 +31,14 @@ dependencies {
     implementation("com.ecommerce:ecommerce-spring-common:0.41-SNAPSHOT") { changing = true }
 
     implementation platform('org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE')
-    implementation platform("org.springframework.cloud:spring-cloud-dependencies:Finchley.RELEASE")
 
 
     //test dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.rest-assured:spring-mock-mvc")
-//    testImplementation("org.junit.jupiter:junit-jupiter-api")
-//    testImplementation('org.junit.jupiter:junit-jupiter-engine')
-//    testImplementation('org.mockito:mockito-junit-jupiter:2.26.0')
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation('org.junit.jupiter:junit-jupiter-engine')
+    testImplementation('org.mockito:mockito-junit-jupiter:2.26.0')
 }
 
 

@@ -1,11 +1,12 @@
 package com.ecommerce.order.event;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderPaidEvent extends OrderEvent {
-    public OrderPaidEvent(String orderId) {
+
+    @JsonCreator
+    public OrderPaidEvent(@JsonProperty("orderId") String orderId) {
         super(orderId);
     }
 

@@ -9,7 +9,7 @@ import com.ecommerce.order.command.PayOrderCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.model.ProductId;
-import com.ecommerce.shared.event.publish.DomainEventPublisher;
+import com.ecommerce.shared.event.DomainEventPublisher;
 import com.ecommerce.shared.model.Address;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

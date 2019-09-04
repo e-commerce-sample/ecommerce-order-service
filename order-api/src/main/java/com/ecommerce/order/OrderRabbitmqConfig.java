@@ -1,6 +1,6 @@
 package com.ecommerce.order;
 
-import com.ecommerce.spring.common.configuration.rabbit.EcommerceRabbitProperties;
+import com.ecommerce.spring.common.event.messaging.rabbit.EcommerceRabbitProperties;
 import org.springframework.amqp.core.Binding;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

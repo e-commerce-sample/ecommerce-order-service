@@ -1,6 +1,6 @@
 package com.ecommerce.order;
 
-import com.ecommerce.shared.utils.DefaultObjectMapper;
+import com.ecommerce.shared.jackson.DefaultObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

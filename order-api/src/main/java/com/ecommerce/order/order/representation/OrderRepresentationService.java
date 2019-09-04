@@ -6,7 +6,7 @@ import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.representation.detail.OrderItemRepresentation;
 import com.ecommerce.order.order.representation.detail.OrderRepresentation;
 import com.ecommerce.order.order.representation.summary.OrderSummaryRepresentation;
-import com.ecommerce.shared.utils.DefaultObjectMapper;
+import com.ecommerce.shared.jackson.DefaultObjectMapper;
 import com.ecommerce.shared.utils.PagedResource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
