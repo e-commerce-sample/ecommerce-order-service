@@ -1,6 +1,6 @@
 package com.ecommerce.order;
 
-import com.ecommerce.order.event.OrderEvent;
+import com.ecommerce.order.event.order.OrderEvent;
 import com.ecommerce.order.order.OrderEventHandler;
 import com.ecommerce.spring.common.event.messaging.rabbit.EcommerceRabbitListener;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;

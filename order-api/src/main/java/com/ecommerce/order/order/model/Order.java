@@ -1,9 +1,9 @@
 package com.ecommerce.order.order.model;
 
-import com.ecommerce.order.event.OrderAddressChangedEvent;
-import com.ecommerce.order.event.OrderCreatedEvent;
-import com.ecommerce.order.event.OrderPaidEvent;
-import com.ecommerce.order.event.OrderProductChangedEvent;
+import com.ecommerce.order.event.order.OrderAddressChangedEvent;
+import com.ecommerce.order.event.order.OrderCreatedEvent;
+import com.ecommerce.order.event.order.OrderPaidEvent;
+import com.ecommerce.order.event.order.OrderProductChangedEvent;
 import com.ecommerce.order.order.exception.OrderCannotBeModifiedException;
 import com.ecommerce.order.order.exception.PaidPriceNotSameWithOrderPriceException;
 import com.ecommerce.order.order.exception.ProductNotInOrderException;
@@ -39,8 +39,8 @@ public class Order extends BaseAggregate {
         this.status = CREATED;
         this.address = address;
         this.createdAt = now();
-        List<com.ecommerce.order.event.OrderItem> orderItems = items.stream()
-                .map(orderItem -> new com.ecommerce.order.event.OrderItem(orderItem.getProductId().toString(),
+        List<com.ecommerce.order.event.order.OrderItem> orderItems = items.stream()
+                .map(orderItem -> new com.ecommerce.order.event.order.OrderItem(orderItem.getProductId().toString(),
                         orderItem.getCount())).collect(Collectors.toList());
         raiseEvent(new OrderCreatedEvent(id.toString(), totalPrice, address, createdAt, orderItems));
     }

@@ -1,4 +1,4 @@
-package com.ecommerce.order.event;
+package com.ecommerce.order.event.order;
 
 import com.ecommerce.shared.event.DomainEvent;
 
