@@ -1,13 +1,17 @@
 package com.ecommerce.order.event.order;
 
 import com.ecommerce.shared.model.Address;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderCreatedEvent extends OrderEvent {
     private BigDecimal price;
     private Address address;
@@ -15,12 +19,11 @@ public class OrderCreatedEvent extends OrderEvent {
     private Instant createdAt;
 
 
-    @JsonCreator
-    public OrderCreatedEvent(@JsonProperty("orderId") String orderId,
-                             @JsonProperty("price") BigDecimal price,
-                             @JsonProperty("address") Address address,
-                             @JsonProperty("createdAt") Instant createdAt,
-                             @JsonProperty("items") List<OrderItem> items) {
+    public OrderCreatedEvent(String orderId,
+                             BigDecimal price,
+                             Address address,
+                             Instant createdAt,
+                             List<OrderItem> items) {
         super(orderId);
         this.price = price;
         this.createdAt = createdAt;
@@ -28,19 +31,4 @@ public class OrderCreatedEvent extends OrderEvent {
         this.items = items;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public List<OrderItem> getItems() {
-        return items;
-    }
 }
