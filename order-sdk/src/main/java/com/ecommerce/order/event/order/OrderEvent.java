@@ -7,12 +7,7 @@ import lombok.Getter;
 public abstract class OrderEvent extends DomainEvent {
     private String orderId;
 
-    @Deprecated
-    protected OrderEvent() {
-    }
-
-    OrderEvent(String orderId) {
-        super("Order");
+    protected OrderEvent(String orderId) {
         this.orderId = orderId;
     }
 }
