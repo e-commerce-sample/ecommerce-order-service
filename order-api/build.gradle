@@ -8,9 +8,6 @@ application {
     applicationDefaultJvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 
 sourceSets {
 
@@ -43,8 +40,6 @@ dependencies {
 
 
 configurations {
-    implementation.extendsFrom apiImplementation
-    runtimeOnly.extendsFrom apiRuntimeOnly
     componentTestImplementation.extendsFrom testImplementation
     componentTestRuntimeOnly.extendsFrom testRuntimeOnly
     apiTestImplementation.extendsFrom testImplementation
@@ -67,15 +62,6 @@ task apiTest(type: Test) {
     testClassesDirs = sourceSets.apiTest.output.classesDirs
     classpath = sourceSets.apiTest.runtimeClasspath
     shouldRunAfter componentTest
-}
-
-configurations.all {
-    exclude group: "junit", module: "junit"
-    exclude group: "org.assertj", module: "assertj-core"
-}
-
-tasks.withType(Test) {
-    useJUnitPlatform()
 }
 
 check.dependsOn componentTest

@@ -21,6 +21,9 @@ subprojects {
 
     apply plugin: 'java'
 
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
     dependencies {
         compileOnly 'org.projectlombok:lombok:1.18.8'
         annotationProcessor 'org.projectlombok:lombok:1.18.8'

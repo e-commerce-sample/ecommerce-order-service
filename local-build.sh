@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-./gradlew clean build
+set -e
+
+./gradlew composeDown
+
+./gradlew clean  build

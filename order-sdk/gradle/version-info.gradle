@@ -8,7 +8,7 @@ def buildDate = (ZonedDateTime.now((ZoneId.of("Asia/Shanghai")))).toString()
 
 
 jar {
-    baseName = group
+    baseName = rootProject.sdkArtifact
     version = rootProject.version
     manifest {
         attributes(

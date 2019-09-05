@@ -31,6 +31,7 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker、RabbitMQ
 |本地构建|`./local-build.sh`|启动启动MySQL，运行所有类型的自动化测试|
 |停止MySQL|`./gradlew composeDown`|将清空所有数据|
 |手动启动MySQL|`./gradlew composeUp`||
+|发布sdk|`./publish-sdk.sh`|可以通过修改`gradle.properties`文件中的`version`指定版本|
 
 # 领域对象
 |领域对象|中文名|业务功能|

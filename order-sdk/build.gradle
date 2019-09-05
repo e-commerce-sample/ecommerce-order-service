@@ -3,8 +3,6 @@ plugins {
     id 'maven-publish'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 dependencies {
     api("com.ecommerce:ecommerce-shared-model:0.12-SNAPSHOT") { changing = true }
@@ -18,9 +16,9 @@ task sourcesJar(type: Jar) {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'com.ecommerce'
-            artifactId = 'order-sdk'
-            version = '0.1-SNAPSHOT'
+            groupId = rootProject.group
+            artifactId = rootProject.sdkArtifact
+            version = rootProject.version
             from components.java
             artifact sourcesJar {
                 classifier "sources"
