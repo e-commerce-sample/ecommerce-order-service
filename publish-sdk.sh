@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-./gradlew clean :order-sdk:publish
+./gradlew clean :ecommerce-order-service-sdk:publish

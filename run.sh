@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-./gradlew clean :order-api:bootRun
+./gradlew clean :ecommerce-order-service-api:bootRun

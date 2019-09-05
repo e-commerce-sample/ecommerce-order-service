@@ -6,4 +6,4 @@ set -e
 ./gradlew composeDown
 
 #Start build process...
-./gradlew clean  build
+./gradlew clean build
