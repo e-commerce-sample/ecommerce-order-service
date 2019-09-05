@@ -24,7 +24,7 @@ sourceSets {
 
 
 dependencies {
-    implementation project(':order-sdk')
+    implementation project(':ecommerce-order-service-sdk')
     implementation("com.ecommerce:ecommerce-spring-common:0.41-SNAPSHOT") { changing = true }
 
     implementation platform('org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE')

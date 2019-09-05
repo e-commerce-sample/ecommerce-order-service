@@ -1,2 +1,2 @@
-rootProject.name = 'order-backend'
-include 'order-api','order-sdk'
+rootProject.name = 'ecommerce-order-service'
+include 'ecommerce-order-service-api','ecommerce-order-service-sdk'
