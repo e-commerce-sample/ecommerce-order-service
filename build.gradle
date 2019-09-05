@@ -52,8 +52,7 @@ subprojects {
         gradleVersion = '5.2.1'
     }
 
-    //todo: added back
-//    apply from: "${rootProject.projectDir}/gradle/dependency-check/dependency-check.gradle"
+    apply from: "${rootProject.projectDir}/gradle/dependency-check/dependency-check.gradle"
     apply from: "${rootProject.projectDir}/gradle/spotbugs/spotbugs.gradle"
     apply from: "${rootProject.projectDir}/gradle/checkstyle/checkstyle.gradle"
     apply from: "${rootProject.projectDir}/gradle/git-hooks/git-hooks.gradle"

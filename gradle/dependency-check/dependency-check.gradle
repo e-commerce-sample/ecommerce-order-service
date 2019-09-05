@@ -4,7 +4,7 @@ dependencyCheck {
     failBuildOnCVSS = 5
     failOnError = true
     suppressionFile = file("${rootProject.projectDir}/gradle/dependency-check/suppression.xml") //配置文件路径
-    scanConfigurations = ["compile", "compileOnly", "implementation", "runtime"]
+    scanConfigurations = ["compile", "compileOnly", "implementation", "runtime","api"]
     analyzers {
         experimentalEnabled = true
         archiveEnabled = true
