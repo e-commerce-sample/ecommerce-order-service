@@ -1,4 +1,4 @@
-package com.ecommerce.order.command;
+package com.ecommerce.order.command.order;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,4 +1,4 @@
-package com.ecommerce.order.command;
+package com.ecommerce.order.command.order;
 
 import com.ecommerce.shared.model.Address;
 import com.fasterxml.jackson.annotation.JsonCreator;
