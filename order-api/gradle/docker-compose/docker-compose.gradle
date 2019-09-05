@@ -1,10 +1,10 @@
-apply plugin: 'docker-compose'
+apply plugin: 'com.russianprussian.avast.gradle.docker-compose'
 
 //dockerCompose.isRequiredBy(componentTest)
 //dockerCompose.isRequiredBy(apiTest)
 
 dockerCompose {
-    useComposeFiles = ['gradle/docker-compose/docker-compose.yml']
+    useComposeFiles = ["${projectDir}/gradle/docker-compose/docker-compose.yml"]
     // stopContainers = false
 //     removeContainers = false
 //     removeVolumes = false

@@ -3,6 +3,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
+        classpath "gradle.plugin.com.avast.gradle:gradle-docker-compose-plugin:1"
         classpath "org.owasp:dependency-check-gradle:5.2.1"
         classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:2.0.0"
     }

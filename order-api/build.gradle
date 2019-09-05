@@ -85,12 +85,7 @@ bootJar {
     launchScript()
 }
 
-//todo  enable all below
 apply from: "${projectDir}/gradle/idea.gradle"
-//apply from: "${projectDir}/gradle/docker-compose/docker-compose.gradle"
-//apply from: "${projectDir}/gradle/dependency-check/dependency-check.gradle"
-//apply from: "${projectDir}/gradle/spotbugs/spotbugs.gradle"
-//apply from: "${projectDir}/gradle/checkstyle/checkstyle.gradle"
-//apply from: "${projectDir}/gradle/git-hooks/git-hooks.gradle"
-//apply from: "${projectDir}/gradle/version-info.gradle"
-//apply from: "${projectDir}/gradle/jacoco.gradle"
+apply from: "${projectDir}/gradle/docker-compose/docker-compose.gradle"
+apply from: "${projectDir}/gradle/version-info.gradle"
+apply from: "${projectDir}/gradle/jacoco.gradle"
