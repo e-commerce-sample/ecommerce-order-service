@@ -1,8 +1,3 @@
-# todo
-- event listener和handle新统一策略
-- kafka
-- mongo
-
 # 项目简介
 本项目是Ecommerce系统的订单（Order）子系统，用于接受用户订单。
 
