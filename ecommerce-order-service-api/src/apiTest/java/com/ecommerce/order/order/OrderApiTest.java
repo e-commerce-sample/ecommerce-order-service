@@ -68,7 +68,7 @@ class OrderApiTest extends BaseApiTest {
             Order order = Order.create(newUuid(), newArrayList(create(newUuid(), 20, BigDecimal.valueOf(30))), address);
             repository.save(order);
         });
-        domainEventPublisher.publish();
+        domainEventPublisher.publishNextBatch();
         Thread.sleep(3000);
 
         given()
