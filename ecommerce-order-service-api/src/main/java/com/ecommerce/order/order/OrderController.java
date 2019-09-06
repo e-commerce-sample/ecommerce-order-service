@@ -4,7 +4,6 @@ import com.ecommerce.order.command.order.ChangeAddressDetailCommand;
 import com.ecommerce.order.command.order.ChangeProductCountCommand;
 import com.ecommerce.order.command.order.CreateOrderCommand;
 import com.ecommerce.order.command.order.PayOrderCommand;
-import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.representation.OrderRepresentationService;
 import com.ecommerce.order.order.representation.detail.OrderRepresentation;
 import com.ecommerce.order.order.representation.summary.OrderSummaryRepresentation;
@@ -19,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Map;
 
+import static com.google.common.collect.ImmutableMap.of;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -36,8 +37,8 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public OrderId createOrder(@RequestBody @Valid CreateOrderCommand command) {
-        return applicationService.createOrder(command);
+    public Map<String, String> createOrder(@RequestBody @Valid CreateOrderCommand command) {
+        return of("id", applicationService.createOrder(command));
     }
 
     @PostMapping("/{id}/products")

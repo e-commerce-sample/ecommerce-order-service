@@ -1,3 +1,10 @@
+# todo
+- readme修改
+- id全部变为string
+- event listener和handle新统一策略
+- kafka
+- mongo
+
 # 项目简介
 本项目是Ecommerce系统的订单（Order）子系统，用于接受用户订单。
 

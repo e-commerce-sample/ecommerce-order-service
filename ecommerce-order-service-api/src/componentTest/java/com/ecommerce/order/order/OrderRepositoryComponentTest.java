@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
-import static com.ecommerce.order.order.model.OrderId.of;
 import static com.ecommerce.order.order.model.OrderItem.create;
-import static com.ecommerce.order.order.model.ProductId.newProductId;
 import static com.ecommerce.shared.utils.UuidGenerator.newUuid;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.math.BigDecimal.valueOf;
@@ -24,7 +22,7 @@ class OrderRepositoryComponentTest extends BaseComponentTest {
     @Test
     public void should_save_order() {
         Address address = Address.of("四川", "成都", "天府软件园1号");
-        Order order = Order.create(of(newUuid()), newArrayList(create(newProductId(), 2, valueOf(20))), address);
+        Order order = Order.create(newUuid(), newArrayList(create(newUuid(), 2, valueOf(20))), address);
         orderRepository.save(order);
         Order saved = orderRepository.byId(order.getId());
         assertEquals(order.getCreatedAt(), saved.getCreatedAt());

@@ -14,7 +14,7 @@ public class OrderFactory {
     }
 
     public Order create(List<OrderItem> items, Address address) {
-        OrderId orderId = idGenerator.generate();
+        String orderId = idGenerator.generate();
         return Order.create(orderId, items, address);
     }
 }

@@ -4,8 +4,6 @@ import com.ecommerce.order.event.order.OrderEvent;
 import com.ecommerce.order.order.representation.OrderRepresentationService;
 import org.springframework.stereotype.Component;
 
-import static com.ecommerce.order.order.model.OrderId.of;
-
 @Component
 public class OrderEventHandler {
     private final OrderRepresentationService orderRepresentationService;
@@ -15,6 +13,6 @@ public class OrderEventHandler {
     }
 
     public void cqrsSync(OrderEvent event) {
-        orderRepresentationService.cqrsSync(of(event.getOrderId()));
+        orderRepresentationService.cqrsSync(event.getOrderId());
     }
 }

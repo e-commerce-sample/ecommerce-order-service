@@ -2,7 +2,6 @@ package com.ecommerce.order.order;
 
 import com.ecommerce.order.order.exception.OrderNotFoundException;
 import com.ecommerce.order.order.model.Order;
-import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.shared.event.DomainEventRecorder;
 import com.ecommerce.shared.jackson.DefaultObjectMapper;
 import com.ecommerce.shared.model.BaseRepository;
@@ -36,10 +35,10 @@ public class OrderRepository extends BaseRepository<Order> {
         jdbcTemplate.update(sql, paramMap);
     }
 
-    public Order byId(OrderId id) {
+    public Order byId(String id) {
         try {
             String sql = "SELECT JSON_CONTENT FROM ORDERS WHERE ID=:id;";
-            return jdbcTemplate.queryForObject(sql, of("id", id.toString()), mapper());
+            return jdbcTemplate.queryForObject(sql, of("id", id), mapper());
         } catch (EmptyResultDataAccessException e) {
             throw new OrderNotFoundException(id);
         }

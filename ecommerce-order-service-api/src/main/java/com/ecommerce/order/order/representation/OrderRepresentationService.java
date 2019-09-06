@@ -2,7 +2,6 @@ package com.ecommerce.order.order.representation;
 
 import com.ecommerce.order.order.OrderRepository;
 import com.ecommerce.order.order.model.Order;
-import com.ecommerce.order.order.model.OrderId;
 import com.ecommerce.order.order.representation.detail.OrderItemRepresentation;
 import com.ecommerce.order.order.representation.detail.OrderRepresentation;
 import com.ecommerce.order.order.representation.summary.OrderSummaryRepresentation;
@@ -41,7 +40,7 @@ public class OrderRepresentationService {
 
     @Transactional(readOnly = true)
     public OrderRepresentation byId(String id) {
-        Order order = orderRepository.byId(OrderId.of(id));
+        Order order = orderRepository.byId(id);
         return toRepresentation(order);
     }
 
@@ -61,7 +60,7 @@ public class OrderRepresentationService {
     }
 
     @Transactional
-    public void cqrsSync(OrderId id) {
+    public void cqrsSync(String id) {
         Order order = orderRepository.byId(id);
         OrderSummaryRepresentation summary = OrderSummaryRepresentation.from(order);
         String sql = "INSERT INTO ORDER_SUMMARY (ID, JSON_CONTENT) VALUES (:id, :json) " +

@@ -7,8 +7,6 @@ import com.ecommerce.order.command.order.CreateOrderCommand;
 import com.ecommerce.order.command.order.OrderItemCommand;
 import com.ecommerce.order.command.order.PayOrderCommand;
 import com.ecommerce.order.order.model.Order;
-import com.ecommerce.order.order.model.OrderId;
-import com.ecommerce.order.order.model.ProductId;
 import com.ecommerce.shared.event.DomainEventPublisher;
 import com.ecommerce.shared.model.Address;
 import org.junit.jupiter.api.Test;
@@ -16,10 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
-import static com.ecommerce.order.order.model.OrderId.of;
 import static com.ecommerce.order.order.model.OrderItem.create;
 import static com.ecommerce.order.order.model.OrderStatus.PAID;
-import static com.ecommerce.order.order.model.ProductId.newProductId;
 import static com.ecommerce.shared.utils.UuidGenerator.newUuid;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.math.BigDecimal.valueOf;
@@ -48,14 +44,14 @@ class OrderApiTest extends BaseApiTest {
                 .post("/orders")
                 .then().statusCode(201)
                 .extract().body().jsonPath().getString("id");
-        Order order = repository.byId(OrderId.of(id));
+        Order order = repository.byId(id);
         assertNotNull(order);
     }
 
     @Test
     public void should_retrieve_order() {
         Address address = Address.of("四川", "成都", "天府软件园1号");
-        Order order = Order.create(of(newUuid()), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))), address);
+        Order order = Order.create(newUuid(), newArrayList(create(newUuid(), 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
         String idString = order.getId().toString();
         given()
@@ -69,7 +65,7 @@ class OrderApiTest extends BaseApiTest {
     public void should_list_order_summary() throws InterruptedException {
         range(0, 10).forEach(value -> {
             Address address = Address.of("四川", "成都", "天府软件园1号");
-            Order order = Order.create(of(newUuid()), newArrayList(create(newProductId(), 20, BigDecimal.valueOf(30))), address);
+            Order order = Order.create(newUuid(), newArrayList(create(newUuid(), 20, BigDecimal.valueOf(30))), address);
             repository.save(order);
         });
         domainEventPublisher.publish();
@@ -88,8 +84,8 @@ class OrderApiTest extends BaseApiTest {
     public void should_update_product_count() {
         Address address = Address.of("四川", "成都", "天府软件园1号");
 
-        ProductId productId = newProductId();
-        Order order = Order.create(of(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
+        String productId = newUuid();
+        Order order = Order.create(newUuid(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
         String idString = order.getId().toString();
 
@@ -109,8 +105,8 @@ class OrderApiTest extends BaseApiTest {
     @Test
     public void should_pay_order() {
         Address address = Address.of("四川", "成都", "天府软件园1号");
-        ProductId productId = newProductId();
-        Order order = Order.create(of(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
+        String productId = newUuid();
+        Order order = Order.create(newUuid(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
         String idString = order.getId().toString();
 
@@ -129,8 +125,8 @@ class OrderApiTest extends BaseApiTest {
     @Test
     public void should_change_order_address_detail() {
         Address address = Address.of("四川", "成都", "天府软件园1号");
-        ProductId productId = newProductId();
-        Order order = Order.create(of(newUuid()), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
+        String productId = newUuid();
+        Order order = Order.create(newUuid(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
         String idString = order.getId().toString();
 

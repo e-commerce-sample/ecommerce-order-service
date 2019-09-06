@@ -7,17 +7,17 @@ import java.math.BigDecimal;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderItem {
-    private ProductId productId;
+    private String productId;
     private int count;
     private BigDecimal itemPrice;
 
-    private OrderItem(ProductId productId, int count, BigDecimal itemPrice) {
+    private OrderItem(String productId, int count, BigDecimal itemPrice) {
         this.productId = productId;
         this.count = count;
         this.itemPrice = itemPrice;
     }
 
-    public static OrderItem create(ProductId productId, int count, BigDecimal itemPrice) {
+    public static OrderItem create(String productId, int count, BigDecimal itemPrice) {
         return new OrderItem(productId, count, itemPrice);
     }
 
@@ -29,7 +29,7 @@ public class OrderItem {
         this.count = count;
     }
 
-    public ProductId getProductId() {
+    public String getProductId() {
         return productId;
     }
 

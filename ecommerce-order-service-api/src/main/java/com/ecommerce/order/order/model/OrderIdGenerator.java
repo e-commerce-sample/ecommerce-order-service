@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderIdGenerator {
 
-    public OrderId generate() {
-        return OrderId.of(UuidGenerator.newUuid());
+    public String generate() {
+        return UuidGenerator.newUuid();
     }
 }
