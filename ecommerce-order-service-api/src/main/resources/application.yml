@@ -5,3 +5,8 @@ logging:
   pattern:
     console: "%date{yyyy-MM-dd HH:mm:ss.SSS,Asia/Shanghai} %X{clientIp}-%X{requestId}-%X{userId} %highlight(%-5level) [%t] %logger{36} : %m%n%wEx"
     file: "%date{yyyy-MM-dd HH:mm:ss.SSS,Asia/Shanghai} %X{clientIp}-%X{requestId}-%X{userId} %highlight(%-5level) [%t] %logger{36} : %m%n%wEx"
+
+server:
+  tomcat:
+    max-threads: 1000
+    max-connections: 20000
