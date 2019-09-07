@@ -30,7 +30,9 @@ Spring Boot、Gradle、MySQL、Junit 5、Rest Assured、Docker、RabbitMQ/Kafka
 |生成IntelliJ工程|`./idea.sh`|自动打开IntelliJ|
 |本地运行|`./run.sh`|自动启动MySQL，开启HTTP 8080端口，监听5005调试端口|
 |本地构建|`./local-build.sh`|启动启动MySQL，运行所有类型的自动化测试|
-|停止MySQL|`./gradlew composeDown`|将清空所有数据|
+|停止本地MySQL|`./gradlew composeDown`|将清空所有数据|
+|清空本地MySQL|`./mysql-clean-local.sh`|不会重建MySQL实例|
+|登录本地MySQL|`./mysql-login-local.sh`||
 |手动启动MySQL|`./gradlew composeUp`||
 |发布sdk|`./publish-sdk.sh`|可以通过修改`gradle.properties`文件中的`version`指定版本|
 
