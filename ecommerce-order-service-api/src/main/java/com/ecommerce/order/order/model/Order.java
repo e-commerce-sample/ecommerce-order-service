@@ -8,7 +8,7 @@ import com.ecommerce.order.sdk.event.order.OrderCreatedEvent;
 import com.ecommerce.order.sdk.event.order.OrderPaidEvent;
 import com.ecommerce.order.sdk.event.order.OrderProductChangedEvent;
 import com.ecommerce.order.sdk.representation.order.OrderRepresentation;
-import com.ecommerce.order.sdk.representation.order.summary.OrderSummaryRepresentation;
+import com.ecommerce.order.sdk.representation.order.OrderSummaryRepresentation;
 import com.ecommerce.shared.model.Address;
 import com.ecommerce.shared.model.BaseAggregate;
 import lombok.Builder;

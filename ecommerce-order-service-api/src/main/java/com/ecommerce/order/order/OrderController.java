@@ -6,7 +6,7 @@ import com.ecommerce.order.sdk.command.order.ChangeProductCountCommand;
 import com.ecommerce.order.sdk.command.order.CreateOrderCommand;
 import com.ecommerce.order.sdk.command.order.PayOrderCommand;
 import com.ecommerce.order.sdk.representation.order.OrderRepresentation;
-import com.ecommerce.order.sdk.representation.order.summary.OrderSummaryRepresentation;
+import com.ecommerce.order.sdk.representation.order.OrderSummaryRepresentation;
 import com.ecommerce.shared.utils.PagedResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

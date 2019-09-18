@@ -1,4 +1,4 @@
-spring.application.name: order-backend
+spring.application.name: ecommerce-order-service-api
 spring.zipkin.baseUrl: http://localhost:9411
 spring.zipkin.sender.type: web
 spring.sleuth.sampler.probability: 1.0

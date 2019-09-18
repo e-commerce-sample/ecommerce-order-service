@@ -2,9 +2,8 @@ package com.ecommerce.order.order.representation;
 
 import com.ecommerce.order.order.OrderRepository;
 import com.ecommerce.order.order.model.Order;
-import com.ecommerce.order.sdk.representation.order.OrderItem;
 import com.ecommerce.order.sdk.representation.order.OrderRepresentation;
-import com.ecommerce.order.sdk.representation.order.summary.OrderSummaryRepresentation;
+import com.ecommerce.order.sdk.representation.order.OrderSummaryRepresentation;
 import com.ecommerce.shared.jackson.DefaultObjectMapper;
 import com.ecommerce.shared.utils.PagedResource;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.collect.Maps.newHashMap;
@@ -70,17 +68,4 @@ public class OrderRepresentationService {
         log.info("Order[{}] summary synced due to CQRS.", id);
     }
 
-    private OrderRepresentation toRepresentation(Order order) {
-        List<OrderItem> itemRepresentations = order.getItems().stream()
-                .map(orderItem -> new OrderItem(orderItem.getProductId(),
-                        orderItem.getCount(),
-                        orderItem.getItemPrice()))
-                .collect(Collectors.toList());
-
-        return new OrderRepresentation(order.getId(),
-                itemRepresentations,
-                order.getTotalPrice(),
-                order.getStatus().name(),
-                order.getCreatedAt());
-    }
 }
