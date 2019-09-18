@@ -108,6 +108,7 @@ public class Order extends BaseAggregate {
                 itemRepresentations,
                 this.getTotalPrice(),
                 this.getStatus().name(),
+                this.getAddress(),
                 this.getCreatedAt());
     }
 

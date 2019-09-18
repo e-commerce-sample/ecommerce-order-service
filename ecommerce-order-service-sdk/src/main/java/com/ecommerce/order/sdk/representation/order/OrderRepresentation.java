@@ -1,6 +1,7 @@
 package com.ecommerce.order.sdk.representation.order;
 
 
+import com.ecommerce.shared.model.Address;
 import lombok.Value;
 
 import java.math.BigDecimal;
@@ -9,10 +10,11 @@ import java.util.List;
 
 @Value
 public class OrderRepresentation {
-    private final String id;
-    private final List<OrderItem> items;
-    private final BigDecimal totalPrice;
-    private final String status;
-    private final Instant createdAt;
+    private String id;
+    private List<OrderItem> items;
+    private BigDecimal totalPrice;
+    private String status;
+    private Address address;
+    private Instant createdAt;
 
 }
