@@ -27,7 +27,8 @@ processResources {
                 "buildNumber": System.getenv('GO_PIPELINE_LABEL') ?: "Local",
                 "gitRevision": gitRevision,
                 "gitBranch"  : gitBranch,
-                "buildTime"  : buildDate
+                "buildTime"  : buildDate,
+                "appName"    : rootProject.apiArtifact
         ])
     }
 }

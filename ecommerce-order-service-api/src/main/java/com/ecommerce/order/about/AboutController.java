@@ -1,5 +1,6 @@
 package com.ecommerce.order.about;
 
+import com.ecommerce.order.sdk.representation.about.AboutRepresentation;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +27,17 @@ public class AboutController {
         String buildTime = environment.getProperty("buildTime");
         String gitRevision = environment.getProperty("gitRevision");
         String gitBranch = environment.getProperty("gitBranch");
+        String appName = environment.getProperty("appName");
 
         String activeProfiles = Arrays.toString(environment.getActiveProfiles());
         String deployTime = this.deployTime.toString();
-        return new AboutRepresentation(buildNumber, buildTime, deployTime, gitRevision, gitBranch, activeProfiles);
+        return new AboutRepresentation(appName,
+                buildNumber,
+                buildTime,
+                deployTime,
+                gitRevision,
+                gitBranch,
+                activeProfiles);
     }
 
 }

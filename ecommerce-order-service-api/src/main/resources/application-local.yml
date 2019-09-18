@@ -2,6 +2,7 @@ buildNumber: unknown
 buildTime: unknown
 gitRevision: unknown
 gitBranch: unknown
+appName: unknown
 
 spring:
   datasource:
