@@ -1,24 +1,24 @@
 package com.ecommerce.order.order.model;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+
+@Getter
+@Builder
 public class OrderItem {
     private String productId;
     private int count;
     private BigDecimal itemPrice;
 
-    private OrderItem(String productId, int count, BigDecimal itemPrice) {
-        this.productId = productId;
-        this.count = count;
-        this.itemPrice = itemPrice;
-    }
-
     public static OrderItem create(String productId, int count, BigDecimal itemPrice) {
-        return new OrderItem(productId, count, itemPrice);
+        return OrderItem.builder()
+                .productId(productId)
+                .count(count)
+                .itemPrice(itemPrice)
+                .build();
     }
 
     BigDecimal totalPrice() {

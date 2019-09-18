@@ -1,13 +1,13 @@
-package com.ecommerce.order.order.representation.detail;
+package com.ecommerce.order.sdk.representation.order;
 
 import java.math.BigDecimal;
 
-public class OrderItemRepresentation {
+public class OrderItem {
     private final String productId;
     private final int count;
     private final BigDecimal itemPrice;
 
-    public OrderItemRepresentation(String productId, int count, BigDecimal itemPrice) {
+    public OrderItem(String productId, int count, BigDecimal itemPrice) {
         this.productId = productId;
         this.count = count;
         this.itemPrice = itemPrice;

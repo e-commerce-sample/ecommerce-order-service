@@ -1,16 +1,18 @@
 package com.ecommerce.order.order.model;
 
-import com.ecommerce.order.event.order.OrderAddressChangedEvent;
-import com.ecommerce.order.event.order.OrderCreatedEvent;
-import com.ecommerce.order.event.order.OrderPaidEvent;
-import com.ecommerce.order.event.order.OrderProductChangedEvent;
 import com.ecommerce.order.order.exception.OrderCannotBeModifiedException;
 import com.ecommerce.order.order.exception.PaidPriceNotSameWithOrderPriceException;
 import com.ecommerce.order.order.exception.ProductNotInOrderException;
+import com.ecommerce.order.sdk.event.order.OrderAddressChangedEvent;
+import com.ecommerce.order.sdk.event.order.OrderCreatedEvent;
+import com.ecommerce.order.sdk.event.order.OrderPaidEvent;
+import com.ecommerce.order.sdk.event.order.OrderProductChangedEvent;
+import com.ecommerce.order.sdk.representation.order.OrderRepresentation;
+import com.ecommerce.order.sdk.representation.order.summary.OrderSummaryRepresentation;
 import com.ecommerce.shared.model.Address;
 import com.ecommerce.shared.model.BaseAggregate;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -19,36 +21,45 @@ import java.util.stream.Collectors;
 
 import static com.ecommerce.order.order.model.OrderStatus.CREATED;
 import static com.ecommerce.order.order.model.OrderStatus.PAID;
-import static com.google.common.collect.Lists.newArrayList;
 import static java.math.BigDecimal.ZERO;
 import static java.time.Instant.now;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+
+@Getter
+@Builder
 public class Order extends BaseAggregate {
     private String id;
-    private List<OrderItem> items = newArrayList();
+    private List<OrderItem> items;
     private BigDecimal totalPrice;
     private OrderStatus status;
     private Address address;
     private Instant createdAt;
 
-    private Order(String id, List<OrderItem> items, Address address) {
-        this.id = id;
-        this.items.addAll(items);
-        this.totalPrice = calculateTotalPrice();
-        this.status = CREATED;
-        this.address = address;
-        this.createdAt = now();
-        List<com.ecommerce.order.event.order.OrderItem> orderItems = items.stream()
-                .map(orderItem -> new com.ecommerce.order.event.order.OrderItem(orderItem.getProductId().toString(),
-                        orderItem.getCount())).collect(Collectors.toList());
-        raiseEvent(new OrderCreatedEvent(id.toString(), totalPrice, address, createdAt, orderItems));
-    }
-
     public static Order create(String id, List<OrderItem> items, Address address) {
-        return new Order(id, items, address);
+        Order order = Order.builder()
+                .id(id)
+                .items(items)
+                .totalPrice(calculateTotalPrice(items))
+                .status(CREATED)
+                .address(address)
+                .createdAt(now())
+                .build();
+        order.raiseCreatedEvent(id, items, address);
+        return order;
     }
 
+    private static BigDecimal calculateTotalPrice(List<OrderItem> items) {
+        return items.stream()
+                .map(OrderItem::totalPrice)
+                .reduce(ZERO, BigDecimal::add);
+    }
+
+    private void raiseCreatedEvent(String id, List<OrderItem> items, Address address) {
+        List<com.ecommerce.order.sdk.event.order.OrderItem> orderItems = items.stream()
+                .map(orderItem -> new com.ecommerce.order.sdk.event.order.OrderItem(orderItem.getProductId(),
+                        orderItem.getCount())).collect(Collectors.toList());
+        raiseEvent(new OrderCreatedEvent(id, totalPrice, address, orderItems, createdAt));
+    }
 
     public void changeProductCount(String productId, int count) {
         if (this.status == PAID) {
@@ -58,16 +69,9 @@ public class Order extends BaseAggregate {
         OrderItem orderItem = retrieveItem(productId);
         int originalCount = orderItem.getCount();
         orderItem.updateCount(count);
-        this.totalPrice = calculateTotalPrice();
-        raiseEvent(new OrderProductChangedEvent(id.toString(), productId.toString(), originalCount, count));
+        this.totalPrice = calculateTotalPrice(items);
+        raiseEvent(new OrderProductChangedEvent(id, productId, originalCount, count));
     }
-
-    private BigDecimal calculateTotalPrice() {
-        return items.stream()
-                .map(OrderItem::totalPrice)
-                .reduce(ZERO, BigDecimal::add);
-    }
-
 
     private OrderItem retrieveItem(String productId) {
         return items.stream()
@@ -81,7 +85,7 @@ public class Order extends BaseAggregate {
             throw new PaidPriceNotSameWithOrderPriceException(id);
         }
         this.status = PAID;
-        raiseEvent(new OrderPaidEvent(this.getId().toString()));
+        raiseEvent(new OrderPaidEvent(this.getId()));
     }
 
     public void changeAddressDetail(String detail) {
@@ -90,30 +94,30 @@ public class Order extends BaseAggregate {
         }
 
         this.address = this.address.changeDetailTo(detail);
-        raiseEvent(new OrderAddressChangedEvent(getId().toString(), detail, address.getDetail()));
+        raiseEvent(new OrderAddressChangedEvent(getId(), detail, address.getDetail()));
     }
 
-    public String getId() {
-        return id;
+    public OrderRepresentation toRepresentation() {
+        List<com.ecommerce.order.sdk.representation.order.OrderItem> itemRepresentations = this.getItems().stream()
+                .map(orderItem -> new com.ecommerce.order.sdk.representation.order.OrderItem(orderItem.getProductId(),
+                        orderItem.getCount(),
+                        orderItem.getItemPrice()))
+                .collect(Collectors.toList());
+
+        return new OrderRepresentation(this.getId(),
+                itemRepresentations,
+                this.getTotalPrice(),
+                this.getStatus().name(),
+                this.getCreatedAt());
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+
+    public OrderSummaryRepresentation toSummary() {
+        return new OrderSummaryRepresentation(this.getId(),
+                this.getTotalPrice(),
+                this.getStatus().name(),
+                this.getCreatedAt(),
+                this.getAddress());
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public List<OrderItem> getItems() {
-        return items;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
 }

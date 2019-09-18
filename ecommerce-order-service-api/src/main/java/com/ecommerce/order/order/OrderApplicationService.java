@@ -1,11 +1,11 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.command.order.ChangeProductCountCommand;
-import com.ecommerce.order.command.order.CreateOrderCommand;
-import com.ecommerce.order.command.order.PayOrderCommand;
 import com.ecommerce.order.order.model.Order;
 import com.ecommerce.order.order.model.OrderFactory;
 import com.ecommerce.order.order.model.OrderItem;
+import com.ecommerce.order.sdk.command.order.ChangeProductCountCommand;
+import com.ecommerce.order.sdk.command.order.CreateOrderCommand;
+import com.ecommerce.order.sdk.command.order.PayOrderCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

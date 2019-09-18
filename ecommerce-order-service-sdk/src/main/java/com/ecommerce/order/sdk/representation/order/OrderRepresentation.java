@@ -1,6 +1,5 @@
-package com.ecommerce.order.order.representation.detail;
+package com.ecommerce.order.sdk.representation.order;
 
-import com.ecommerce.order.order.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -8,15 +7,15 @@ import java.util.List;
 
 public class OrderRepresentation {
     private final String id;
-    private final List<OrderItemRepresentation> items;
+    private final List<OrderItem> items;
     private final BigDecimal totalPrice;
-    private final OrderStatus status;
+    private final String status;
     private final Instant createdAt;
 
     public OrderRepresentation(String id,
-                               List<OrderItemRepresentation> items,
+                               List<OrderItem> items,
                                BigDecimal totalPrice,
-                               OrderStatus status,
+                               String status,
                                Instant createdAt) {
         this.id = id;
         this.items = items;
@@ -29,7 +28,7 @@ public class OrderRepresentation {
         return id;
     }
 
-    public List<OrderItemRepresentation> getItems() {
+    public List<OrderItem> getItems() {
         return items;
     }
 
@@ -37,7 +36,7 @@ public class OrderRepresentation {
         return totalPrice;
     }
 
-    public OrderStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 

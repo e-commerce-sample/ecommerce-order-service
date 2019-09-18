@@ -4,6 +4,7 @@
 <module name="Checker">
 
     <module name="TreeWalker">
+        <module name="SuppressionCommentFilter"/>
 
         <module name="LineLength">
             <property name="max" value="150"/>

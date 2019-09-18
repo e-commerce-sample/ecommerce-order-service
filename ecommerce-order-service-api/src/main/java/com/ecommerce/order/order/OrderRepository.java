@@ -28,7 +28,7 @@ public class OrderRepository extends BaseRepository<Order> {
     protected void doSave(Order order) {
         String sql = "INSERT INTO ORDERS (ID, JSON_CONTENT) VALUES (:id, :json) " +
                 "ON DUPLICATE KEY UPDATE JSON_CONTENT=:json;";
-        Map<String, String> paramMap = of("id", order.getId().toString(), "json", objectMapper.writeValueAsString(order));
+        Map<String, String> paramMap = of("id", order.getId(), "json", objectMapper.writeValueAsString(order));
         jdbcTemplate.update(sql, paramMap);
     }
 

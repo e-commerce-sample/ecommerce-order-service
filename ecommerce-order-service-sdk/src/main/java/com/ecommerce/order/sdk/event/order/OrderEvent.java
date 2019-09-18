@@ -1,4 +1,4 @@
-package com.ecommerce.order.event.order;
+package com.ecommerce.order.sdk.event.order;
 
 import com.ecommerce.shared.event.DomainEvent;
 import lombok.Getter;

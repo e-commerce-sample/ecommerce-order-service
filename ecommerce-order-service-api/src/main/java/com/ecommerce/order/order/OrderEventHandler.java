@@ -1,7 +1,7 @@
 package com.ecommerce.order.order;
 
-import com.ecommerce.order.event.order.OrderEvent;
 import com.ecommerce.order.order.representation.OrderRepresentationService;
+import com.ecommerce.order.sdk.event.order.OrderEvent;
 import org.springframework.stereotype.Component;
 
 @Component

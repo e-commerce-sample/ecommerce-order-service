@@ -1,12 +1,12 @@
 package com.ecommerce.order.order;
 
 import com.ecommerce.order.BaseApiTest;
-import com.ecommerce.order.command.order.ChangeAddressDetailCommand;
-import com.ecommerce.order.command.order.ChangeProductCountCommand;
-import com.ecommerce.order.command.order.CreateOrderCommand;
-import com.ecommerce.order.command.order.OrderItemCommand;
-import com.ecommerce.order.command.order.PayOrderCommand;
 import com.ecommerce.order.order.model.Order;
+import com.ecommerce.order.sdk.command.order.ChangeAddressDetailCommand;
+import com.ecommerce.order.sdk.command.order.ChangeProductCountCommand;
+import com.ecommerce.order.sdk.command.order.CreateOrderCommand;
+import com.ecommerce.order.sdk.command.order.OrderItemCommand;
+import com.ecommerce.order.sdk.command.order.PayOrderCommand;
 import com.ecommerce.shared.event.DomainEventPublisher;
 import com.ecommerce.shared.model.Address;
 import org.junit.jupiter.api.Test;
@@ -53,7 +53,7 @@ class OrderApiTest extends BaseApiTest {
         Address address = Address.of("四川", "成都", "天府软件园1号");
         Order order = Order.create(newUuid(), newArrayList(create(newUuid(), 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
-        String idString = order.getId().toString();
+        String idString = order.getId();
         given()
                 .when()
                 .get("/orders/{id}", idString)
@@ -87,10 +87,10 @@ class OrderApiTest extends BaseApiTest {
         String productId = newUuid();
         Order order = Order.create(newUuid(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
-        String idString = order.getId().toString();
+        String idString = order.getId();
 
         given().contentType("application/json")
-                .body(new ChangeProductCountCommand(productId.toString(), 30))
+                .body(new ChangeProductCountCommand(productId, 30))
                 .when()
                 .post("orders/{id}/products", idString)
                 .then().statusCode(200);
@@ -108,7 +108,7 @@ class OrderApiTest extends BaseApiTest {
         String productId = newUuid();
         Order order = Order.create(newUuid(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
-        String idString = order.getId().toString();
+        String idString = order.getId();
 
         given().contentType("application/json")
                 .body(new PayOrderCommand(BigDecimal.valueOf(600)))
@@ -128,7 +128,7 @@ class OrderApiTest extends BaseApiTest {
         String productId = newUuid();
         Order order = Order.create(newUuid(), newArrayList(create(productId, 20, BigDecimal.valueOf(30))), address);
         repository.save(order);
-        String idString = order.getId().toString();
+        String idString = order.getId();
 
         given().contentType("application/json")
                 .body(new ChangeAddressDetailCommand("天府软件园2号"))
